@@ -1,0 +1,143 @@
+# Pakistan ISR Assets
+# AWACS and reconnaissance
+# Data compiled from public sources
+
+awacs_units:
+  # Erieye AWACS
+  - id: erieye_det
+    name: "Erieye AWACS Squadron"
+    faction: pakistan
+    type: erieye
+    aircraft_count: 4
+    aircraft_available: 3
+    base_id: paf_kamra
+    orbit:
+      lat: 32.0
+      lon: 72.0
+    mission: ground_alert
+    hours_on_station: 0
+    status: operational
+    notes: "Saab 2000 platform"
+
+  # ZDK-03 Karakoram Eagle (Chinese)
+  - id: zdk03_det
+    name: "ZDK-03 Detachment"
+    faction: pakistan
+    type: zdk03
+    aircraft_count: 4
+    aircraft_available: 3
+    base_id: paf_kamra
+    orbit:
+      lat: 30.0
+      lon: 71.0
+    mission: ground_alert
+    hours_on_station: 0
+    status: operational
+    notes: "Chinese AWACS"
+
+satellites:
+  # Pakistan limited indigenous satellite capability
+  # Some access via commercial/Chinese satellites
+  - id: prss1
+    name: "PRSS-1 (Pak Remote Sensing)"
+    faction: pakistan
+    type: optical
+    resolution_m: 1.0
+    revisit_hours: 48
+    coverage_priority:
+      - punjab
+      - kashmir
+    weather_dependent: true
+    status: operational
+    notes: "Built with Chinese assistance"
+
+  # Commercial access (represented abstractly)
+  - id: commercial_imagery
+    name: "Commercial Satellite Access"
+    faction: pakistan
+    type: optical
+    resolution_m: 2.0
+    revisit_hours: 24
+    coverage: on_request
+    status: operational
+    notes: "Commercial providers"
+
+# Ground-based sensors
+ground_sensors:
+  - id: bsr_lahore
+    name: "Ground Surveillance Radar Lahore"
+    faction: pakistan
+    type: bsr
+    location:
+      lat: 31.4
+      lon: 74.0
+    detection_range_km: 25
+    status: operational
+
+  - id: bsr_sialkot
+    name: "Ground Surveillance Radar Sialkot"
+    faction: pakistan
+    type: bsr
+    location:
+      lat: 32.5
+      lon: 74.5
+    detection_range_km: 25
+    status: operational
+
+  - id: bsr_kashmir
+    name: "Ground Surveillance Radar Kashmir"
+    faction: pakistan
+    type: bsr
+    location:
+      lat: 34.0
+      lon: 73.5
+    detection_range_km: 25
+    status: operational
+
+# EW/SIGINT
+ew_units:
+  - id: ew_det_1
+    name: "EW Detachment 1"
+    faction: pakistan
+    type: ew_pak_ground
+    system_count: 4
+    systems_available: 3
+    location:
+      lat: 32.0
+      lon: 72.5
+    active: false
+    status: ready
+    sector: "Northern Punjab"
+
+  - id: ew_det_2
+    name: "EW Detachment 2"
+    faction: pakistan
+    type: ew_pak_ground
+    system_count: 4
+    systems_available: 3
+    location:
+      lat: 31.0
+      lon: 73.5
+    active: false
+    status: ready
+    sector: "Central Punjab"
+
+  - id: ew_det_3
+    name: "EW Detachment 3"
+    faction: pakistan
+    type: ew_pak_ground
+    system_count: 3
+    systems_available: 3
+    location:
+      lat: 28.5
+      lon: 68.5
+    active: false
+    status: ready
+    sector: "Sindh"
+
+# Summary:
+# 4 Erieye AWACS (Saab 2000)
+# 4 ZDK-03 AWACS (Chinese)
+# Limited satellite imagery (1 indigenous + commercial)
+# Ground surveillance radars
+# Ground-based EW systems

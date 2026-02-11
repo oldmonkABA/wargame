@@ -1,0 +1,209 @@
+# Logistics Schema Definition
+
+supply_types:
+  # Types of supplies tracked
+  ammunition:
+    id: ammunition
+    unit: tons
+    consumption_rate:
+      idle: 0
+      defend: 10
+      attack: 30
+      intense_combat: 50
+
+  fuel:
+    id: fuel
+    unit: tons
+    consumption_rate:
+      idle: 5
+      movement: 20
+      combat_movement: 30
+
+  food:
+    id: food
+    unit: tons
+    consumption_rate:
+      per_1000_troops_per_turn: 2
+
+  spares:
+    id: spares
+    unit: tons
+    consumption_rate:
+      per_equipment_point_per_turn: 0.1
+
+depot:
+  # Schema for supply depot
+  # - id: unique identifier
+  # - name: depot name
+  # - faction: india | pakistan
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - type: forward | main | strategic
+  # - capacity:
+  #     ammunition: max tons
+  #     fuel: max tons
+  #     food: max tons
+  #     spares: max tons
+  # - current:
+  #     ammunition: current tons
+  #     fuel: current tons
+  #     food: current tons
+  #     spares: current tons
+  # - hardened: true | false
+  # - camouflaged: 0-100
+  # - throughput: tons per turn that can be distributed
+  # - served_units: list of unit IDs supplied from this depot
+  # - status: operational | damaged | destroyed
+
+example_depot:
+  id: "depot_punjab_main"
+  name: "Punjab Main Supply Depot"
+  faction: india
+  location:
+    lat: 30.5
+    lon: 76.0
+    grid: null
+  type: main
+  capacity:
+    ammunition: 5000
+    fuel: 8000
+    food: 2000
+    spares: 1000
+  current:
+    ammunition: 4500
+    fuel: 7000
+    food: 1800
+    spares: 900
+  hardened: false
+  camouflaged: 40
+  throughput: 500
+  served_units:
+    - "10_corps"
+  status: operational
+
+supply_route:
+  # Schema for supply routes
+  # - id: unique identifier
+  # - faction: india | pakistan
+  # - from: source depot/railhead ID
+  # - to: destination depot/unit ID
+  # - type: rail | road | air
+  # - capacity: tons per turn
+  # - length_km: route length
+  # - vulnerability: 0-100 (how exposed to interdiction)
+  # - choke_points: list of grid refs that are critical
+  # - status: open | congested | interdicted | cut
+
+example_route:
+  id: "route_amritsar_front"
+  faction: india
+  from: "depot_amritsar"
+  to: "depot_forward_01"
+  type: road
+  capacity: 200
+  length_km: 45
+  vulnerability: 60
+  choke_points:
+    - {grid: "H12", type: "bridge"}
+    - {grid: "J14", type: "pass"}
+  status: open
+
+# Logistics network
+logistics_network:
+  # Resupply mechanics
+  resupply:
+    # Units within depot.throughput get full resupply
+    # Units beyond must rely on transport
+    max_range_from_depot_km: 50
+    beyond_range_penalty: 0.5  # 50% resupply rate
+
+  # Aerial resupply
+  airdrop:
+    capacity_per_sortie: 10  # tons
+    accuracy: 70  # % that reaches unit
+    risk: 20  # % loss to enemy action
+
+  # Transport capacity
+  transport:
+    truck_company:
+      capacity: 50  # tons per turn
+      range_km: 100
+      vulnerability: 60
+
+    rail:
+      capacity: 500  # tons per turn
+      vulnerability_to_strike: 80
+
+  # Interdiction effects
+  interdiction:
+    air_strike_on_route:
+      capacity_reduction: 0.3  # 30% reduction
+      repair_turns: 2
+
+    bridge_destroyed:
+      capacity_reduction: 1.0  # total block
+      repair_turns: 8  # or bypass
+
+    sf_sabotage:
+      capacity_reduction: 0.5
+      repair_turns: 3
+
+# Supply status effects
+supply_effects:
+  # Effects on unit performance by supply level
+  levels:
+    100:
+      combat_modifier: 1.0
+      movement_modifier: 1.0
+      status: "fully supplied"
+
+    75:
+      combat_modifier: 0.95
+      movement_modifier: 1.0
+      status: "adequate"
+
+    50:
+      combat_modifier: 0.8
+      movement_modifier: 0.9
+      status: "strained"
+
+    25:
+      combat_modifier: 0.5
+      movement_modifier: 0.6
+      status: "critical"
+
+    10:
+      combat_modifier: 0.2
+      movement_modifier: 0.3
+      status: "desperate"
+
+    0:
+      combat_modifier: 0.1
+      movement_modifier: 0.1
+      status: "combat_ineffective"
+
+  # Ammo-specific
+  out_of_ammo:
+    can_attack: false
+    defense_modifier: 0.3
+
+  # Fuel-specific
+  out_of_fuel:
+    can_move: false
+    defense_modifier: 0.8
+
+# POL (Petroleum, Oil, Lubricants) targets
+pol_targets:
+  refinery:
+    output_reduction_if_hit: 0.5  # strategic level
+    repair_turns: 16
+
+  fuel_depot:
+    loss_if_hit: 0.7  # 70% of stored fuel
+    secondary_fires: true
+
+  fuel_train:
+    loss_if_hit: 1.0
+    blocks_rail: true

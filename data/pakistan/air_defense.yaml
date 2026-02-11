@@ -1,0 +1,274 @@
+# Pakistan Air Defense Systems
+# SAM sites and radar network
+# Data compiled from public sources
+
+sam_sites:
+  # HQ-9/P (FD-2000) Long Range SAM
+  - id: hq9_karachi
+    name: "HQ-9 Battery Karachi"
+    faction: pakistan
+    sam_type: hq9
+    launcher_count: 8
+    missiles_available: 48
+    location:
+      lat: 24.8
+      lon: 67.0
+      sector: "Karachi"
+    protecting:
+      - paf_karachi
+      - paf_masroor
+      - karachi_city
+    radar_id: hq9_radar_karachi
+    status: operational
+
+  - id: hq9_lahore
+    name: "HQ-9 Battery Lahore"
+    faction: pakistan
+    sam_type: hq9
+    launcher_count: 8
+    missiles_available: 48
+    location:
+      lat: 31.5
+      lon: 74.3
+      sector: "Lahore"
+    protecting:
+      - paf_lahore
+      - lahore_city
+    radar_id: hq9_radar_lahore
+    status: operational
+
+  - id: hq9_islamabad
+    name: "HQ-9 Battery Islamabad"
+    faction: pakistan
+    sam_type: hq9
+    launcher_count: 8
+    missiles_available: 48
+    location:
+      lat: 33.6
+      lon: 73.0
+      sector: "Capital"
+    protecting:
+      - islamabad
+      - paf_kamra
+    radar_id: hq9_radar_islamabad
+    status: operational
+
+  # HQ-16 (LY-80) Medium Range SAM
+  - id: hq16_sargodha
+    name: "HQ-16 Battery Sargodha"
+    faction: pakistan
+    sam_type: hq16
+    launcher_count: 6
+    missiles_available: 36
+    location:
+      lat: 32.0
+      lon: 72.6
+      sector: "Sargodha"
+    protecting:
+      - paf_sargodha
+    radar_id: hq16_radar_sargodha
+    status: operational
+
+  - id: hq16_mianwali
+    name: "HQ-16 Battery Mianwali"
+    faction: pakistan
+    sam_type: hq16
+    launcher_count: 6
+    missiles_available: 36
+    location:
+      lat: 32.5
+      lon: 71.5
+      sector: "Mianwali"
+    protecting:
+      - paf_mianwali
+    radar_id: hq16_radar_mianwali
+    status: operational
+
+  - id: hq16_multan
+    name: "HQ-16 Battery Multan"
+    faction: pakistan
+    sam_type: hq16
+    launcher_count: 6
+    missiles_available: 36
+    location:
+      lat: 30.2
+      lon: 71.4
+      sector: "Multan"
+    protecting:
+      - paf_multan
+    radar_id: hq16_radar_multan
+    status: operational
+
+  - id: hq16_jacobabad
+    name: "HQ-16 Battery Jacobabad"
+    faction: pakistan
+    sam_type: hq16
+    launcher_count: 6
+    missiles_available: 36
+    location:
+      lat: 28.2
+      lon: 68.4
+      sector: "Jacobabad"
+    protecting:
+      - paf_jacobabad
+    radar_id: hq16_radar_jacobabad
+    status: operational
+
+  # Spada 2000 Short Range SAM
+  - id: spada_kamra
+    name: "Spada Battery Kamra"
+    faction: pakistan
+    sam_type: spada2000
+    launcher_count: 4
+    missiles_available: 24
+    location:
+      lat: 33.8
+      lon: 72.4
+      sector: "Kamra"
+    protecting:
+      - paf_kamra
+    radar_id: spada_radar_kamra
+    status: operational
+
+  - id: spada_peshawar
+    name: "Spada Battery Peshawar"
+    faction: pakistan
+    sam_type: spada2000
+    launcher_count: 4
+    missiles_available: 24
+    location:
+      lat: 33.9
+      lon: 71.5
+      sector: "Peshawar"
+    protecting:
+      - paf_peshawar
+    radar_id: spada_radar_peshawar
+    status: operational
+
+  - id: spada_rafiqui
+    name: "Spada Battery Rafiqui"
+    faction: pakistan
+    sam_type: spada2000
+    launcher_count: 4
+    missiles_available: 24
+    location:
+      lat: 30.7
+      lon: 72.2
+      sector: "Rafiqui"
+    protecting:
+      - paf_rafiqui
+    radar_id: spada_radar_rafiqui
+    status: operational
+
+  # FM-90 Point Defense
+  - id: fm90_sargodha
+    name: "FM-90 Battery Sargodha"
+    faction: pakistan
+    sam_type: fm90
+    launcher_count: 4
+    missiles_available: 16
+    location:
+      lat: 32.0
+      lon: 72.6
+      sector: "Sargodha"
+    protecting:
+      - paf_sargodha
+    status: operational
+
+  - id: fm90_jacobabad
+    name: "FM-90 Battery Jacobabad"
+    faction: pakistan
+    sam_type: fm90
+    launcher_count: 4
+    missiles_available: 16
+    location:
+      lat: 28.2
+      lon: 68.4
+      sector: "Jacobabad"
+    protecting:
+      - paf_jacobabad
+    status: operational
+
+radar_sites:
+  # Early Warning Radars
+  - id: ew_radar_north
+    name: "Northern EW Radar"
+    faction: pakistan
+    type: early_warning
+    range_km: 450
+    altitude_coverage_km: 25
+    low_level_detection: 55
+    location:
+      lat: 34.0
+      lon: 73.0
+    ecm_resistance: 60
+    status: operational
+
+  - id: ew_radar_central
+    name: "Central EW Radar"
+    faction: pakistan
+    type: early_warning
+    range_km: 450
+    altitude_coverage_km: 25
+    low_level_detection: 55
+    location:
+      lat: 31.5
+      lon: 72.0
+    ecm_resistance: 60
+    status: operational
+
+  - id: ew_radar_south
+    name: "Southern EW Radar"
+    faction: pakistan
+    type: early_warning
+    range_km: 450
+    altitude_coverage_km: 25
+    low_level_detection: 55
+    location:
+      lat: 28.0
+      lon: 68.0
+    ecm_resistance: 60
+    status: operational
+
+  # HQ-9 Associated Radars
+  - id: hq9_radar_karachi
+    name: "HQ-9 Radar Karachi"
+    faction: pakistan
+    type: fire_control
+    range_km: 300
+    altitude_coverage_km: 27
+    low_level_detection: 65
+    location:
+      lat: 24.8
+      lon: 67.0
+    associated_sam: hq9_karachi
+    ecm_resistance: 65
+    status: operational
+
+  - id: hq9_radar_lahore
+    name: "HQ-9 Radar Lahore"
+    faction: pakistan
+    type: fire_control
+    range_km: 300
+    altitude_coverage_km: 27
+    low_level_detection: 65
+    location:
+      lat: 31.5
+      lon: 74.3
+    associated_sam: hq9_lahore
+    ecm_resistance: 65
+    status: operational
+
+  - id: hq9_radar_islamabad
+    name: "HQ-9 Radar Islamabad"
+    faction: pakistan
+    type: fire_control
+    range_km: 300
+    altitude_coverage_km: 27
+    low_level_detection: 65
+    location:
+      lat: 33.6
+      lon: 73.0
+    associated_sam: hq9_islamabad
+    ecm_resistance: 65
+    status: operational

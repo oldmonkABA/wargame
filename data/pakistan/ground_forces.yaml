@@ -1,0 +1,328 @@
+# Pakistan Army Ground Forces
+# Corps and Divisions
+# Data compiled from public sources
+
+formations:
+  # ARMY STRATEGIC FORCES COMMAND
+  - id: pakistan_army_hq
+    name: "GHQ Rawalpindi"
+    faction: pakistan
+    type: command
+    hq_location:
+      lat: 33.6
+      lon: 73.0
+      city: "Rawalpindi"
+    subordinates:
+      - 1_corps
+      - 2_corps
+      - 4_corps
+      - 5_corps
+      - 10_corps
+      - 11_corps
+      - 12_corps
+      - 30_corps
+      - 31_corps
+    status: operational
+
+  # STRIKE CORPS
+  - id: 1_corps_pak
+    name: "I Corps (Strike)"
+    faction: pakistan
+    type: strike_corps
+    hq_location:
+      lat: 32.9
+      lon: 73.7
+      city: "Mangla"
+    subordinates:
+      - 6_armored_div
+      - 17_infantry_div
+    reserves:
+      - independent_armored_brigade_1
+    command_rating: 85
+    status: operational
+    notes: "Primary strike formation"
+
+  - id: 2_corps_pak
+    name: "II Corps (Strike)"
+    faction: pakistan
+    type: strike_corps
+    hq_location:
+      lat: 30.1
+      lon: 71.4
+      city: "Multan"
+    subordinates:
+      - 1_armored_div_pak
+      - 40_infantry_div
+    command_rating: 82
+    status: operational
+    notes: "Southern strike corps"
+
+  # HOLDING CORPS
+  - id: 4_corps_pak
+    name: "IV Corps"
+    faction: pakistan
+    type: holding_corps
+    hq_location:
+      lat: 31.5
+      lon: 74.3
+      city: "Lahore"
+    subordinates:
+      - 10_infantry_div_pak
+      - 11_infantry_div_pak
+    command_rating: 80
+    status: operational
+    sector: "Lahore-Kasur"
+
+  - id: 5_corps_pak
+    name: "V Corps"
+    faction: pakistan
+    type: holding_corps
+    hq_location:
+      lat: 28.4
+      lon: 70.3
+      city: "Karachi"
+    subordinates:
+      - 18_infantry_div_pak
+      - 25_mech_div
+    command_rating: 75
+    status: operational
+    sector: "Sindh"
+
+  - id: 10_corps_pak
+    name: "X Corps"
+    faction: pakistan
+    type: mountain_corps
+    hq_location:
+      lat: 33.6
+      lon: 73.0
+      city: "Rawalpindi"
+    subordinates:
+      - 12_infantry_div_pak
+      - 19_infantry_div_pak
+      - 23_infantry_div_pak
+    command_rating: 85
+    status: operational
+    sector: "Kashmir LOC"
+
+  - id: 11_corps_pak
+    name: "XI Corps"
+    faction: pakistan
+    type: holding_corps
+    hq_location:
+      lat: 34.0
+      lon: 71.5
+      city: "Peshawar"
+    subordinates:
+      - 7_infantry_div_pak
+      - 9_infantry_div_pak
+    command_rating: 78
+    status: operational
+    sector: "KPK-FATA"
+
+  - id: 12_corps_pak
+    name: "XII Corps"
+    faction: pakistan
+    type: holding_corps
+    hq_location:
+      lat: 30.2
+      lon: 66.9
+      city: "Quetta"
+    subordinates:
+      - 33_infantry_div
+      - 41_infantry_div
+    command_rating: 75
+    status: operational
+    sector: "Balochistan"
+
+  - id: 30_corps_pak
+    name: "XXX Corps"
+    faction: pakistan
+    type: holding_corps
+    hq_location:
+      lat: 32.0
+      lon: 72.6
+      city: "Gujranwala"
+    subordinates:
+      - 8_infantry_div_pak
+      - 15_infantry_div_pak
+    command_rating: 80
+    status: operational
+    sector: "Punjab North"
+
+  - id: 31_corps_pak
+    name: "XXXI Corps"
+    faction: pakistan
+    type: holding_corps
+    hq_location:
+      lat: 30.6
+      lon: 72.3
+      city: "Bahawalpur"
+    subordinates:
+      - 35_infantry_div
+      - 37_infantry_div
+    command_rating: 78
+    status: operational
+    sector: "Punjab South/Cholistan"
+
+ground_units:
+  # ARMORED DIVISIONS
+  - id: 1_armored_div_pak
+    name: "1st Armoured Division"
+    faction: pakistan
+    type: armored_division
+    parent: 2_corps_pak
+    brigades:
+      - 3_armored_brigade
+      - 4_armored_brigade
+      - 52_infantry_brigade
+    mbt_count: 200
+    mbt_type: al_khalid
+    strength_current: 14000
+    strength_max: 15000
+    location:
+      lat: 30.5
+      lon: 71.5
+    posture: reserve
+    status: combat_ready
+
+  - id: 6_armored_div
+    name: "6th Armoured Division"
+    faction: pakistan
+    type: armored_division
+    parent: 1_corps_pak
+    brigades:
+      - 24_armored_brigade
+      - 25_armored_brigade
+      - 11_infantry_brigade
+    mbt_count: 220
+    mbt_type: al_khalid
+    strength_current: 14500
+    strength_max: 15500
+    location:
+      lat: 32.5
+      lon: 73.5
+    posture: reserve
+    status: combat_ready
+
+  # INFANTRY DIVISIONS
+  - id: 10_infantry_div_pak
+    name: "10th Infantry Division"
+    faction: pakistan
+    type: infantry_division
+    parent: 4_corps_pak
+    brigades:
+      - 28_infantry_brigade
+      - 29_infantry_brigade
+      - 101_infantry_brigade
+    strength_current: 17000
+    strength_max: 18000
+    location:
+      lat: 31.4
+      lon: 74.0
+    posture: defend
+    dug_in: 2
+    status: combat_ready
+    sector: "Lahore East"
+
+  - id: 11_infantry_div_pak
+    name: "11th Infantry Division"
+    faction: pakistan
+    type: infantry_division
+    parent: 4_corps_pak
+    brigades:
+      - 30_infantry_brigade
+      - 31_infantry_brigade
+      - 102_infantry_brigade
+    strength_current: 16500
+    strength_max: 17500
+    location:
+      lat: 31.2
+      lon: 73.8
+    posture: defend
+    dug_in: 2
+    status: combat_ready
+    sector: "Kasur"
+
+  - id: 12_infantry_div_pak
+    name: "12th Infantry Division"
+    faction: pakistan
+    type: infantry_division
+    parent: 10_corps_pak
+    brigades:
+      - 32_infantry_brigade
+      - 33_infantry_brigade
+      - 103_infantry_brigade
+    strength_current: 16000
+    strength_max: 17000
+    location:
+      lat: 34.0
+      lon: 73.5
+    posture: defend
+    dug_in: 3
+    status: combat_ready
+    sector: "LOC North"
+
+  - id: 25_mech_div
+    name: "25th Mechanized Division"
+    faction: pakistan
+    type: mechanized_division
+    parent: 5_corps_pak
+    brigades:
+      - 55_mech_brigade
+      - 56_mech_brigade
+      - 57_infantry_brigade
+    mbt_count: 100
+    mbt_type: vt4
+    ifv_count: 180
+    strength_current: 14000
+    strength_max: 15000
+    location:
+      lat: 28.0
+      lon: 68.5
+    posture: reserve
+    status: combat_ready
+    sector: "Sindh Reserve"
+
+  - id: 35_infantry_div
+    name: "35th Infantry Division"
+    faction: pakistan
+    type: infantry_division
+    parent: 31_corps_pak
+    brigades:
+      - 70_infantry_brigade
+      - 71_infantry_brigade
+      - 110_infantry_brigade
+    strength_current: 16000
+    strength_max: 17000
+    location:
+      lat: 29.5
+      lon: 71.5
+    posture: defend
+    dug_in: 2
+    status: combat_ready
+    sector: "Cholistan"
+
+  - id: 37_infantry_div
+    name: "37th Infantry Division"
+    faction: pakistan
+    type: infantry_division
+    parent: 31_corps_pak
+    brigades:
+      - 73_infantry_brigade
+      - 74_infantry_brigade
+      - 111_infantry_brigade
+    strength_current: 16500
+    strength_max: 17500
+    location:
+      lat: 28.5
+      lon: 70.5
+    posture: defend
+    dug_in: 2
+    status: combat_ready
+    sector: "Rahim Yar Khan"
+
+# Summary:
+# 2 Strike Corps, 7+ Holding Corps
+# 2 Armoured Divisions (~420 MBTs)
+# 1 Mechanized Division
+# Multiple Infantry Divisions

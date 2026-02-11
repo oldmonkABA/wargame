@@ -1,0 +1,186 @@
+# Indian Special Forces
+# Data compiled from public sources
+
+sf_units:
+  # Para SF (Special Forces)
+  - id: para_sf_1
+    name: "1 Para (SF)"
+    faction: india
+    type: para_sf
+    team_count: 8
+    teams_available: 8
+    base_id: agra_sf_base
+    location:
+      lat: 27.1
+      lon: 77.9
+    insertion_status: standby
+    mission: null
+    status: ready
+    notes: "Balidaan - elite unit"
+
+  - id: para_sf_2
+    name: "2 Para (SF)"
+    faction: india
+    type: para_sf
+    team_count: 8
+    teams_available: 7
+    base_id: agra_sf_base
+    location:
+      lat: 27.1
+      lon: 77.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  - id: para_sf_3
+    name: "3 Para (SF)"
+    faction: india
+    type: para_sf
+    team_count: 8
+    teams_available: 8
+    base_id: agra_sf_base
+    location:
+      lat: 27.1
+      lon: 77.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  - id: para_sf_4
+    name: "4 Para (SF)"
+    faction: india
+    type: para_sf
+    team_count: 8
+    teams_available: 7
+    base_id: agra_sf_base
+    location:
+      lat: 27.1
+      lon: 77.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  - id: para_sf_9
+    name: "9 Para (SF)"
+    faction: india
+    type: para_sf
+    team_count: 8
+    teams_available: 8
+    base_id: agra_sf_base
+    location:
+      lat: 27.1
+      lon: 77.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  - id: para_sf_10
+    name: "10 Para (SF)"
+    faction: india
+    type: para_sf
+    team_count: 8
+    teams_available: 7
+    base_id: agra_sf_base
+    location:
+      lat: 27.1
+      lon: 77.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  - id: para_sf_21
+    name: "21 Para (SF)"
+    faction: india
+    type: para_sf
+    team_count: 8
+    teams_available: 8
+    base_id: agra_sf_base
+    location:
+      lat: 27.1
+      lon: 77.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  # Garud Commando Force (IAF)
+  - id: garud_1
+    name: "Garud Detachment 1"
+    faction: india
+    type: garud
+    team_count: 6
+    teams_available: 6
+    base_id: iaf_agra
+    location:
+      lat: 27.1
+      lon: 77.9
+    insertion_status: standby
+    mission: null
+    status: ready
+    notes: "Airbase defense and CSAR"
+
+  - id: garud_2
+    name: "Garud Detachment 2"
+    faction: india
+    type: garud
+    team_count: 6
+    teams_available: 5
+    base_id: iaf_ambala
+    location:
+      lat: 30.3
+      lon: 76.8
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  # MARCOS (Navy SF - can operate inland)
+  - id: marcos_det
+    name: "MARCOS Detachment"
+    faction: india
+    type: marcos
+    team_count: 4
+    teams_available: 4
+    base_id: navy_base
+    location:
+      lat: 19.0
+      lon: 72.9
+    insertion_status: standby
+    mission: null
+    status: ready
+    notes: "Can deploy to Punjab rivers"
+
+  # Ghatak Platoons (attached to infantry)
+  - id: ghatak_1_corps
+    name: "Ghatak Platoons I Corps"
+    faction: india
+    type: ghatak
+    team_count: 6
+    teams_available: 6
+    base_id: null
+    location:
+      lat: 30.0
+      lon: 75.0
+    insertion_status: standby
+    mission: null
+    status: ready
+    parent: 1_corps
+
+  - id: ghatak_9_corps
+    name: "Ghatak Platoons IX Corps"
+    faction: india
+    type: ghatak
+    team_count: 6
+    teams_available: 5
+    base_id: null
+    location:
+      lat: 32.0
+      lon: 75.5
+    insertion_status: standby
+    mission: null
+    status: ready
+    parent: 9_corps
+
+# Summary:
+# 7 Para (SF) battalions (~56 teams)
+# 2 Garud detachments (~12 teams)
+# 1 MARCOS detachment (~4 teams)
+# Multiple Ghatak platoons per corps

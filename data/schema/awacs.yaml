@@ -1,0 +1,176 @@
+# AWACS / AEW&C Platform Schema
+# Airborne Warning and Control Systems for India-Pakistan theater
+
+platforms:
+  # INDIA
+  phalcon:
+    id: phalcon
+    name: "EL/W-2090 Phalcon"
+    faction: india
+    base_aircraft: "IL-76"
+    quantity: 3
+    radar:
+      type: active_electronically_scanned_array
+      detection_range_km: 400
+      simultaneous_tracks: 100
+      look_down_capability: true
+      maritime_mode: true
+    endurance_hours: 9
+    operational_altitude_m: 9000
+    crew: 19
+    datalink:
+      bandwidth_gbps: 2.0
+      channels: 16
+      encrypted: true
+    self_protection:
+      rwr: true  # Radar Warning Receiver
+      chaff_flare: true
+      ew_suite: basic
+    status: operational
+    notes: "Primary Indian AEW&C asset. 360-degree radar coverage"
+
+  netra:
+    id: netra
+    name: "DRDO AEW&C (Netra)"
+    faction: india
+    base_aircraft: "Embraer ERJ-145"
+    quantity: 2
+    radar:
+      type: active_phased_array
+      detection_range_km: 250
+      simultaneous_tracks: 50
+      look_down_capability: true
+      maritime_mode: false
+    endurance_hours: 5
+    operational_altitude_m: 8500
+    crew: 10
+    datalink:
+      bandwidth_gbps: 1.0
+      channels: 8
+      encrypted: true
+    self_protection:
+      rwr: true
+      chaff_flare: true
+      ew_suite: none
+    status: operational
+    notes: "Indigenous development. Smaller, more deployable than Phalcon"
+
+  # PAKISTAN
+  erieye:
+    id: erieye
+    name: "Saab 2000 Erieye"
+    faction: pakistan
+    base_aircraft: "Saab 2000"
+    quantity: 4
+    radar:
+      type: active_electronically_scanned_array
+      detection_range_km: 350
+      simultaneous_tracks: 60
+      look_down_capability: true
+      maritime_mode: true
+    endurance_hours: 6
+    operational_altitude_m: 6500
+    crew: 6
+    datalink:
+      bandwidth_gbps: 1.5
+      channels: 12
+      encrypted: true
+    self_protection:
+      rwr: true
+      chaff_flare: true
+      ew_suite: basic
+    status: operational
+    notes: "Pakistan's primary AEW&C. Balance beam radar. Combat-proven"
+
+  zdk03:
+    id: zdk03
+    name: "ZDK-03 Karakoram Eagle"
+    faction: pakistan
+    base_aircraft: "Y-8F"
+    quantity: 4
+    radar:
+      type: active_phased_array
+      detection_range_km: 400
+      simultaneous_tracks: 80
+      look_down_capability: true
+      maritime_mode: true
+    endurance_hours: 8
+    operational_altitude_m: 8500
+    crew: 12
+    datalink:
+      bandwidth_gbps: 1.5
+      channels: 12
+      encrypted: true
+    self_protection:
+      rwr: true
+      chaff_flare: true
+      ew_suite: basic
+    status: operational
+    notes: "Chinese-built. 360-degree rotodome. Heavier and longer range than Erieye"
+
+# Cooperative engagement mechanics
+cooperative_engagement:
+  detection_sharing:
+    description: >
+      AWACS shares detection data with all linked fighters and SAM sites,
+      enabling network-centric warfare. Fighters can engage targets they
+      have not detected themselves, using AWACS track data.
+    latency_seconds: 2
+    accuracy_degradation: 0.05  # 5% accuracy loss vs own-sensor data
+
+  bvr_guidance:
+    description: >
+      AWACS provides mid-course guidance for BVR missiles, extending
+      effective engagement range. Fighter radar need not illuminate target
+      until terminal phase.
+    range_extension: 0.30  # +30% effective BVR range
+    requires_datalink: true
+    max_simultaneous_guidances_per_awacs: 6
+
+  target_handoff:
+    description: >
+      AWACS can hand off a tracked target from one fighter to another
+      seamlessly, enabling relay attacks and coordinated multi-axis strikes.
+    handoff_time_seconds: 5
+    success_rate: 0.95
+
+  silent_running:
+    description: >
+      Fighters can operate radar-silent while receiving AWACS track data,
+      maintaining stealth until weapons release. AWACS acts as the sensor.
+    fighter_rcs_reduction: 0.40  # 40% RCS reduction with radar off
+    detection_range_provided_by_awacs: true
+    engagement_limitation: "Fighter must activate own radar for terminal guidance"
+
+# Limitations and vulnerabilities
+limitations:
+  ew_disruption:
+    radar_jamming_vulnerability: 0.30  # 30% detection degradation under heavy EW
+    datalink_jamming:
+      effect: "Cooperative engagement degrades to basic detection sharing"
+      threshold: "Requires dedicated standoff jammer within 200km"
+    eccm_capability:
+      phalcon: 0.80  # Good ECCM
+      netra: 0.60
+      erieye: 0.75
+      zdk03: 0.65
+
+  awacs_kill_effect:
+    description: >
+      Loss of an AWACS platform severely degrades a faction's air defense
+      and offensive air capability. High-value target priority.
+    detection_loss_percent: 40  # 40% detection capability lost per AWACS kill
+    bvr_range_reduction: 0.30  # 30% BVR range reduction without AWACS
+    morale_impact: 10  # Morale penalty to air units
+    replacement_time_turns: 99  # Effectively irreplaceable in theater
+
+  bandwidth_limits:
+    description: >
+      Each AWACS can only manage a finite number of cooperative engagements
+      simultaneously. Exceeding capacity degrades service quality.
+    max_fighters_managed:
+      phalcon: 24
+      netra: 12
+      erieye: 16
+      zdk03: 20
+    overload_degradation: 0.10  # Per-fighter degradation when over capacity

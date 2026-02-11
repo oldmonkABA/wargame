@@ -1,0 +1,143 @@
+# Pakistan Army Aviation Helicopter Assets
+# Data compiled from public sources
+
+helicopter_units:
+  # AH-1F Cobra Attack Helicopters
+  - id: cobra_sqn_1
+    name: "Cobra Squadron 1"
+    faction: pakistan
+    helicopter_type: ah1_cobra
+    helicopter_count: 12
+    helicopters_available: 10
+    base_id: army_rawalpindi
+    location:
+      lat: 33.6
+      lon: 73.0
+    mission: ready
+    status: ready
+    sector: "Northern"
+
+  - id: cobra_sqn_2
+    name: "Cobra Squadron 2"
+    faction: pakistan
+    helicopter_type: ah1_cobra
+    helicopter_count: 10
+    helicopters_available: 8
+    base_id: army_multan
+    location:
+      lat: 30.2
+      lon: 71.4
+    mission: ready
+    status: ready
+    sector: "Central"
+
+  - id: cobra_sqn_3
+    name: "Cobra Squadron 3"
+    faction: pakistan
+    helicopter_type: ah1_cobra
+    helicopter_count: 10
+    helicopters_available: 8
+    base_id: army_lahore
+    location:
+      lat: 31.5
+      lon: 74.3
+    mission: ready
+    status: ready
+    sector: "Lahore"
+
+  # T129 ATAK Attack Helicopters
+  - id: t129_sqn_1
+    name: "T129 ATAK Squadron"
+    faction: pakistan
+    helicopter_type: t129
+    helicopter_count: 6
+    helicopters_available: 5
+    base_id: army_rawalpindi
+    location:
+      lat: 33.6
+      lon: 73.0
+    mission: ready
+    status: ready
+    sector: "Reserve"
+    notes: "Modern attack helicopter"
+
+  # Z-10 Attack Helicopters (Chinese)
+  - id: z10_sqn_1
+    name: "Z-10 Squadron"
+    faction: pakistan
+    helicopter_type: z10
+    helicopter_count: 8
+    helicopters_available: 6
+    base_id: army_mangla
+    location:
+      lat: 32.9
+      lon: 73.7
+    mission: ready
+    status: ready
+    sector: "Strike Corps Reserve"
+    notes: "Chinese attack helicopter"
+
+  # Mi-17 Transport
+  - id: mi17_sqn_1_pak
+    name: "Mi-17 Squadron 1"
+    faction: pakistan
+    helicopter_type: mi17_pak
+    helicopter_count: 10
+    helicopters_available: 8
+    base_id: army_rawalpindi
+    location:
+      lat: 33.6
+      lon: 73.0
+    mission: ready
+    status: ready
+    sector: "Northern"
+
+  - id: mi17_sqn_2_pak
+    name: "Mi-17 Squadron 2"
+    faction: pakistan
+    helicopter_type: mi17_pak
+    helicopter_count: 10
+    helicopters_available: 8
+    base_id: army_multan
+    location:
+      lat: 30.2
+      lon: 71.4
+    mission: ready
+    status: ready
+    sector: "Central"
+
+  - id: mi17_sqn_3_pak
+    name: "Mi-17 Squadron 3"
+    faction: pakistan
+    helicopter_type: mi17_pak
+    helicopter_count: 8
+    helicopters_available: 6
+    base_id: army_skardu
+    location:
+      lat: 35.3
+      lon: 75.5
+    mission: ready
+    status: ready
+    sector: "Kashmir/Gilgit"
+
+  # UH-1/Bell 412
+  - id: uh1_sqn_1
+    name: "UH-1 Utility Squadron"
+    faction: pakistan
+    helicopter_type: mi17_pak  # Similar utility role
+    helicopter_count: 12
+    helicopters_available: 10
+    base_id: army_lahore
+    location:
+      lat: 31.5
+      lon: 74.3
+    mission: ready
+    status: ready
+    sector: "Punjab"
+
+# Summary:
+# 32 AH-1F Cobra
+# 6 T129 ATAK
+# 8 Z-10
+# 28+ Mi-17
+# 12+ UH-1/Bell 412

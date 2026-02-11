@@ -1,0 +1,66 @@
+# Airbase Schema Definition
+# Actual data will be populated from Wikipedia sources
+
+airbase:
+  # Schema for each airbase entry
+  # - id: unique identifier
+  # - name: base name
+  # - faction: india | pakistan
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference (computed)
+  # - type: fighter | bomber | transport | helicopter | mixed
+  # - runways:
+  #     - length_m: runway length in meters
+  #       surface: concrete | asphalt
+  #       hardened: true | false (protected aircraft shelters)
+  # - capacity: max aircraft that can be stationed
+  # - facilities:
+  #     fuel_storage: tons of fuel
+  #     ammo_storage: tons of ordnance
+  #     maintenance: 0-100 (repair capability)
+  #     hardened_shelters: number of HAS
+  # - squadrons: list of squadron IDs stationed here
+  # - sam_coverage: list of SAM site IDs providing protection
+  # - status: operational | damaged | destroyed
+
+example_airbase:
+  id: "iaf_ambala"
+  name: "Ambala Air Force Station"
+  faction: india
+  location:
+    lat: 30.3681
+    lon: 76.8172
+    grid: null  # computed at runtime
+  type: fighter
+  runways:
+    - length_m: 2750
+      surface: concrete
+      hardened: true
+  capacity: 36
+  facilities:
+    fuel_storage: 5000
+    ammo_storage: 2000
+    maintenance: 85
+    hardened_shelters: 24
+  squadrons:
+    - "17_squadron_golden_arrows"
+  sam_coverage:
+    - "akash_ambala_01"
+  status: operational
+
+# Damage model
+runway_damage:
+  # Hits required to close runway by weapon type
+  cruise_missile: 2
+  ballistic_missile: 1
+  bomb_1000lb: 4
+  # Repair time in turns (6hr each)
+  repair_time_per_hit: 2
+
+shelter_damage:
+  # HAS can take 1 direct hit before destruction
+  # Aircraft inside have 90% survival if shelter intact
+  survival_rate_intact: 0.90
+  survival_rate_destroyed: 0.20

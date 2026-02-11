@@ -1,0 +1,178 @@
+# Indian Missile Forces
+# Relevant cruise and ballistic missiles for conventional warfare
+# Data compiled from public sources
+
+missile_units:
+  # BrahMos Regiments - Army
+  - id: brahmos_861_regiment
+    name: "861 Missile Regiment"
+    faction: india
+    missile_type: brahmos
+    launcher_count: 4
+    missiles_ready: 16
+    missiles_reload: 32
+    location:
+      lat: 32.0
+      lon: 76.2
+      sector: "Northern Punjab"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 65
+    status: ready
+    notes: "Near Pathankot sector"
+
+  - id: brahmos_862_regiment
+    name: "862 Missile Regiment"
+    faction: india
+    missile_type: brahmos
+    launcher_count: 4
+    missiles_ready: 16
+    missiles_reload: 32
+    location:
+      lat: 31.2
+      lon: 75.5
+      sector: "Central Punjab"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 65
+    status: ready
+
+  - id: brahmos_863_regiment
+    name: "863 Missile Regiment"
+    faction: india
+    missile_type: brahmos
+    launcher_count: 4
+    missiles_ready: 16
+    missiles_reload: 32
+    location:
+      lat: 28.5
+      lon: 73.5
+      sector: "Rajasthan"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 60
+    status: ready
+
+  - id: brahmos_864_regiment
+    name: "864 Missile Regiment"
+    faction: india
+    missile_type: brahmos
+    launcher_count: 4
+    missiles_ready: 16
+    missiles_reload: 32
+    location:
+      lat: 26.5
+      lon: 72.0
+      sector: "Southern Rajasthan"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 55
+    status: ready
+
+  # BrahMos - Air Launched (with Su-30MKI)
+  - id: brahmos_air_det
+    name: "BrahMos-A Detachment"
+    faction: india
+    missile_type: brahmos_air
+    launcher_count: 0  # Air-launched
+    missiles_ready: 24
+    missiles_reload: 48
+    location:
+      lat: 30.7
+      lon: 75.6
+      base: "Halwara"
+    reload_time_turns: 1
+    mobility: airborne
+    concealment: 0  # N/A
+    status: ready
+    notes: "Carried by Su-30MKI"
+
+  # Nirbhay Cruise Missile
+  - id: nirbhay_regiment_1
+    name: "Strategic Cruise Missile Unit 1"
+    faction: india
+    missile_type: nirbhay
+    launcher_count: 3
+    missiles_ready: 9
+    missiles_reload: 18
+    location:
+      lat: 30.5
+      lon: 76.0
+      sector: "Punjab Rear"
+    reload_time_turns: 3
+    mobility: mobile
+    concealment: 70
+    status: ready
+
+  # Prithvi-II Short Range Ballistic
+  - id: prithvi_333_regiment
+    name: "333 Missile Group"
+    faction: india
+    missile_type: prithvi2
+    launcher_count: 6
+    missiles_ready: 18
+    missiles_reload: 36
+    location:
+      lat: 31.0
+      lon: 75.0
+      sector: "Punjab"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 55
+    status: ready
+
+  - id: prithvi_334_regiment
+    name: "334 Missile Group"
+    faction: india
+    missile_type: prithvi2
+    launcher_count: 6
+    missiles_ready: 18
+    missiles_reload: 36
+    location:
+      lat: 27.0
+      lon: 72.0
+      sector: "Rajasthan"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 50
+    status: ready
+
+  # Pralay Tactical Ballistic Missile
+  - id: pralay_regiment_1
+    name: "Pralay Regiment 1"
+    faction: india
+    missile_type: pralay
+    launcher_count: 4
+    missiles_ready: 12
+    missiles_reload: 24
+    location:
+      lat: 31.5
+      lon: 76.0
+      sector: "Punjab Forward"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 65
+    status: ready
+
+  - id: pralay_regiment_2
+    name: "Pralay Regiment 2"
+    faction: india
+    missile_type: pralay
+    launcher_count: 4
+    missiles_ready: 12
+    missiles_reload: 24
+    location:
+      lat: 28.0
+      lon: 73.0
+      sector: "Rajasthan"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 60
+    status: ready
+
+# Total summary:
+# BrahMos Ground: 16 launchers, 64 ready missiles
+# BrahMos Air: ~24 missiles with Su-30MKI
+# Nirbhay: 3 launchers, 9 ready
+# Prithvi-II: 12 launchers, 36 ready
+# Pralay: 8 launchers, 24 ready

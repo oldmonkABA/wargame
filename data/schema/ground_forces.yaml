@@ -1,0 +1,430 @@
+# Ground Forces Schema Definition
+
+unit_types:
+  # Schema for ground unit type definitions
+  # - id: unique identifier
+  # - name: unit type name
+  # - category: infantry | armor | mechanized | mountain | para | special
+  # - size: brigade | division | corps
+  # - attack: 0-100 (offensive combat power)
+  # - defense: 0-100 (defensive combat power)
+  # - soft_attack: 0-100 (vs infantry/soft targets)
+  # - hard_attack: 0-100 (vs armor/hardened)
+  # - movement:
+  #     road: km per turn
+  #     clear: km per turn
+  #     rough: km per turn
+  #     mountain: km per turn
+  #     desert: km per turn
+  # - organization: 0-100 (cohesion, starts at 100)
+  # - equipment: list of major equipment types
+
+  # Base unit types (to be instantiated for specific units)
+  infantry_brigade:
+    id: infantry_brigade
+    name: "Infantry Brigade"
+    category: infantry
+    size: brigade
+    strength: 3500
+    attack: 45
+    defense: 60
+    soft_attack: 55
+    hard_attack: 25
+    movement:
+      road: 40
+      clear: 25
+      rough: 15
+      mountain: 8
+      desert: 20
+    equipment:
+      - infantry_weapons
+      - atgm
+      - light_vehicles
+      - mortars
+
+  mechanized_brigade:
+    id: mechanized_brigade
+    name: "Mechanized Infantry Brigade"
+    category: mechanized
+    size: brigade
+    strength: 4000
+    attack: 60
+    defense: 65
+    soft_attack: 60
+    hard_attack: 50
+    movement:
+      road: 60
+      clear: 40
+      rough: 20
+      mountain: 5
+      desert: 35
+    equipment:
+      - ifv_bmp2
+      - atgm
+      - light_armor
+
+  armored_brigade:
+    id: armored_brigade
+    name: "Armored Brigade"
+    category: armor
+    size: brigade
+    strength: 3000
+    attack: 80
+    defense: 70
+    soft_attack: 50
+    hard_attack: 85
+    movement:
+      road: 50
+      clear: 35
+      rough: 15
+      mountain: 3
+      desert: 30
+    equipment:
+      - mbt
+      - ifv
+      - self_propelled_artillery
+
+  mountain_brigade:
+    id: mountain_brigade
+    name: "Mountain Infantry Brigade"
+    category: mountain
+    size: brigade
+    strength: 3000
+    attack: 50
+    defense: 70
+    soft_attack: 60
+    hard_attack: 30
+    movement:
+      road: 35
+      clear: 25
+      rough: 20
+      mountain: 15  # better in mountains
+      desert: 15
+    equipment:
+      - infantry_weapons
+      - mortars
+      - pack_artillery
+      - mules
+
+  para_brigade:
+    id: para_brigade
+    name: "Parachute Brigade"
+    category: para
+    size: brigade
+    strength: 2500
+    attack: 55
+    defense: 45
+    soft_attack: 60
+    hard_attack: 35
+    movement:
+      road: 40
+      clear: 30
+      rough: 20
+      mountain: 12
+      desert: 25
+    equipment:
+      - infantry_weapons
+      - atgm
+      - light_vehicles
+      - mortars
+    special:
+      - can_airdrop
+      - air_assault
+
+  # --- Cold Start / Proactive Strategy Unit Types ---
+
+  integrated_battle_group:
+    id: integrated_battle_group
+    name: "Integrated Battle Group (IBG)"
+    category: combined_arms
+    size: brigade_plus  # 5,000-7,000 troops, between brigade and division
+    strength: 6000
+    attack: 78
+    defense: 72
+    soft_attack: 70
+    hard_attack: 75
+    movement:
+      road: 55
+      clear: 38
+      rough: 18
+      mountain: 6
+      desert: 32
+    command_level: major_general
+    mobilization_hours: 12  # 12-48 hours from cold start
+    composition:
+      - 4-6 infantry_or_armored_battalions
+      - 2-3 artillery_regiments
+      - organic_air_defense
+      - organic_signals
+      - organic_engineers
+      - organic_logistics
+    equipment:
+      - mbt
+      - ifv_bmp2
+      - self_propelled_artillery
+      - manpad
+      - atgm
+      - uav_tactical
+    special:
+      - self_contained  # organic logistics, does not depend on corps supply chain
+      - rapid_mobilization  # 12-48 hour readiness
+      - shallow_thrust  # designed for 50-80km penetration
+
+  bhairav_battalion:
+    id: bhairav_battalion
+    name: "Bhairav Battalion (Shock Troops)"
+    category: shock_infantry
+    size: battalion
+    strength: 800
+    attack: 72
+    defense: 50
+    soft_attack: 75
+    hard_attack: 40
+    movement:
+      road: 45
+      clear: 35
+      rough: 25
+      mountain: 15
+      desert: 30
+    equipment:
+      - infantry_weapons
+      - atgm
+      - light_vehicles
+      - mortars
+      - night_vision
+    special:
+      - heliborne_assault  # can be inserted by helicopter behind enemy lines
+      - hybrid_warfare
+      - bridge_seizure  # trained to seize crossing points and road junctions
+      - rapid_insertion  # first wave, H+3 hours
+
+  rudra_brigade:
+    id: rudra_brigade
+    name: "Rudra Brigade (All-Arms Offensive)"
+    category: combined_arms
+    size: brigade
+    strength: 4500
+    attack: 82
+    defense: 65
+    soft_attack: 70
+    hard_attack: 80
+    movement:
+      road: 55
+      clear: 38
+      rough: 16
+      mountain: 4
+      desert: 32
+    equipment:
+      - mbt
+      - ifv
+      - self_propelled_artillery
+      - attack_helicopter_support
+      - atgm
+    special:
+      - strike_corps_firepower  # Strike Corps-level punch in brigade-size package
+      - integrated_fire_support  # organic heavy firepower
+
+  shaktibaan_regiment:
+    id: shaktibaan_regiment
+    name: "Shaktibaan Regiment (Drone & Loitering Munitions)"
+    category: drone_artillery
+    size: regiment
+    strength: 600
+    attack: 65
+    defense: 30
+    soft_attack: 70
+    hard_attack: 55
+    movement:
+      road: 50
+      clear: 35
+      rough: 20
+      mountain: 10
+      desert: 30
+    equipment:
+      - swarm_drones
+      - loitering_munitions
+      - kamikaze_uav
+      - drone_control_station
+    special:
+      - non_contact_warfare  # can strike without exposing troops
+      - artillery_hunting  # primary role: find and kill enemy artillery
+      - swarm_saturation  # can launch coordinated drone swarms
+      - attached_to_artillery  # operates alongside artillery brigades
+
+  ashni_platoon:
+    id: ashni_platoon
+    name: "Ashni Platoon (Tactical ISR Drone)"
+    category: isr
+    size: platoon
+    strength: 30
+    attack: 5
+    defense: 10
+    soft_attack: 10
+    hard_attack: 5
+    movement:
+      road: 50
+      clear: 40
+      rough: 30
+      mountain: 20
+      desert: 40
+    equipment:
+      - micro_uav
+      - tactical_drone
+      - drone_control_tablet
+      - encrypted_datalink
+    special:
+      - embedded_isr  # one per infantry battalion
+      - real_time_feed  # provides immediate tactical awareness
+      - anti_tank_detection  # spots enemy AT positions for advancing armor
+      - low_signature  # small, hard to detect
+
+# Main Battle Tanks (for reference in units)
+mbt_types:
+  t90:
+    name: "T-90 Bhishma"
+    faction: india
+    attack: 82
+    defense: 80
+    speed: 60
+
+  arjun:
+    name: "Arjun Mk1A"
+    faction: india
+    attack: 78
+    defense: 85
+    speed: 55
+
+  t72:
+    name: "T-72M1 Ajeya"
+    faction: india
+    attack: 65
+    defense: 65
+    speed: 60
+
+  al_khalid:
+    name: "Al-Khalid"
+    faction: pakistan
+    attack: 75
+    defense: 75
+    speed: 65
+
+  al_zarrar:
+    name: "Al-Zarrar"
+    faction: pakistan
+    attack: 60
+    defense: 60
+    speed: 60
+
+  vt4:
+    name: "VT-4"
+    faction: pakistan
+    attack: 78
+    defense: 78
+    speed: 65
+
+ground_unit:
+  # Schema for deployed ground unit
+  # - id: unique identifier
+  # - name: unit name/designation
+  # - faction: india | pakistan
+  # - type: reference to unit_types
+  # - parent: parent formation ID (division/corps)
+  # - strength_current: current manpower
+  # - strength_max: full strength manpower
+  # - organization: 0-100 (cohesion, drops with losses/suppression)
+  # - morale: 0-100
+  # - supply_level: 0-100 (ammo, fuel, food)
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - posture: attack | defend | delay | withdraw | reserve
+  # - dug_in: 0-3 (entrenchment level, increases over turns in same position)
+  # - status: combat_ready | engaged | retreating | routed | destroyed
+
+example_ground_unit:
+  id: "15_mech_brigade"
+  name: "15 Mechanized Brigade"
+  faction: india
+  type: mechanized_brigade
+  parent: "10_infantry_division"
+  strength_current: 3800
+  strength_max: 4000
+  organization: 95
+  morale: 85
+  supply_level: 100
+  location:
+    lat: 31.2
+    lon: 74.5
+    grid: null
+  posture: defend
+  dug_in: 2
+  status: combat_ready
+
+# Higher formations
+formation:
+  # Division and Corps level
+  # - id: unique identifier
+  # - name: formation name
+  # - faction: india | pakistan
+  # - type: infantry_division | armored_division | strike_corps | holding_corps | pivot_corps | ibg
+  # - hq_location: grid reference
+  # - subordinates: list of unit IDs
+  # - reserves: list of reserve unit IDs
+  # - command_rating: 0-100 (staff quality)
+  # - status: operational | degraded | combat_ineffective
+
+example_formation:
+  id: "1_strike_corps"
+  name: "I Corps (Strike)"
+  faction: india
+  type: strike_corps
+  hq_location:
+    lat: 31.0
+    lon: 75.0
+    grid: null
+  subordinates:
+    - "15_mech_brigade"
+    - "43_armored_brigade"
+    - "72_infantry_brigade"
+  reserves:
+    - "23_armored_brigade"
+  command_rating: 80
+  status: operational
+
+# Combat resolution
+combat_model:
+  # Modified Lanchester model
+  # Attacker_losses = Defender_power * terrain_modifier * time
+  # Defender_losses = Attacker_power * attacker_bonus * time
+
+  # Terrain defense multipliers
+  terrain_defense:
+    open: 1.0
+    hills: 1.3
+    forest: 1.4
+    urban: 2.0
+    mountain: 2.5
+    river_crossing: 0.5  # attacker penalty
+    fortified: 3.0
+
+  # Posture effects
+  posture_modifier:
+    attack: 1.2  # attack bonus
+    defend: 1.5  # defense bonus
+    delay: 1.2   # defense bonus, can retreat
+    withdraw: 0.8  # penalty while retreating
+
+  # Entrenchment bonus (per level)
+  dug_in_bonus: 0.15  # 15% defense per level
+
+  # Supply effects
+  low_supply_penalty:
+    75: 0.9   # 10% penalty below 75%
+    50: 0.7   # 30% penalty below 50%
+    25: 0.4   # 60% penalty below 25%
+    0: 0.1    # 90% penalty at 0%
+
+  # Morale effects
+  morale_break_threshold: 30
+  rout_threshold: 15

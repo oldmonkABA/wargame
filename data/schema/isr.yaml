@@ -1,0 +1,244 @@
+# ISR (Intelligence, Surveillance, Reconnaissance) Schema Definition
+
+awacs_types:
+  # Schema for AWACS/AEW&C type definitions
+  # - id: unique identifier
+  # - name: aircraft name
+  # - faction: india | pakistan
+  # - radar_range_km: detection range
+  # - altitude_m: operating altitude
+  # - endurance_hours: time on station
+  # - tracks_simultaneous: max targets tracked
+  # - fighter_control: max fighters can direct
+  # - look_down: 0-100 (ground clutter rejection)
+  # - ew_resistance: 0-100 (jamming resistance)
+  # - data_link: true | false (can share tracks)
+
+  # INDIA
+  phalcon:
+    id: phalcon
+    name: "A-50EI Phalcon"
+    faction: india
+    radar_range_km: 400
+    altitude_m: 9000
+    endurance_hours: 9
+    tracks_simultaneous: 100
+    fighter_control: 24
+    look_down: 85
+    ew_resistance: 75
+    data_link: true
+
+  netra:
+    id: netra
+    name: "DRDO Netra AEW&C"
+    faction: india
+    radar_range_km: 250
+    altitude_m: 8000
+    endurance_hours: 5
+    tracks_simultaneous: 50
+    fighter_control: 12
+    look_down: 70
+    ew_resistance: 60
+    data_link: true
+
+  # PAKISTAN
+  erieye:
+    id: erieye
+    name: "Saab 2000 Erieye"
+    faction: pakistan
+    radar_range_km: 350
+    altitude_m: 8000
+    endurance_hours: 8
+    tracks_simultaneous: 100
+    fighter_control: 20
+    look_down: 80
+    ew_resistance: 70
+    data_link: true
+
+  zdk03:
+    id: zdk03
+    name: "ZDK-03 Karakoram Eagle"
+    faction: pakistan
+    radar_range_km: 300
+    altitude_m: 8000
+    endurance_hours: 10
+    tracks_simultaneous: 60
+    fighter_control: 15
+    look_down: 75
+    ew_resistance: 65
+    data_link: true
+
+awacs_unit:
+  # Schema for AWACS deployment
+  # - id: unique identifier
+  # - name: unit designation
+  # - faction: india | pakistan
+  # - type: reference to awacs_types
+  # - aircraft_count: number of aircraft
+  # - aircraft_available: operational aircraft
+  # - base_id: home base
+  # - orbit:
+  #     lat: orbit center latitude
+  #     lon: orbit center longitude
+  #     grid: hex grid reference
+  # - mission: airborne | ground_alert | maintenance
+  # - hours_on_station: current mission duration
+  # - status: operational | damaged | destroyed
+
+example_awacs:
+  id: "phalcon_01"
+  name: "Phalcon AWACS Det"
+  faction: india
+  type: phalcon
+  aircraft_count: 3
+  aircraft_available: 2
+  base_id: "iaf_agra"
+  orbit:
+    lat: 31.0
+    lon: 75.0
+    grid: null
+  mission: ground_alert
+  hours_on_station: 0
+  status: operational
+
+# Satellite reconnaissance
+satellites:
+  # Schema for satellite coverage
+  # - id: unique identifier
+  # - name: satellite name
+  # - faction: india | pakistan
+  # - type: optical | sar | sigint
+  # - resolution_m: ground resolution (optical/SAR)
+  # - revisit_hours: time between passes
+  # - coverage: list of grid refs covered per pass
+  # - weather_dependent: true | false (optical only)
+
+  # INDIA
+  cartosat:
+    id: cartosat
+    name: "Cartosat-3"
+    faction: india
+    type: optical
+    resolution_m: 0.25
+    revisit_hours: 24
+    weather_dependent: true
+
+  risat:
+    id: risat
+    name: "RISAT-2BR1"
+    faction: india
+    type: sar
+    resolution_m: 0.35
+    revisit_hours: 12
+    weather_dependent: false
+
+  emisat:
+    id: emisat
+    name: "EMISAT"
+    faction: india
+    type: sigint
+    resolution_m: null
+    revisit_hours: 6
+    weather_dependent: false
+
+  # PAKISTAN (limited indigenous, some access via China)
+  prss1:
+    id: prss1
+    name: "PRSS-1"
+    faction: pakistan
+    type: optical
+    resolution_m: 1.0
+    revisit_hours: 48
+    weather_dependent: true
+
+# Ground-based sensors
+ground_sensors:
+  # Battlefield surveillance radars
+  bsr:
+    detection_range_km: 30
+    can_detect: [vehicle, personnel, low_flying]
+    accuracy_m: 50
+
+  # Acoustic sensors
+  acoustic:
+    detection_range_km: 10
+    can_detect: [artillery, vehicle]
+    bearing_accuracy_deg: 5
+
+  # Seismic sensors
+  seismic:
+    detection_range_km: 5
+    can_detect: [vehicle, digging]
+
+# ISR fusion
+isr_fusion:
+  # Intelligence picture quality
+  coverage_bonus:
+    # Multiple source bonus
+    single_source: 1.0
+    two_sources: 1.3
+    three_plus: 1.5
+
+  # Timeliness
+  intel_freshness:
+    realtime: 1.0  # AWACS, drones
+    hourly: 0.8    # frequent satellite, recon
+    daily: 0.5     # infrequent satellite
+    stale: 0.2     # 2+ days old
+
+  # Revealed information by source
+  reveals:
+    awacs:
+      - airborne_aircraft
+      - aircraft_type
+      - altitude
+      - heading
+      - speed
+
+    satellite_optical:
+      - unit_positions
+      - unit_type
+      - approximate_strength
+      - fortifications
+      - logistics_activity
+
+    satellite_sar:
+      - all_weather: true
+      - vehicle_detection
+      - movement_detection
+      - concealed_units: partial
+
+    satellite_sigint:
+      - emitter_locations
+      - communication_nodes
+      - radar_sites
+
+    drone_recon:
+      - detailed_positions
+      - exact_strength
+      - equipment_identification
+      - realtime_movement
+
+    sf_recon:
+      - exact_positions
+      - detailed_strength
+      - unit_identification
+      - activity_patterns
+      - morale_assessment
+
+# Target acquisition
+target_acquisition:
+  # Time to acquire target for strike
+  acquisition_time_minutes:
+    awacs_controlled: 2
+    satellite_cued: 30
+    drone_spotted: 5
+    sf_designated: 10
+    estimated_position: 60
+
+  # Accuracy for strike planning
+  targeting_cep_m:
+    gps_coordinates: 10
+    laser_designated: 2
+    radar_fixed: 50
+    estimated: 200

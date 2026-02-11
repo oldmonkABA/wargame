@@ -1,0 +1,255 @@
+# Air Defense Systems Schema Definition
+
+sam_types:
+  # Schema for SAM system type definitions
+  # - id: unique identifier
+  # - name: system name
+  # - faction: india | pakistan
+  # - category: long_range | medium_range | short_range | point_defense
+  # - range_km: maximum engagement range
+  # - altitude_max_km: max engagement altitude
+  # - altitude_min_m: min engagement altitude
+  # - missiles_per_launcher: ready missiles per TEL
+  # - reload_time_turns: turns to reload
+  # - pk_aircraft: probability of kill vs aircraft (0-100)
+  # - pk_cruise_missile: probability of kill vs cruise missiles (0-100)
+  # - pk_ballistic: probability of kill vs ballistic missiles (0-100)
+  # - radar_type: organic | external
+  # - ecm_resistance: 0-100 (resistance to jamming)
+  # - mobility: static | semi_mobile | mobile
+
+  # INDIA
+  s400:
+    id: s400
+    name: "S-400 Triumf"
+    faction: india
+    category: long_range
+    range_km: 400
+    altitude_max_km: 30
+    altitude_min_m: 10
+    missiles_per_launcher: 4
+    reload_time_turns: 1
+    pk_aircraft: 85
+    pk_cruise_missile: 75
+    pk_ballistic: 60
+    radar_type: organic
+    ecm_resistance: 80
+    mobility: semi_mobile
+
+  akash:
+    id: akash
+    name: "Akash"
+    faction: india
+    category: medium_range
+    range_km: 30
+    altitude_max_km: 18
+    altitude_min_m: 30
+    missiles_per_launcher: 3
+    reload_time_turns: 1
+    pk_aircraft: 70
+    pk_cruise_missile: 60
+    pk_ballistic: 20
+    radar_type: organic
+    ecm_resistance: 55
+    mobility: mobile
+
+  akash_ng:
+    id: akash_ng
+    name: "Akash-NG"
+    faction: india
+    category: medium_range
+    range_km: 80
+    altitude_max_km: 20
+    altitude_min_m: 30
+    missiles_per_launcher: 3
+    reload_time_turns: 1
+    pk_aircraft: 80
+    pk_cruise_missile: 70
+    pk_ballistic: 30
+    radar_type: organic
+    ecm_resistance: 65
+    mobility: mobile
+
+  spyder:
+    id: spyder
+    name: "SPYDER"
+    faction: india
+    category: short_range
+    range_km: 15
+    altitude_max_km: 9
+    altitude_min_m: 20
+    missiles_per_launcher: 4
+    reload_time_turns: 1
+    pk_aircraft: 75
+    pk_cruise_missile: 65
+    pk_ballistic: 10
+    radar_type: organic
+    ecm_resistance: 60
+    mobility: mobile
+
+  barak8:
+    id: barak8
+    name: "Barak-8 / MRSAM"
+    faction: india
+    category: medium_range
+    range_km: 100
+    altitude_max_km: 16
+    altitude_min_m: 15
+    missiles_per_launcher: 8
+    reload_time_turns: 1
+    pk_aircraft: 80
+    pk_cruise_missile: 75
+    pk_ballistic: 40
+    radar_type: organic
+    ecm_resistance: 70
+    mobility: semi_mobile
+
+  # PAKISTAN
+  hq9:
+    id: hq9
+    name: "HQ-9/P (FD-2000)"
+    faction: pakistan
+    category: long_range
+    range_km: 200
+    altitude_max_km: 27
+    altitude_min_m: 25
+    missiles_per_launcher: 4
+    reload_time_turns: 1
+    pk_aircraft: 78
+    pk_cruise_missile: 65
+    pk_ballistic: 50
+    radar_type: organic
+    ecm_resistance: 65
+    mobility: semi_mobile
+
+  hq16:
+    id: hq16
+    name: "HQ-16 (LY-80)"
+    faction: pakistan
+    category: medium_range
+    range_km: 40
+    altitude_max_km: 10
+    altitude_min_m: 15
+    missiles_per_launcher: 6
+    reload_time_turns: 1
+    pk_aircraft: 72
+    pk_cruise_missile: 60
+    pk_ballistic: 20
+    radar_type: organic
+    ecm_resistance: 55
+    mobility: mobile
+
+  spada2000:
+    id: spada2000
+    name: "Spada 2000"
+    faction: pakistan
+    category: short_range
+    range_km: 20
+    altitude_max_km: 6
+    altitude_min_m: 20
+    missiles_per_launcher: 6
+    reload_time_turns: 1
+    pk_aircraft: 68
+    pk_cruise_missile: 55
+    pk_ballistic: 10
+    radar_type: organic
+    ecm_resistance: 50
+    mobility: semi_mobile
+
+  fm90:
+    id: fm90
+    name: "FM-90"
+    faction: pakistan
+    category: point_defense
+    range_km: 10
+    altitude_max_km: 4
+    altitude_min_m: 15
+    missiles_per_launcher: 4
+    reload_time_turns: 1
+    pk_aircraft: 60
+    pk_cruise_missile: 50
+    pk_ballistic: 5
+    radar_type: organic
+    ecm_resistance: 40
+    mobility: mobile
+
+sam_site:
+  # Schema for deployed SAM site
+  # - id: unique identifier
+  # - name: unit designation
+  # - faction: india | pakistan
+  # - sam_type: reference to sam_types
+  # - launcher_count: number of TELs
+  # - missiles_available: total missiles at site
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - protecting: list of asset IDs this site covers
+  # - radar_id: associated radar site ID
+  # - status: operational | damaged | destroyed | relocating
+
+example_sam_site:
+  id: "s400_punjab_01"
+  name: "S-400 Battery Punjab-1"
+  faction: india
+  sam_type: s400
+  launcher_count: 8
+  missiles_available: 64
+  location:
+    lat: 31.5
+    lon: 75.8
+    grid: null
+  protecting:
+    - "iaf_adampur"
+    - "iaf_halwara"
+  radar_id: "radar_punjab_01"
+  status: operational
+
+radar_site:
+  # Schema for radar installations
+  # - id: unique identifier
+  # - name: site name
+  # - faction: india | pakistan
+  # - type: early_warning | fire_control | awacs_ground_station
+  # - range_km: detection range
+  # - altitude_coverage_km: max altitude
+  # - low_level_detection: 0-100 (ability to see low flyers)
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - associated_sam: SAM site ID if fire control
+  # - ecm_resistance: 0-100
+  # - status: operational | jammed | damaged | destroyed
+
+example_radar:
+  id: "radar_punjab_01"
+  name: "Punjab Sector Radar"
+  faction: india
+  type: early_warning
+  range_km: 450
+  altitude_coverage_km: 30
+  low_level_detection: 60
+  location:
+    lat: 31.5
+    lon: 75.8
+    grid: null
+  associated_sam: "s400_punjab_01"
+  ecm_resistance: 70
+  status: operational
+
+# Engagement resolution
+engagement_rules:
+  # Max engagements per launcher per turn
+  max_engagements_per_tel: 2
+
+  # Overlapping coverage bonus
+  overlapping_coverage_pk_bonus: 10
+
+  # Saturation threshold (missiles per SAM battery)
+  saturation_threshold: 4
+  saturation_pk_penalty: 20
+
+  # Jamming effects
+  jamming_pk_reduction_per_10_ecm: 5  # 5% pk reduction per 10 points of jam effectiveness over resistance

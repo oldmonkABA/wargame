@@ -1,0 +1,584 @@
+# Pakistan Air Force Aircraft Loadouts
+# Based on Operation Sindoor (May 2025) configurations
+# Reference: CHPM Exploratory Note No. 1
+
+# =============================================================================
+# CHENGDU J-10C
+# =============================================================================
+# 20 aircraft. Premium air superiority fighter.
+# AESA radar, PL-15 capability.
+# Chinese 4.5 gen platform.
+
+j10c:
+  type_stats:
+    total_aircraft: 20
+    generation: 4.5
+    ew_suite: chinese_integrated
+    ew_rating: 70
+    radar: klj7a_aesa
+    radar_rating: 80
+    datalink: link17
+
+  loadouts:
+    air_superiority:
+      name: "Dragon CAP"
+      role: air_superiority
+      description: "Maximum BVR with PL-15"
+      weapons:
+        bvr: { type: pl15, count: 4 }
+        wvr: { type: pl10, count: 2 }
+      performance:
+        speed_modifier: -5
+        maneuver_modifier: -5
+        range_modifier: -8
+      endurance_hours: 2.5
+      bvr_range_km: 200
+      air_to_air_rating: 88
+      ground_attack_rating: 0
+      notes: "Premium air superiority. PL-15 outranges all Indian BVR except Meteor"
+      cooperative_engagement: true
+
+    mixed_loadout:
+      name: "Dragon Flex"
+      role: multirole
+      description: "BVR heavy with some strike"
+      weapons:
+        bvr: { type: pl15, count: 2 }
+        bvr_secondary: { type: pl12, count: 2 }
+        wvr: { type: pl10, count: 2 }
+      performance:
+        speed_modifier: -5
+        maneuver_modifier: -8
+        range_modifier: -10
+      endurance_hours: 2.3
+      bvr_range_km: 200
+      air_to_air_rating: 82
+      ground_attack_rating: 0
+      notes: "Extended missile count with mixed BVR"
+
+    sead:
+      name: "Dragon SEAD"
+      role: sead
+      description: "Anti-radiation attack"
+      weapons:
+        a2g: { type: cm400akg, count: 2 }
+        wvr: { type: pl10, count: 2 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -15
+        range_modifier: -12
+      endurance_hours: 2.0
+      standoff_range_km: 250
+      air_to_air_rating: 45
+      ground_attack_rating: 85
+      notes: "CM-400AKG anti-radiation capability"
+
+    strike:
+      name: "Dragon Strike"
+      role: strike
+      description: "Precision ground attack"
+      weapons:
+        a2g: { type: ls6, count: 4 }
+        wvr: { type: pl10, count: 2 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -12
+        range_modifier: -15
+      endurance_hours: 2.0
+      standoff_range_km: 60
+      air_to_air_rating: 40
+      ground_attack_rating: 75
+      notes: "Precision strike with LS-6 glide bombs"
+
+# =============================================================================
+# JF-17 THUNDER BLOCK III
+# =============================================================================
+# Part of 150+ JF-17 fleet. Latest variant.
+# AESA radar, PL-15 compatible.
+# Indigenous production.
+
+jf17_block3:
+  type_stats:
+    total_aircraft: 50
+    generation: 4.5
+    ew_suite: integrated
+    ew_rating: 65
+    radar: klj7a_aesa
+    radar_rating: 75
+    datalink: link17
+
+  loadouts:
+    air_superiority:
+      name: "Thunder CAP"
+      role: air_superiority
+      description: "BVR dominant with PL-15"
+      weapons:
+        bvr: { type: pl15, count: 2 }
+        wvr: { type: pl10, count: 2 }
+      performance:
+        speed_modifier: -3
+        maneuver_modifier: -5
+        range_modifier: -5
+      endurance_hours: 2.2
+      bvr_range_km: 200
+      air_to_air_rating: 78
+      ground_attack_rating: 0
+      notes: "Key May 7 interceptor. PL-15 used against IAF with Erieye support"
+      cooperative_engagement: true
+
+    extended_bvr:
+      name: "Thunder Extended"
+      role: air_superiority
+      description: "Maximum missile count"
+      weapons:
+        bvr: { type: pl15, count: 2 }
+        bvr_secondary: { type: pl12, count: 2 }
+        wvr: { type: pl5e, count: 2 }
+      performance:
+        speed_modifier: -5
+        maneuver_modifier: -8
+        range_modifier: -8
+      endurance_hours: 2.0
+      bvr_range_km: 200
+      air_to_air_rating: 75
+      ground_attack_rating: 0
+      notes: "Mixed BVR loadout for sustained engagement"
+
+    cm400_sead:
+      name: "Thunder SEAD"
+      role: sead
+      description: "Anti-radiation/anti-ship"
+      weapons:
+        a2g: { type: cm400akg, count: 1 }
+        wvr: { type: pl10, count: 2 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -12
+        range_modifier: -10
+      endurance_hours: 1.8
+      standoff_range_km: 250
+      air_to_air_rating: 40
+      ground_attack_rating: 82
+      notes: "May 9-10 used against S-400 radars at Adampur"
+
+    strike:
+      name: "Thunder Strike"
+      role: strike
+      description: "Precision ground attack"
+      weapons:
+        a2g: { type: ls6, count: 4 }
+        wvr: { type: pl5e, count: 2 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -12
+        range_modifier: -12
+      endurance_hours: 1.8
+      standoff_range_km: 60
+      air_to_air_rating: 30
+      ground_attack_rating: 70
+      notes: "Precision attack configuration"
+
+# =============================================================================
+# JF-17 THUNDER BLOCK I/II
+# =============================================================================
+# ~100 aircraft. Earlier variants.
+# Mechanical radar, PL-12 primary BVR.
+
+jf17:
+  type_stats:
+    total_aircraft: 100
+    generation: 4
+    ew_suite: basic
+    ew_rating: 55
+    radar: klj7_mechanical
+    radar_rating: 62
+    datalink: link17
+
+  loadouts:
+    air_superiority:
+      name: "Thunder Defense"
+      role: air_superiority
+      description: "Standard BVR loadout"
+      weapons:
+        bvr: { type: pl12, count: 4 }
+        wvr: { type: pl5e, count: 2 }
+      performance:
+        speed_modifier: -3
+        maneuver_modifier: -5
+        range_modifier: -5
+      endurance_hours: 2.0
+      bvr_range_km: 100
+      air_to_air_rating: 68
+      ground_attack_rating: 0
+      notes: "Standard PAF interceptor"
+
+    light_strike:
+      name: "Thunder Light Attack"
+      role: strike
+      description: "Ground attack configuration"
+      weapons:
+        a2g: { type: ls6, count: 2 }
+        a2g_secondary: { type: gbu12, count: 2 }
+        wvr: { type: pl5e, count: 2 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -10
+        range_modifier: -10
+      endurance_hours: 1.8
+      standoff_range_km: 60
+      air_to_air_rating: 35
+      ground_attack_rating: 65
+      notes: "Light attack role"
+
+    cm400_strike:
+      name: "Thunder Heavy Strike"
+      role: sead
+      description: "CM-400AKG carrier"
+      weapons:
+        a2g: { type: cm400akg, count: 1 }
+        wvr: { type: pl5e, count: 2 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -15
+        range_modifier: -12
+      endurance_hours: 1.7
+      standoff_range_km: 250
+      air_to_air_rating: 30
+      ground_attack_rating: 78
+      notes: "Anti-radiation capability"
+
+# =============================================================================
+# GENERAL DYNAMICS F-16 BLOCK 52/MLU
+# =============================================================================
+# 75 aircraft. Most capable Western platform.
+# AIM-120C exclusive - US restrictions on weapons.
+# Best trained crews.
+
+f16:
+  type_stats:
+    total_aircraft: 75
+    generation: 4
+    ew_suite: aces_ii
+    ew_rating: 70
+    radar: apg68v9
+    radar_rating: 75
+    datalink: link16_pak
+
+  loadouts:
+    air_superiority:
+      name: "Viper CAP"
+      role: air_superiority
+      description: "AMRAAM loadout"
+      weapons:
+        bvr: { type: aim120c, count: 4 }
+        wvr: { type: aim9x, count: 2 }
+      performance:
+        speed_modifier: -3
+        maneuver_modifier: -5
+        range_modifier: -5
+      endurance_hours: 2.5
+      bvr_range_km: 105
+      air_to_air_rating: 82
+      ground_attack_rating: 0
+      notes: "Proven platform. AIM-120C killed MiG-21 in 2019. Best EW suite"
+
+    extended_range:
+      name: "Viper Extended"
+      role: air_superiority
+      description: "With external tanks"
+      weapons:
+        bvr: { type: aim120c, count: 2 }
+        wvr: { type: aim9x, count: 2 }
+        tanks: { type: external_370gal, count: 2 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -10
+        range_modifier: +30
+      endurance_hours: 3.5
+      bvr_range_km: 105
+      air_to_air_rating: 72
+      ground_attack_rating: 0
+      notes: "Extended CAP duration"
+
+    precision_strike:
+      name: "Viper Strike"
+      role: strike
+      description: "JDAM delivery"
+      weapons:
+        a2g: { type: jdam, count: 4 }
+        wvr: { type: aim9x, count: 2 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -15
+        range_modifier: -10
+      endurance_hours: 2.0
+      standoff_range_km: 15
+      air_to_air_rating: 45
+      ground_attack_rating: 78
+      notes: "GPS-guided strike"
+
+    multirole:
+      name: "Viper Flex"
+      role: multirole
+      description: "Balanced loadout"
+      weapons:
+        bvr: { type: aim120c, count: 2 }
+        wvr: { type: aim9x, count: 2 }
+        a2g: { type: gbu12, count: 2 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -10
+        range_modifier: -8
+      endurance_hours: 2.2
+      bvr_range_km: 105
+      standoff_range_km: 10
+      air_to_air_rating: 65
+      ground_attack_rating: 55
+      notes: "Swing role capability"
+
+# =============================================================================
+# DASSAULT MIRAGE III/V ROSE
+# =============================================================================
+# ~85 aircraft. Upgraded with ROSE program.
+# Ra'ad cruise missile carrier.
+# Strike dedicated.
+
+mirage3:
+  type_stats:
+    total_aircraft: 50
+    generation: 3
+    ew_suite: basic
+    ew_rating: 35
+    radar: agave
+    radar_rating: 40
+    datalink: limited
+
+  loadouts:
+    cruise_missile:
+      name: "Ra'ad Carrier"
+      role: strike
+      description: "Nuclear-capable cruise missile"
+      weapons:
+        a2g: { type: raad, count: 1 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -15
+        range_modifier: -10
+      endurance_hours: 2.0
+      standoff_range_km: 350
+      air_to_air_rating: 15
+      ground_attack_rating: 80
+      notes: "Strategic strike role. Can carry nuclear Ra'ad"
+
+    glide_bomb:
+      name: "H-4 Strike"
+      role: strike
+      description: "Glide bomb attack"
+      weapons:
+        a2g: { type: h4, count: 1 }
+      performance:
+        speed_modifier: -12
+        maneuver_modifier: -18
+        range_modifier: -12
+      endurance_hours: 1.8
+      standoff_range_km: 120
+      air_to_air_rating: 10
+      ground_attack_rating: 72
+      notes: "Standoff glide bomb capability"
+
+    conventional:
+      name: "Bomb Truck"
+      role: strike
+      description: "Dumb bomb delivery"
+      weapons:
+        a2g: { type: bombs_1000lb, count: 4 }
+      performance:
+        speed_modifier: -15
+        maneuver_modifier: -20
+        range_modifier: -15
+      endurance_hours: 1.5
+      standoff_range_km: 0
+      air_to_air_rating: 10
+      ground_attack_rating: 60
+      notes: "Legacy strike role"
+
+mirage5:
+  type_stats:
+    total_aircraft: 35
+    generation: 3
+    ew_suite: basic
+    ew_rating: 30
+    radar: minimal
+    radar_rating: 35
+    datalink: limited
+
+  loadouts:
+    cruise_missile:
+      name: "Ra'ad Strike"
+      role: strike
+      description: "Cruise missile delivery"
+      weapons:
+        a2g: { type: raad, count: 1 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -15
+        range_modifier: -10
+      endurance_hours: 2.2
+      standoff_range_km: 350
+      air_to_air_rating: 10
+      ground_attack_rating: 78
+      notes: "Mirage 5 optimized for strike"
+
+    attack:
+      name: "Ground Attack"
+      role: strike
+      description: "Close air support"
+      weapons:
+        a2g: { type: bombs_500lb, count: 6 }
+        rockets: { type: rockets, count: 2 }
+      performance:
+        speed_modifier: -15
+        maneuver_modifier: -20
+        range_modifier: -15
+      endurance_hours: 1.8
+      standoff_range_km: 0
+      air_to_air_rating: 8
+      ground_attack_rating: 58
+      notes: "CAS role"
+
+# =============================================================================
+# F-7PG (CHENGDU)
+# =============================================================================
+# ~60 aircraft. Point defense interceptor.
+# Being phased out.
+
+f7pg:
+  type_stats:
+    total_aircraft: 60
+    generation: 3
+    ew_suite: minimal
+    ew_rating: 25
+    radar: grifo7
+    radar_rating: 45
+    datalink: basic
+
+  loadouts:
+    point_defense:
+      name: "Alert Scramble"
+      role: air_superiority
+      description: "Quick reaction"
+      weapons:
+        wvr: { type: pl5e, count: 4 }
+      performance:
+        speed_modifier: 0
+        maneuver_modifier: 0
+        range_modifier: 0
+      endurance_hours: 0.8
+      bvr_range_km: 0
+      air_to_air_rating: 40
+      ground_attack_rating: 0
+      notes: "No BVR capability. High sortie rate. Training and secondary defense"
+
+# =============================================================================
+# AEW&C PLATFORMS
+# =============================================================================
+
+erieye:
+  type_stats:
+    total_aircraft: 6
+    type: awacs
+    platform: saab2000
+    radar: erieye_aesa
+    radar_range_km: 450
+    altitude_ceiling_ft: 31000
+    endurance_hours: 7
+    datalink: link17
+
+  capabilities:
+    simultaneous_tracks: 100
+    fighter_control: 24
+    cooperative_engagement: true
+    ecm_resistance: 70
+    low_level_detection: excellent
+    notes: "Primary PAF AWACS. Used May 7 for cooperative PL-15 engagement"
+
+  cooperative_engagement:
+    supported_missiles: [pl15, pl12]
+    target_data_update: continuous
+    shooter_radar_mode: silent
+    effectiveness: "Allowed PAF fighters to engage at 200km without own radar emission"
+
+zdk03:
+  type_stats:
+    total_aircraft: 4
+    type: awacs
+    platform: y8
+    radar: chinese_aesa
+    radar_range_km: 350
+    altitude_ceiling_ft: 30000
+    endurance_hours: 8
+    datalink: link17
+
+  capabilities:
+    simultaneous_tracks: 60
+    fighter_control: 12
+    cooperative_engagement: limited
+    ecm_resistance: 55
+    low_level_detection: moderate
+    notes: "Chinese AWACS. Underperformed expectations. Backup to Erieye"
+
+# =============================================================================
+# WEAPON STOCKS (Estimated Total PAF)
+# =============================================================================
+
+weapon_stocks:
+  # Premium Chinese weapons - limited
+  pl15: 150                # Long range BVR
+  pl10: 200                # Advanced WVR
+  cm400akg: 60             # Anti-radiation
+
+  # Standard Chinese weapons
+  pl12: 400
+  pl5e: 500
+  ls6: 200
+
+  # American weapons (restricted resupply)
+  aim120c: 200             # US-supplied, cannot be replaced easily
+  aim9x: 150
+  jdam: 300
+
+  # Legacy/indigenous
+  raad: 40                 # Cruise missile
+  h4: 80
+  bombs_various: 10000
+
+# =============================================================================
+# SPECIAL NOTES - OPERATION SINDOOR TACTICS
+# =============================================================================
+
+sindoor_tactics:
+  may_7_intercept:
+    description: >
+      PAF used Erieye + Link-17 cooperative engagement to fire PL-15 at 200km
+      while keeping fighter radars silent. IAF pilots had minimal warning as
+      their RWR did not detect imminent threat until missile terminal phase.
+    aircraft_used: [j10c, jf17_block3]
+    missiles_used: pl15
+    awacs_support: erieye
+    result: "Multiple IAF aircraft shot down including at least one Rafale"
+
+  may_9_sead_attempt:
+    description: >
+      JF-17 with CM-400AKG attempted to penetrate S-400 envelope using
+      intensive jamming and decoys. Targeted Adampur S-400 battery.
+    aircraft_used: [jf17_block3, jf17]
+    missiles_used: cm400akg
+    result: "PAF claims radar hits, IAF denies significant damage"
+
+  drone_swarms:
+    description: >
+      300-600 drones per wave including Yihaa-III, TB2, Akinci mixed with
+      decoy drones to saturate Indian air defenses.
+    platforms: [yihaa3, tb2, akinci, songar, decoy_drones]
+    targets: [indian_airbases, s400_batteries, army_hq]
+    result: "Largely neutralized by Indian IACCCS + Akashteer integration"

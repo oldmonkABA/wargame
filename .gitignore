@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+logs/
+*.log
+test_replay.html
+ai war simulation.html
+*.pdf
+*:Zone.Identifier

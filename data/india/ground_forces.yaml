@@ -1,0 +1,603 @@
+# Indian Army Ground Forces - Western Theater
+# Corps and Divisions relevant to India-Pakistan border
+# Data compiled from public sources
+
+formations:
+  # WESTERN COMMAND
+  - id: western_command
+    name: "Western Command"
+    faction: india
+    type: command
+    hq_location:
+      lat: 30.7
+      lon: 76.7
+      city: "Chandimandir"
+    subordinates:
+      - 2_corps
+      - 9_corps
+      - 10_corps
+      - 11_corps
+    status: operational
+
+  # Strike Corps
+  - id: 1_corps
+    name: "I Corps (Strike)"
+    faction: india
+    type: strike_corps
+    hq_location:
+      lat: 30.3
+      lon: 75.6
+      city: "Mathura"  # Can move forward
+    subordinates:
+      - 4_armored_div
+      - 22_infantry_div
+    reserves:
+      - 16_independent_armored_brigade
+    command_rating: 85
+    status: operational
+    notes: "Primary strike formation"
+
+  - id: 2_corps
+    name: "II Corps (Strike)"
+    faction: india
+    type: strike_corps
+    hq_location:
+      lat: 27.2
+      lon: 78.0
+      city: "Agra"
+    subordinates:
+      - 1_armored_div
+      - 14_rapid_div
+    command_rating: 82
+    status: operational
+
+  # Pivot Corps (formerly Holding Corps - now have offensive capability under Cold Start)
+  # Pivot Corps are "first responders" - can launch limited offensives immediately
+  # while heavier IBGs mobilize and move in for the main thrust.
+  - id: 9_corps
+    name: "IX Corps"
+    faction: india
+    type: pivot_corps
+    hq_location:
+      lat: 30.5
+      lon: 76.5
+      city: "Yol"
+    subordinates:
+      - 26_infantry_div
+      - 29_infantry_div
+      - ibg_west_1  # Operationalized IBG for Pakistan border
+      - ibg_west_2  # Operationalized IBG for Pakistan border
+    command_rating: 82  # Upgraded with IBG operationalization
+    status: operational
+    sector: "Punjab North"
+    doctrine: proactive_strategy
+    notes: "First corps to operationalize IBGs on Western Front (2 IBGs active)"
+
+  - id: 10_corps
+    name: "X Corps"
+    faction: india
+    type: pivot_corps
+    hq_location:
+      lat: 32.2
+      lon: 76.3
+      city: "Bhatinda"
+    subordinates:
+      - 7_infantry_div
+      - 39_infantry_div
+    additional_offensive_assets:
+      - 55_armored_brigade  # Additional armored brigade for offensive capability
+    command_rating: 80
+    status: operational
+    sector: "Punjab Central"
+    doctrine: proactive_strategy
+
+  - id: 11_corps
+    name: "XI Corps"
+    faction: india
+    type: pivot_corps
+    hq_location:
+      lat: 26.9
+      lon: 75.7
+      city: "Jalandhar"
+    subordinates:
+      - 15_infantry_div
+      - 16_infantry_div
+    additional_offensive_assets:
+      - 67_armored_brigade  # Additional armored brigade for offensive capability
+    command_rating: 78
+    status: operational
+    sector: "Punjab South"
+    doctrine: proactive_strategy
+
+  # SOUTH WESTERN COMMAND (Rajasthan Sector)
+  - id: sw_command
+    name: "South Western Command"
+    faction: india
+    type: command
+    hq_location:
+      lat: 26.8
+      lon: 75.8
+      city: "Jaipur"
+    subordinates:
+      - 10_corps_sw
+      - 12_corps
+    status: operational
+
+  - id: 10_corps_sw
+    name: "X Corps (SW)"
+    faction: india
+    type: holding_corps
+    hq_location:
+      lat: 26.3
+      lon: 73.0
+      city: "Jodhpur"
+    subordinates:
+      - 6_mountain_div
+      - 11_infantry_div
+    command_rating: 76
+    status: operational
+    sector: "Rajasthan North"
+
+  - id: 12_corps
+    name: "XII Corps"
+    faction: india
+    type: holding_corps
+    hq_location:
+      lat: 24.5
+      lon: 70.8
+      city: "Jodhpur South"
+    subordinates:
+      - 12_infantry_div
+      - 18_infantry_div
+    command_rating: 75
+    status: operational
+    sector: "Rajasthan South"
+
+  # NORTHERN COMMAND (Kashmir)
+  - id: 14_corps
+    name: "XIV Corps (Fire and Fury)"
+    faction: india
+    type: mountain_corps
+    hq_location:
+      lat: 34.0
+      lon: 77.5
+      city: "Leh"
+    subordinates:
+      - 3_infantry_div
+      - 8_mountain_div
+    command_rating: 85
+    status: operational
+    sector: "Ladakh"
+
+  - id: 15_corps
+    name: "XV Corps (Chinar)"
+    faction: india
+    type: holding_corps
+    hq_location:
+      lat: 33.9
+      lon: 74.7
+      city: "Srinagar"
+    subordinates:
+      - 19_infantry_div
+      - 28_infantry_div
+    command_rating: 82
+    status: operational
+    sector: "Kashmir Valley"
+
+  - id: 16_corps
+    name: "XVI Corps (White Knight)"
+    faction: india
+    type: holding_corps
+    hq_location:
+      lat: 32.7
+      lon: 74.8
+      city: "Nagrota"
+    subordinates:
+      - 10_infantry_div
+      - 25_infantry_div
+    command_rating: 80
+    status: operational
+    sector: "Jammu"
+
+ground_units:
+  # ARMORED DIVISIONS
+  - id: 1_armored_div
+    name: "1st Armoured Division"
+    faction: india
+    type: armored_division
+    parent: 2_corps
+    brigades:
+      - 17_armored_brigade
+      - 43_armored_brigade
+      - 35_infantry_brigade
+    mbt_count: 250
+    mbt_type: t90
+    strength_current: 15000
+    strength_max: 16000
+    location:
+      lat: 27.5
+      lon: 77.0
+    posture: reserve
+    status: combat_ready
+
+  - id: 4_armored_div
+    name: "4th Armoured Division (Black Elephant)"
+    faction: india
+    type: armored_division
+    parent: 1_corps
+    brigades:
+      - 4_armored_brigade
+      - 18_armored_brigade
+      - 7_infantry_brigade
+    mbt_count: 230
+    mbt_type: t90
+    strength_current: 14500
+    strength_max: 15500
+    location:
+      lat: 30.0
+      lon: 75.0
+    posture: reserve
+    status: combat_ready
+
+  # INFANTRY DIVISIONS (Sample)
+  - id: 7_infantry_div
+    name: "7th Infantry Division"
+    faction: india
+    type: infantry_division
+    parent: 10_corps
+    brigades:
+      - 21_infantry_brigade
+      - 22_infantry_brigade
+      - 68_infantry_brigade
+    strength_current: 18000
+    strength_max: 19000
+    location:
+      lat: 31.5
+      lon: 74.9
+    posture: defend
+    dug_in: 2
+    status: combat_ready
+    sector: "Hussainiwala"
+
+  - id: 15_infantry_div
+    name: "15th Infantry Division"
+    faction: india
+    type: infantry_division
+    parent: 11_corps
+    brigades:
+      - 44_infantry_brigade
+      - 45_infantry_brigade
+      - 102_infantry_brigade
+    strength_current: 17500
+    strength_max: 18500
+    location:
+      lat: 30.8
+      lon: 74.6
+    posture: defend
+    dug_in: 2
+    status: combat_ready
+    sector: "Ferozepur"
+
+  - id: 26_infantry_div
+    name: "26th Infantry Division"
+    faction: india
+    type: infantry_division
+    parent: 9_corps
+    brigades:
+      - 77_infantry_brigade
+      - 78_infantry_brigade
+      - 115_infantry_brigade
+    strength_current: 17000
+    strength_max: 18000
+    location:
+      lat: 32.0
+      lon: 75.2
+    posture: defend
+    dug_in: 2
+    status: combat_ready
+    sector: "Pathankot"
+
+  # RAPID/MECHANIZED
+  - id: 14_rapid_div
+    name: "14th RAPID Division"
+    faction: india
+    type: mechanized_division
+    parent: 2_corps
+    brigades:
+      - 52_mech_brigade
+      - 53_mech_brigade
+      - 340_mech_brigade
+    mbt_count: 120
+    mbt_type: t72
+    ifv_count: 200
+    strength_current: 14000
+    strength_max: 15000
+    location:
+      lat: 28.0
+      lon: 76.5
+    posture: reserve
+    status: combat_ready
+
+  # MOUNTAIN (Kashmir)
+  - id: 8_mountain_div
+    name: "8th Mountain Division"
+    faction: india
+    type: mountain_division
+    parent: 14_corps
+    brigades:
+      - 114_mountain_brigade
+      - 115_mountain_brigade
+      - 141_mountain_brigade
+    strength_current: 15000
+    strength_max: 16000
+    location:
+      lat: 34.2
+      lon: 77.0
+    posture: defend
+    dug_in: 2
+    status: combat_ready
+    sector: "Kargil-Leh"
+    notes: "High altitude specialized"
+
+  # ============================================================
+  # INTEGRATED BATTLE GROUPS (IBGs) - Cold Start / Proactive Strategy
+  # IBGs replace Divisions as primary offensive unit
+  # ============================================================
+
+  # Western Front IBGs (under IX Corps)
+  - id: ibg_west_1
+    name: "IBG West-1 (Shakargarh)"
+    faction: india
+    type: integrated_battle_group
+    parent: 9_corps
+    command_level: major_general
+    brigades:
+      - 4_armored_battalion_ibgw1
+      - 7_mech_battalion_ibgw1
+      - 12_infantry_battalion_ibgw1
+      - 15_infantry_battalion_ibgw1
+      - 22_artillery_regiment_ibgw1
+      - 33_artillery_regiment_ibgw1
+    organic_assets:
+      air_defense: true
+      signals: true
+      engineers: true
+      logistics: true
+    mbt_count: 80
+    mbt_type: t90
+    ifv_count: 120
+    strength_current: 6500
+    strength_max: 7000
+    location:
+      lat: 32.3
+      lon: 75.4
+    posture: reserve
+    mobilization_hours: 12
+    status: combat_ready
+    objective: "Shakargarh Bulge - 50km shallow thrust"
+    notes: "Primary IBG for Shakargarh axis. Self-contained combined arms."
+
+  - id: ibg_west_2
+    name: "IBG West-2 (Sialkot)"
+    faction: india
+    type: integrated_battle_group
+    parent: 9_corps
+    command_level: major_general
+    brigades:
+      - 9_armored_battalion_ibgw2
+      - 11_mech_battalion_ibgw2
+      - 18_infantry_battalion_ibgw2
+      - 21_infantry_battalion_ibgw2
+      - 44_artillery_regiment_ibgw2
+      - 55_artillery_regiment_ibgw2
+    organic_assets:
+      air_defense: true
+      signals: true
+      engineers: true
+      logistics: true
+    mbt_count: 75
+    mbt_type: t90
+    ifv_count: 110
+    strength_current: 6000
+    strength_max: 6500
+    location:
+      lat: 32.5
+      lon: 75.1
+    posture: reserve
+    mobilization_hours: 18
+    status: combat_ready
+    objective: "Sialkot axis - 60km shallow thrust"
+
+  # Desert Sector IBG (under SW Command)
+  - id: ibg_desert_1
+    name: "IBG Desert-1 (Thar)"
+    faction: india
+    type: integrated_battle_group
+    parent: 10_corps_sw
+    command_level: major_general
+    brigades:
+      - 2_armored_battalion_ibgd1
+      - 5_mech_battalion_ibgd1
+      - 8_infantry_battalion_ibgd1
+      - 14_infantry_battalion_ibgd1
+      - 61_artillery_regiment_ibgd1
+      - 72_artillery_regiment_ibgd1
+    organic_assets:
+      air_defense: true
+      signals: true
+      engineers: true
+      logistics: true
+    mbt_count: 65
+    mbt_type: arjun  # Arjun Mk-1A spearheads desert sector
+    ifv_count: 100
+    strength_current: 5500
+    strength_max: 6000
+    location:
+      lat: 26.0
+      lon: 71.5
+    posture: reserve
+    mobilization_hours: 24
+    status: combat_ready
+    objective: "Thar desert - 80km penetration into Sindh"
+    notes: "Arjun Mk-1A optimized for desert. Hunter-killer sights."
+
+  # ============================================================
+  # SPECIALIZED UNITS - Post-Sindoor 2026 Restructuring
+  # ============================================================
+
+  # BHAIRAV BATTALIONS (Shock Troops)
+  - id: bhairav_1
+    name: "1st Bhairav Battalion (Sikh LI)"
+    faction: india
+    type: bhairav_battalion
+    parent: 9_corps
+    strength_current: 780
+    strength_max: 800
+    location:
+      lat: 32.1
+      lon: 75.3
+    posture: reserve
+    status: combat_ready
+    deployment_focus: "LoC / Shakargarh axis"
+    notes: "Shock troops for heliborne assault. Seize bridges and road junctions at H+3."
+
+  - id: bhairav_2
+    name: "2nd Bhairav Battalion"
+    faction: india
+    type: bhairav_battalion
+    parent: 10_corps_sw
+    strength_current: 790
+    strength_max: 800
+    location:
+      lat: 26.5
+      lon: 72.0
+    posture: reserve
+    status: combat_ready
+    deployment_focus: "Rajasthan Sector"
+    notes: "Desert shock troops. Secure crossing points ahead of IBG Desert-1."
+
+  # RUDRA BRIGADES (All-Arms Offensive)
+  - id: rudra_1
+    name: "1st Rudra Brigade"
+    faction: india
+    type: rudra_brigade
+    parent: 1_corps
+    mbt_count: 60
+    mbt_type: t90
+    strength_current: 4400
+    strength_max: 4500
+    location:
+      lat: 30.5
+      lon: 75.8
+    posture: reserve
+    status: combat_ready
+    deployment_focus: "Western Front - Punjab"
+    notes: "Strike Corps firepower in brigade package. Follows IBG breakthrough."
+
+  - id: rudra_2
+    name: "2nd Rudra Brigade"
+    faction: india
+    type: rudra_brigade
+    parent: 2_corps
+    mbt_count: 55
+    mbt_type: t90
+    strength_current: 4300
+    strength_max: 4500
+    location:
+      lat: 27.5
+      lon: 77.5
+    posture: reserve
+    status: combat_ready
+    deployment_focus: "Western Front - Rajasthan"
+    notes: "Exploits IBG Desert-1 penetration with heavy follow-on force."
+
+  # SHAKTIBAAN REGIMENTS (Drone & Loitering Munitions)
+  - id: shaktibaan_1
+    name: "1st Shaktibaan Regiment"
+    faction: india
+    type: shaktibaan_regiment
+    parent: 9_corps
+    strength_current: 580
+    strength_max: 600
+    location:
+      lat: 32.0
+      lon: 75.5
+    posture: reserve
+    status: combat_ready
+    drone_inventory:
+      swarm_drones: 200
+      loitering_munitions: 80
+      kamikaze_uav: 50
+    notes: "Non-Contact Warfare. Primary role: hunt Pakistani artillery at H+15 min."
+
+  - id: shaktibaan_2
+    name: "2nd Shaktibaan Regiment"
+    faction: india
+    type: shaktibaan_regiment
+    parent: 10_corps_sw
+    strength_current: 560
+    strength_max: 600
+    location:
+      lat: 26.2
+      lon: 71.8
+    posture: reserve
+    status: combat_ready
+    drone_inventory:
+      swarm_drones: 180
+      loitering_munitions: 70
+      kamikaze_uav: 40
+    notes: "Desert sector drone warfare. Suppress enemy AD and artillery."
+
+  # ASHNI PLATOONS (Tactical ISR - embedded in infantry battalions)
+  # Note: In practice, every infantry battalion has one. Listed here are
+  # representative formations attached to the IBGs.
+  - id: ashni_ibgw1
+    name: "Ashni Platoon (IBG West-1)"
+    faction: india
+    type: ashni_platoon
+    parent: ibg_west_1
+    strength_current: 30
+    strength_max: 30
+    drone_count: 12
+    location:
+      lat: 32.3
+      lon: 75.4
+    status: combat_ready
+    notes: "Embedded ISR. Spots enemy AT squads for advancing T-90s."
+
+  - id: ashni_ibgw2
+    name: "Ashni Platoon (IBG West-2)"
+    faction: india
+    type: ashni_platoon
+    parent: ibg_west_2
+    strength_current: 30
+    strength_max: 30
+    drone_count: 12
+    location:
+      lat: 32.5
+      lon: 75.1
+    status: combat_ready
+
+  - id: ashni_ibgd1
+    name: "Ashni Platoon (IBG Desert-1)"
+    faction: india
+    type: ashni_platoon
+    parent: ibg_desert_1
+    strength_current: 30
+    strength_max: 30
+    drone_count: 12
+    location:
+      lat: 26.0
+      lon: 71.5
+    status: combat_ready
+
+# Summary:
+# 2 Strike Corps + 5 Pivot Corps (formerly Holding) in Western Theater
+# 3 Integrated Battle Groups (IBG West-1, West-2, Desert-1)
+# 2 Bhairav Battalions (shock troops)
+# 2 Rudra Brigades (all-arms offensive)
+# 2 Shaktibaan Regiments (drone/loitering munitions)
+# 3 Ashni Platoons (tactical ISR drones, embedded in IBGs)
+# 2 Armoured Divisions (~480 MBTs)
+# Multiple Infantry/Mountain Divisions
+# Doctrine: Cold Start / Proactive Strategy - 12-48 hour mobilization, 50-80km shallow thrusts

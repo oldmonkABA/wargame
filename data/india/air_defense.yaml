@@ -1,0 +1,274 @@
+# Indian Air Defense Systems
+# SAM sites and radar network
+# Data compiled from public sources
+
+sam_sites:
+  # S-400 Triumf Systems
+  - id: s400_punjab_1
+    name: "S-400 Battery Punjab-1"
+    faction: india
+    sam_type: s400
+    launcher_count: 8
+    missiles_available: 64
+    location:
+      lat: 31.4
+      lon: 75.7
+      sector: "Adampur-Halwara"
+    protecting:
+      - iaf_adampur
+      - iaf_halwara
+      - chandigarh_city
+    radar_id: s400_radar_punjab_1
+    status: operational
+
+  - id: s400_punjab_2
+    name: "S-400 Battery Punjab-2"
+    faction: india
+    sam_type: s400
+    launcher_count: 8
+    missiles_available: 64
+    location:
+      lat: 30.3
+      lon: 76.8
+      sector: "Ambala"
+    protecting:
+      - iaf_ambala
+      - delhi_ncr
+    radar_id: s400_radar_punjab_2
+    status: operational
+
+  # Akash Medium Range SAM
+  - id: akash_pathankot
+    name: "Akash Battery Pathankot"
+    faction: india
+    sam_type: akash
+    launcher_count: 4
+    missiles_available: 48
+    location:
+      lat: 32.2
+      lon: 75.6
+      sector: "Pathankot"
+    protecting:
+      - iaf_pathankot
+    radar_id: akash_radar_pathankot
+    status: operational
+
+  - id: akash_srinagar
+    name: "Akash Battery Srinagar"
+    faction: india
+    sam_type: akash
+    launcher_count: 4
+    missiles_available: 48
+    location:
+      lat: 33.9
+      lon: 74.7
+      sector: "Kashmir"
+    protecting:
+      - iaf_srinagar
+    radar_id: akash_radar_srinagar
+    status: operational
+
+  - id: akash_halwara
+    name: "Akash Battery Halwara"
+    faction: india
+    sam_type: akash
+    launcher_count: 4
+    missiles_available: 48
+    location:
+      lat: 30.7
+      lon: 75.6
+      sector: "Punjab Central"
+    protecting:
+      - iaf_halwara
+    radar_id: akash_radar_halwara
+    status: operational
+
+  - id: akash_jodhpur
+    name: "Akash Battery Jodhpur"
+    faction: india
+    sam_type: akash
+    launcher_count: 4
+    missiles_available: 48
+    location:
+      lat: 26.2
+      lon: 73.0
+      sector: "Rajasthan"
+    protecting:
+      - iaf_jodhpur
+    radar_id: akash_radar_jodhpur
+    status: operational
+
+  - id: akash_jaisalmer
+    name: "Akash Battery Jaisalmer"
+    faction: india
+    sam_type: akash
+    launcher_count: 4
+    missiles_available: 48
+    location:
+      lat: 26.8
+      lon: 70.8
+      sector: "Rajasthan West"
+    protecting:
+      - iaf_jaisalmer
+    radar_id: akash_radar_jaisalmer
+    status: operational
+
+  # SPYDER Short Range SAM
+  - id: spyder_ambala
+    name: "SPYDER Battery Ambala"
+    faction: india
+    sam_type: spyder
+    launcher_count: 6
+    missiles_available: 36
+    location:
+      lat: 30.3
+      lon: 76.7
+      sector: "Ambala"
+    protecting:
+      - iaf_ambala
+    radar_id: spyder_radar_ambala
+    status: operational
+
+  - id: spyder_adampur
+    name: "SPYDER Battery Adampur"
+    faction: india
+    sam_type: spyder
+    launcher_count: 6
+    missiles_available: 36
+    location:
+      lat: 31.4
+      lon: 75.7
+      sector: "Adampur"
+    protecting:
+      - iaf_adampur
+    radar_id: spyder_radar_adampur
+    status: operational
+
+  - id: spyder_pathankot
+    name: "SPYDER Battery Pathankot"
+    faction: india
+    sam_type: spyder
+    launcher_count: 6
+    missiles_available: 36
+    location:
+      lat: 32.2
+      lon: 75.6
+      sector: "Pathankot"
+    protecting:
+      - iaf_pathankot
+    radar_id: spyder_radar_pathankot
+    status: operational
+
+  # Barak-8 / MRSAM
+  - id: mrsam_punjab
+    name: "MRSAM Battery Punjab"
+    faction: india
+    sam_type: barak8
+    launcher_count: 8
+    missiles_available: 64
+    location:
+      lat: 31.0
+      lon: 75.0
+      sector: "Punjab Central"
+    protecting:
+      - punjab_sector
+    radar_id: mrsam_radar_punjab
+    status: operational
+
+  - id: mrsam_rajasthan
+    name: "MRSAM Battery Rajasthan"
+    faction: india
+    sam_type: barak8
+    launcher_count: 8
+    missiles_available: 64
+    location:
+      lat: 27.0
+      lon: 72.0
+      sector: "Rajasthan Central"
+    protecting:
+      - rajasthan_sector
+    radar_id: mrsam_radar_rajasthan
+    status: operational
+
+radar_sites:
+  # Early Warning Radars
+  - id: ew_radar_punjab_north
+    name: "Punjab North EW Radar"
+    faction: india
+    type: early_warning
+    range_km: 500
+    altitude_coverage_km: 30
+    low_level_detection: 60
+    location:
+      lat: 32.5
+      lon: 75.5
+    ecm_resistance: 70
+    status: operational
+
+  - id: ew_radar_punjab_central
+    name: "Punjab Central EW Radar"
+    faction: india
+    type: early_warning
+    range_km: 500
+    altitude_coverage_km: 30
+    low_level_detection: 60
+    location:
+      lat: 31.0
+      lon: 75.5
+    ecm_resistance: 70
+    status: operational
+
+  - id: ew_radar_rajasthan
+    name: "Rajasthan EW Radar"
+    faction: india
+    type: early_warning
+    range_km: 500
+    altitude_coverage_km: 30
+    low_level_detection: 55
+    location:
+      lat: 27.0
+      lon: 72.5
+    ecm_resistance: 65
+    status: operational
+
+  - id: ew_radar_kashmir
+    name: "Kashmir EW Radar"
+    faction: india
+    type: early_warning
+    range_km: 450
+    altitude_coverage_km: 25
+    low_level_detection: 50
+    location:
+      lat: 34.0
+      lon: 74.8
+    ecm_resistance: 65
+    status: operational
+
+  # S-400 Associated Radars
+  - id: s400_radar_punjab_1
+    name: "S-400 Radar Punjab-1"
+    faction: india
+    type: fire_control
+    range_km: 600
+    altitude_coverage_km: 30
+    low_level_detection: 75
+    location:
+      lat: 31.4
+      lon: 75.7
+    associated_sam: s400_punjab_1
+    ecm_resistance: 80
+    status: operational
+
+  - id: s400_radar_punjab_2
+    name: "S-400 Radar Punjab-2"
+    faction: india
+    type: fire_control
+    range_km: 600
+    altitude_coverage_km: 30
+    low_level_detection: 75
+    location:
+      lat: 30.3
+      lon: 76.8
+    associated_sam: s400_punjab_2
+    ecm_resistance: 80
+    status: operational

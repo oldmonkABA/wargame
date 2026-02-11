@@ -1,0 +1,220 @@
+# Missile Systems Schema Definition
+
+missile_types:
+  # Schema for missile type definitions
+  # - id: unique identifier
+  # - name: missile name
+  # - faction: india | pakistan
+  # - category: cruise | ballistic | air_launched
+  # - range_km: maximum range
+  # - speed: subsonic | supersonic | hypersonic
+  # - cep_m: circular error probable in meters
+  # - payload_kg: warhead weight
+  # - penetration: 0-100 (ability to defeat defenses)
+  # - target_types: [runway, sam_site, radar, hq, depot, soft, hardened]
+  # - flight_time_per_100km: minutes per 100km
+  # - launch_platforms: [ground, ship, air, submarine]
+
+  # INDIA
+  brahmos:
+    id: brahmos
+    name: "BrahMos"
+    faction: india
+    category: cruise
+    range_km: 450
+    speed: supersonic  # Mach 2.8
+    cep_m: 10
+    payload_kg: 300
+    penetration: 85
+    target_types: [runway, sam_site, radar, hq, depot, hardened]
+    flight_time_per_100km: 2
+    launch_platforms: [ground, ship, air]
+
+  brahmos_er:
+    id: brahmos_er
+    name: "BrahMos-ER"
+    faction: india
+    category: cruise
+    range_km: 800
+    speed: supersonic
+    cep_m: 10
+    payload_kg: 300
+    penetration: 88
+    target_types: [runway, sam_site, radar, hq, depot, hardened]
+    flight_time_per_100km: 2
+    launch_platforms: [ground, ship, air]
+
+  nirbhay:
+    id: nirbhay
+    name: "Nirbhay"
+    faction: india
+    category: cruise
+    range_km: 1000
+    speed: subsonic  # Mach 0.7
+    cep_m: 20
+    payload_kg: 450
+    penetration: 65
+    target_types: [runway, depot, soft, hq]
+    flight_time_per_100km: 8
+    launch_platforms: [ground]
+
+  prithvi2:
+    id: prithvi2
+    name: "Prithvi-II"
+    faction: india
+    category: ballistic
+    range_km: 350
+    speed: supersonic
+    cep_m: 50
+    payload_kg: 500
+    penetration: 70
+    target_types: [runway, depot, staging_area, soft]
+    flight_time_per_100km: 1
+    launch_platforms: [ground]
+
+  pralay:
+    id: pralay
+    name: "Pralay"
+    faction: india
+    category: ballistic
+    range_km: 500
+    speed: supersonic
+    cep_m: 25
+    payload_kg: 500
+    penetration: 80
+    target_types: [runway, sam_site, radar, hq, depot, hardened]
+    flight_time_per_100km: 1
+    launch_platforms: [ground]
+
+  # PAKISTAN
+  babur:
+    id: babur
+    name: "Babur (Hatf-7)"
+    faction: pakistan
+    category: cruise
+    range_km: 700
+    speed: subsonic
+    cep_m: 15
+    payload_kg: 450
+    penetration: 70
+    target_types: [runway, depot, hq, soft]
+    flight_time_per_100km: 7
+    launch_platforms: [ground, ship]
+
+  babur2:
+    id: babur2
+    name: "Babur-2"
+    faction: pakistan
+    category: cruise
+    range_km: 900
+    speed: subsonic
+    cep_m: 10
+    payload_kg: 450
+    penetration: 75
+    target_types: [runway, depot, hq, soft, hardened]
+    flight_time_per_100km: 7
+    launch_platforms: [ground]
+
+  raad:
+    id: raad
+    name: "Ra'ad (Hatf-8)"
+    faction: pakistan
+    category: air_launched
+    range_km: 350
+    speed: subsonic
+    cep_m: 15
+    payload_kg: 450
+    penetration: 70
+    target_types: [runway, depot, hq, sam_site]
+    flight_time_per_100km: 7
+    launch_platforms: [air]
+
+  ghaznavi:
+    id: ghaznavi
+    name: "Ghaznavi (Hatf-3)"
+    faction: pakistan
+    category: ballistic
+    range_km: 320
+    speed: supersonic
+    cep_m: 50
+    payload_kg: 500
+    penetration: 65
+    target_types: [runway, depot, staging_area, soft]
+    flight_time_per_100km: 1
+    launch_platforms: [ground]
+
+  shaheen1:
+    id: shaheen1
+    name: "Shaheen-I"
+    faction: pakistan
+    category: ballistic
+    range_km: 750
+    speed: supersonic
+    cep_m: 50
+    payload_kg: 500
+    penetration: 70
+    target_types: [runway, depot, staging_area, hq]
+    flight_time_per_100km: 1
+    launch_platforms: [ground]
+
+missile_launcher:
+  # Schema for missile launcher units
+  # - id: unique identifier
+  # - name: unit name
+  # - faction: india | pakistan
+  # - missile_type: reference to missile_types
+  # - launcher_count: number of launch vehicles
+  # - missiles_ready: missiles ready to fire
+  # - missiles_reload: missiles in reload inventory
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - reload_time_turns: turns to reload after firing
+  # - mobility: static | mobile
+  # - concealment: 0-100 (how hard to find)
+  # - status: ready | reloading | moving | destroyed
+
+example_launcher:
+  id: "brahmos_regiment_1"
+  name: "861 Missile Regiment"
+  faction: india
+  missile_type: brahmos
+  launcher_count: 4
+  missiles_ready: 12
+  missiles_reload: 24
+  location:
+    lat: 32.1
+    lon: 76.3
+    grid: null
+  reload_time_turns: 2
+  mobility: mobile
+  concealment: 60
+  status: ready
+
+# Strike resolution
+strike_resolution:
+  # Hit probability = base_accuracy * (100 - target_hardness) / 100 * penetration / 100
+  # Damage on hit depends on target type
+  damage_table:
+    runway:
+      hit_effect: "cratered"
+      repair_turns: 3
+    sam_site:
+      hit_effect: "destroyed"
+      repair_turns: null  # cannot repair
+    radar:
+      hit_effect: "destroyed"
+      repair_turns: null
+    hq:
+      hit_effect: "disrupted"
+      repair_turns: 4
+    depot:
+      hit_effect: "destroyed"
+      secondary_explosions: 0.3  # chance of ammo cook-off
+    hardened:
+      hit_effect: "damaged"
+      penetration_required: 70
+    soft:
+      hit_effect: "destroyed"
+      repair_turns: null

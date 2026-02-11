@@ -1,0 +1,213 @@
+# Special Forces Schema Definition
+
+sf_types:
+  # Schema for special forces type definitions
+  # - id: unique identifier
+  # - name: unit type name
+  # - faction: india | pakistan
+  # - specialization: sabotage | recon | direct_action | hostage_rescue | pathfinder
+  # - team_size: operators per team
+  # - stealth: 0-100 (concealment ability)
+  # - combat: 0-100 (direct action capability)
+  # - recon: 0-100 (intelligence gathering)
+  # - sabotage: 0-100 (infrastructure destruction)
+  # - insertion_methods: [halo, haho, heliborne, ground, maritime]
+  # - range_behind_lines_km: max operating distance behind enemy lines
+  # - endurance_days: days of self-sustained operations
+
+  # INDIA
+  para_sf:
+    id: para_sf
+    name: "Para SF (Special Forces)"
+    faction: india
+    specialization: direct_action
+    team_size: 12
+    stealth: 85
+    combat: 90
+    recon: 80
+    sabotage: 85
+    insertion_methods: [halo, haho, heliborne, ground]
+    range_behind_lines_km: 100
+    endurance_days: 7
+
+  marcos:
+    id: marcos
+    name: "MARCOS"
+    faction: india
+    specialization: direct_action
+    team_size: 8
+    stealth: 90
+    combat: 92
+    recon: 85
+    sabotage: 80
+    insertion_methods: [halo, haho, heliborne, ground, maritime]
+    range_behind_lines_km: 80
+    endurance_days: 5
+
+  garud:
+    id: garud
+    name: "Garud Commando Force"
+    faction: india
+    specialization: pathfinder
+    team_size: 10
+    stealth: 80
+    combat: 85
+    recon: 85
+    sabotage: 75
+    insertion_methods: [halo, haho, heliborne]
+    range_behind_lines_km: 60
+    endurance_days: 5
+
+  ghatak:
+    id: ghatak
+    name: "Ghatak Platoon"
+    faction: india
+    specialization: recon
+    team_size: 20
+    stealth: 75
+    combat: 80
+    recon: 85
+    sabotage: 70
+    insertion_methods: [heliborne, ground]
+    range_behind_lines_km: 30
+    endurance_days: 3
+
+  # PAKISTAN
+  ssg:
+    id: ssg
+    name: "Special Service Group"
+    faction: pakistan
+    specialization: direct_action
+    team_size: 12
+    stealth: 85
+    combat: 88
+    recon: 82
+    sabotage: 85
+    insertion_methods: [halo, haho, heliborne, ground]
+    range_behind_lines_km: 100
+    endurance_days: 7
+
+  ssg_navy:
+    id: ssg_navy
+    name: "SSG (Navy)"
+    faction: pakistan
+    specialization: direct_action
+    team_size: 8
+    stealth: 88
+    combat: 85
+    recon: 80
+    sabotage: 82
+    insertion_methods: [halo, heliborne, ground, maritime]
+    range_behind_lines_km: 60
+    endurance_days: 5
+
+  zarrar:
+    id: zarrar
+    name: "Zarrar Company"
+    faction: pakistan
+    specialization: sabotage
+    team_size: 15
+    stealth: 82
+    combat: 85
+    recon: 75
+    sabotage: 90
+    insertion_methods: [heliborne, ground]
+    range_behind_lines_km: 50
+    endurance_days: 4
+
+sf_unit:
+  # Schema for SF team deployment
+  # - id: unique identifier
+  # - name: team designation
+  # - faction: india | pakistan
+  # - type: reference to sf_types
+  # - team_count: number of teams
+  # - teams_available: operational teams
+  # - base_id: home base
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - insertion_status: standby | inserted | exfiltrating | compromised
+  # - mission: null | recon | sabotage | direct_action | pathfinder
+  # - target: target ID if on mission
+  # - days_in_field: days since insertion
+  # - detection_risk: 0-100 (accumulates over time)
+  # - status: ready | on_mission | casualties | captured | extracted
+
+example_sf_unit:
+  id: "para_sf_team_alpha"
+  name: "Para SF Det Alpha"
+  faction: india
+  type: para_sf
+  team_count: 4
+  teams_available: 4
+  base_id: "agra_sf_base"
+  location:
+    lat: null  # at base
+    lon: null
+    grid: null
+  insertion_status: standby
+  mission: null
+  target: null
+  days_in_field: 0
+  detection_risk: 0
+  status: ready
+
+# SF operations
+sf_operations:
+  # Mission types and effects
+  recon_mission:
+    reveals_units: true
+    reveals_defenses: true
+    reveals_supply: true
+    detection_risk_per_day: 10
+
+  sabotage_mission:
+    target_types: [runway, radar, sam_site, depot, bridge, hq]
+    success_base: 60  # base % success
+    sabotage_bonus_factor: 0.3  # +0.3% per sabotage point
+    damage_on_success:
+      runway: "closed_2_turns"
+      radar: "destroyed"
+      sam_site: "destroyed"
+      depot: "50%_destroyed"
+      bridge: "destroyed"
+      hq: "disrupted_2_turns"
+    detection_risk_on_action: 40
+
+  direct_action:
+    target_types: [hq, artillery, sam_site, leaders]
+    success_base: 50
+    combat_bonus_factor: 0.4
+    damage_on_success:
+      hq: "destroyed"
+      artillery: "3_guns_destroyed"
+      sam_site: "destroyed"
+      leaders: "command_disrupted"
+    detection_risk_on_action: 60
+
+  pathfinder:
+    effect: "marks_lz_for_air_assault"
+    accuracy_bonus: 30  # for subsequent airdrop/air assault
+    detection_risk_per_day: 5
+
+  # Detection and compromise
+  detection:
+    daily_base_risk: 5
+    terrain_modifier:
+      urban: 0.5  # easier to hide
+      forest: 0.6
+      mountain: 0.7
+      desert: 1.5  # harder to hide
+      open: 2.0
+
+    # If detected
+    pursuit_pk: 40  # chance of casualties when detected
+    capture_chance: 30  # chance some are captured
+
+  # Exfiltration
+  exfil:
+    heliborne_risk: 20  # risk during pickup
+    ground_risk_per_hex: 10
+    abort_threshold: 80  # detection_risk at which mission should abort

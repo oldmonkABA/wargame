@@ -1,0 +1,277 @@
+# Aircraft Type Definitions
+# Stats are relative ratings (0-100) for simulation balance
+
+aircraft_types:
+  # Template:
+  # - name: string
+  # - role: air_superiority | multirole | strike | bomber
+  # - generation: 4 | 4.5 | 5
+  # - air_to_air: 0-100 (dogfight + BVR capability)
+  # - ground_attack: 0-100 (strike effectiveness)
+  # - speed: 0-100 (relative speed/intercept capability)
+  # - range_km: combat radius in km
+  # - payload_kg: max weapon payload
+  # - radar: 0-100 (sensor capability)
+  # - ew_suite: 0-100 (electronic warfare/self-protection)
+  # - stealth: 0-100 (low observable features)
+  # - sortie_rate: sorties per day under optimal conditions
+  # - weapons: list of compatible weapons
+
+  # INDIA
+  rafale:
+    name: "Dassault Rafale"
+    faction: india
+    role: multirole
+    generation: 4.5
+    air_to_air: 88
+    ground_attack: 85
+    speed: 82
+    range_km: 1850
+    payload_kg: 9500
+    radar: 90
+    ew_suite: 92  # SPECTRA suite
+    stealth: 35
+    sortie_rate: 1.5
+    weapons:
+      - meteor
+      - mica
+      - scalp
+      - hammer
+      - gbu
+
+  su30mki:
+    name: "Sukhoi Su-30MKI"
+    faction: india
+    role: air_superiority
+    generation: 4.5
+    air_to_air: 85
+    ground_attack: 75
+    speed: 85
+    range_km: 1500
+    payload_kg: 8000
+    radar: 82
+    ew_suite: 70
+    stealth: 15
+    sortie_rate: 1.2
+    weapons:
+      - r77
+      - r73
+      - brahmos_air
+      - kh59
+      - gbu
+
+  mig29:
+    name: "Mikoyan MiG-29"
+    faction: india
+    role: air_superiority
+    generation: 4
+    air_to_air: 75
+    ground_attack: 55
+    speed: 80
+    range_km: 700
+    payload_kg: 3500
+    radar: 65
+    ew_suite: 50
+    stealth: 15
+    sortie_rate: 1.5
+    weapons:
+      - r77
+      - r73
+      - kh29
+      - gbu
+
+  mirage2000:
+    name: "Dassault Mirage 2000"
+    faction: india
+    role: multirole
+    generation: 4
+    air_to_air: 70
+    ground_attack: 75
+    speed: 78
+    range_km: 1550
+    payload_kg: 6300
+    radar: 68
+    ew_suite: 60
+    stealth: 20
+    sortie_rate: 1.5
+    weapons:
+      - mica
+      - magic2
+      - scalp
+      - gbu
+
+  jaguar:
+    name: "SEPECAT Jaguar"
+    faction: india
+    role: strike
+    generation: 3
+    air_to_air: 30
+    ground_attack: 70
+    speed: 65
+    range_km: 1400
+    payload_kg: 4750
+    radar: 45
+    ew_suite: 40
+    stealth: 10
+    sortie_rate: 1.2
+    weapons:
+      - cbls
+      - gbu
+      - rockets
+
+  mig21:
+    name: "Mikoyan MiG-21 Bison"
+    faction: india
+    role: air_superiority
+    generation: 3
+    air_to_air: 50
+    ground_attack: 40
+    speed: 75
+    range_km: 500
+    payload_kg: 1300
+    radar: 45
+    ew_suite: 35
+    stealth: 10
+    sortie_rate: 1.8
+    weapons:
+      - r73
+      - r60
+      - bombs
+
+  tejas:
+    name: "HAL Tejas Mk1"
+    faction: india
+    role: multirole
+    generation: 4
+    air_to_air: 60
+    ground_attack: 60
+    speed: 70
+    range_km: 500
+    payload_kg: 3500
+    radar: 60
+    ew_suite: 55
+    stealth: 25
+    sortie_rate: 1.5
+    weapons:
+      - derby
+      - python5
+      - gbu
+
+  # PAKISTAN
+  jf17:
+    name: "JF-17 Thunder"
+    faction: pakistan
+    role: multirole
+    generation: 4
+    air_to_air: 65
+    ground_attack: 65
+    speed: 72
+    range_km: 1200
+    payload_kg: 3800
+    radar: 62
+    ew_suite: 55
+    stealth: 20
+    sortie_rate: 1.6
+    weapons:
+      - pl15
+      - pl5
+      - cm400akg
+      - gbu
+
+  jf17_block3:
+    name: "JF-17 Block III"
+    faction: pakistan
+    role: multirole
+    generation: 4.5
+    air_to_air: 72
+    ground_attack: 70
+    speed: 73
+    range_km: 1300
+    payload_kg: 4000
+    radar: 75  # AESA radar
+    ew_suite: 65
+    stealth: 25
+    sortie_rate: 1.5
+    weapons:
+      - pl15
+      - pl10
+      - cm400akg
+      - gbu
+
+  f16:
+    name: "General Dynamics F-16C/D"
+    faction: pakistan
+    role: multirole
+    generation: 4
+    air_to_air: 78
+    ground_attack: 75
+    speed: 80
+    range_km: 1200
+    payload_kg: 5500
+    radar: 75
+    ew_suite: 70
+    stealth: 20
+    sortie_rate: 1.5
+    weapons:
+      - aim120
+      - aim9
+      - agm84
+      - jdam
+
+  mirage3:
+    name: "Dassault Mirage III"
+    faction: pakistan
+    role: strike
+    generation: 3
+    air_to_air: 45
+    ground_attack: 60
+    speed: 70
+    range_km: 1200
+    payload_kg: 4000
+    radar: 40
+    ew_suite: 35
+    stealth: 10
+    sortie_rate: 1.2
+    weapons:
+      - raad
+      - bombs
+      - rockets
+
+  mirage5:
+    name: "Dassault Mirage 5"
+    faction: pakistan
+    role: strike
+    generation: 3
+    air_to_air: 40
+    ground_attack: 65
+    speed: 68
+    range_km: 1300
+    payload_kg: 4000
+    radar: 35
+    ew_suite: 30
+    stealth: 10
+    sortie_rate: 1.2
+    weapons:
+      - raad
+      - bombs
+      - rockets
+
+  j10c:
+    name: "Chengdu J-10C"
+    faction: pakistan
+    role: multirole
+    generation: 4.5
+    air_to_air: 80
+    ground_attack: 72
+    speed: 78
+    range_km: 1100
+    payload_kg: 6000
+    radar: 80  # AESA
+    ew_suite: 70
+    stealth: 30
+    sortie_rate: 1.4
+    weapons:
+      - pl15
+      - pl10
+      - cm400akg
+      - gbu

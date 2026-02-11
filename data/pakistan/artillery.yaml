@@ -1,0 +1,262 @@
+# Pakistan Army Artillery
+# Data compiled from public sources
+
+artillery_units:
+  # A-100 MLRS REGIMENTS
+  - id: a100_regiment_1
+    name: "A-100 Regiment 1"
+    faction: pakistan
+    artillery_type: a100
+    gun_count: 12
+    guns_available: 11
+    ammo_basic_load: 24
+    ammo_remaining: 264
+    location:
+      lat: 32.5
+      lon: 73.0
+      sector: "Northern Punjab"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 1_corps_pak
+
+  - id: a100_regiment_2
+    name: "A-100 Regiment 2"
+    faction: pakistan
+    artillery_type: a100
+    gun_count: 12
+    guns_available: 10
+    ammo_basic_load: 24
+    ammo_remaining: 240
+    location:
+      lat: 31.0
+      lon: 72.5
+      sector: "Central Punjab"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 2_corps_pak
+
+  - id: a100_regiment_3
+    name: "A-100 Regiment 3"
+    faction: pakistan
+    artillery_type: a100
+    gun_count: 12
+    guns_available: 10
+    ammo_basic_load: 24
+    ammo_remaining: 240
+    location:
+      lat: 29.0
+      lon: 70.0
+      sector: "Sindh"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 5_corps_pak
+
+  # KRL-122 MRL REGIMENTS
+  - id: krl122_regiment_1
+    name: "KRL-122 Regiment 1"
+    faction: pakistan
+    artillery_type: ks1a
+    gun_count: 18
+    guns_available: 16
+    ammo_basic_load: 40
+    ammo_remaining: 640
+    location:
+      lat: 31.5
+      lon: 73.8
+      sector: "Lahore"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 4_corps_pak
+
+  - id: krl122_regiment_2
+    name: "KRL-122 Regiment 2"
+    faction: pakistan
+    artillery_type: ks1a
+    gun_count: 18
+    guns_available: 15
+    ammo_basic_load: 40
+    ammo_remaining: 600
+    location:
+      lat: 30.5
+      lon: 71.0
+      sector: "Multan"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 2_corps_pak
+
+  - id: krl122_regiment_3
+    name: "KRL-122 Regiment 3"
+    faction: pakistan
+    artillery_type: ks1a
+    gun_count: 18
+    guns_available: 15
+    ammo_basic_load: 40
+    ammo_remaining: 600
+    location:
+      lat: 34.0
+      lon: 73.5
+      sector: "LOC"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 10_corps_pak
+
+  # SH-15 REGIMENTS (Self-Propelled, Chinese)
+  - id: sh15_regiment_1
+    name: "SH-15 Regiment 1"
+    faction: pakistan
+    artillery_type: sh15
+    gun_count: 18
+    guns_available: 16
+    ammo_basic_load: 80
+    ammo_remaining: 1280
+    location:
+      lat: 32.0
+      lon: 72.5
+      sector: "Gujranwala"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 30_corps_pak
+    notes: "Modern, truck-mounted"
+
+  - id: sh15_regiment_2
+    name: "SH-15 Regiment 2"
+    faction: pakistan
+    artillery_type: sh15
+    gun_count: 18
+    guns_available: 15
+    ammo_basic_load: 80
+    ammo_remaining: 1200
+    location:
+      lat: 31.0
+      lon: 73.5
+      sector: "Lahore Reserve"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 4_corps_pak
+
+  # M109 REGIMENTS (Self-Propelled)
+  - id: m109_regiment_1
+    name: "M109 Regiment 1"
+    faction: pakistan
+    artillery_type: m109
+    gun_count: 18
+    guns_available: 14
+    ammo_basic_load: 80
+    ammo_remaining: 1120
+    location:
+      lat: 32.5
+      lon: 73.5
+      sector: "Northern Punjab"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 1_corps_pak
+
+  - id: m109_regiment_2
+    name: "M109 Regiment 2"
+    faction: pakistan
+    artillery_type: m109
+    gun_count: 18
+    guns_available: 13
+    ammo_basic_load: 80
+    ammo_remaining: 1040
+    location:
+      lat: 30.0
+      lon: 71.5
+      sector: "Southern Punjab"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 2_corps_pak
+
+  # M198 TOWED REGIMENTS
+  - id: m198_regiment_1
+    name: "M198 Regiment 1"
+    faction: pakistan
+    artillery_type: m198
+    gun_count: 18
+    guns_available: 15
+    ammo_basic_load: 100
+    ammo_remaining: 1500
+    location:
+      lat: 31.4
+      lon: 74.0
+      sector: "Lahore East"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 4_corps_pak
+
+  - id: m198_regiment_2
+    name: "M198 Regiment 2"
+    faction: pakistan
+    artillery_type: m198
+    gun_count: 18
+    guns_available: 14
+    ammo_basic_load: 100
+    ammo_remaining: 1400
+    location:
+      lat: 34.0
+      lon: 73.0
+      sector: "LOC South"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 10_corps_pak
+
+  - id: m198_regiment_3
+    name: "M198 Regiment 3"
+    faction: pakistan
+    artillery_type: m198
+    gun_count: 18
+    guns_available: 14
+    ammo_basic_load: 100
+    ammo_remaining: 1400
+    location:
+      lat: 29.5
+      lon: 71.0
+      sector: "Cholistan"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 31_corps_pak
+
+# Counter-Battery Radars (Chinese SLC-2)
+counter_battery_radars:
+  - id: slc2_1
+    name: "SLC-2 WLR 1"
+    faction: pakistan
+    type: weapon_locating_radar
+    range_km: 40
+    location:
+      lat: 32.0
+      lon: 73.0
+    status: operational
+    attached_to: a100_regiment_1
+
+  - id: slc2_2
+    name: "SLC-2 WLR 2"
+    faction: pakistan
+    type: weapon_locating_radar
+    range_km: 40
+    location:
+      lat: 31.5
+      lon: 73.5
+    status: operational
+    attached_to: sh15_regiment_2
+
+# Summary:
+# 3 A-100 Regiments (36 launchers, 100km range)
+# 3 KRL-122 Regiments (54 launchers, 40km range)
+# 2 SH-15 Regiments (36 SPH, 53km range)
+# 2 M109 Regiments (36 SPH)
+# 3 M198 Regiments (54 towed guns)
+# 2+ Weapon Locating Radars

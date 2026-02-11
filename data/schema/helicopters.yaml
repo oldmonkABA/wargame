@@ -1,0 +1,282 @@
+# Helicopter Systems Schema Definition
+
+helicopter_types:
+  # Schema for helicopter type definitions
+  # - id: unique identifier
+  # - name: helicopter name
+  # - faction: india | pakistan
+  # - category: attack | transport | utility | scout
+  # - speed_kmh: cruise speed
+  # - range_km: combat radius
+  # - payload_kg: weapon or cargo payload
+  # - armor: 0-100 (protection level)
+  # - agility: 0-100 (maneuverability)
+  # - sensors:
+  #     radar: true | false
+  #     flir: true | false
+  #     targeting: true | false
+  # - weapons: list of compatible weapons
+  # - troop_capacity: infantry carried (if transport)
+  # - survivability: 0-100 (vs ground fire and AAA)
+
+  # INDIA
+  apache:
+    id: apache
+    name: "AH-64E Apache"
+    faction: india
+    category: attack
+    speed_kmh: 293
+    range_km: 480
+    payload_kg: 800
+    armor: 75
+    agility: 85
+    sensors:
+      radar: true  # Longbow radar
+      flir: true
+      targeting: true
+    weapons:
+      - hellfire
+      - hydra_rockets
+      - m230_chain_gun
+    troop_capacity: 0
+    survivability: 70
+
+  rudra:
+    id: rudra
+    name: "HAL Rudra (ALH WSI)"
+    faction: india
+    category: attack
+    speed_kmh: 260
+    range_km: 400
+    payload_kg: 500
+    armor: 55
+    agility: 75
+    sensors:
+      radar: false
+      flir: true
+      targeting: true
+    weapons:
+      - mistral
+      - rockets_70mm
+      - m621_cannon
+    troop_capacity: 0
+    survivability: 55
+
+  lch:
+    id: lch
+    name: "HAL Light Combat Helicopter"
+    faction: india
+    category: attack
+    speed_kmh: 268
+    range_km: 350
+    payload_kg: 400
+    armor: 60
+    agility: 85
+    sensors:
+      radar: false
+      flir: true
+      targeting: true
+    weapons:
+      - mistral
+      - rockets_70mm
+      - turret_gun
+    troop_capacity: 0
+    survivability: 60
+
+  mi35:
+    id: mi35
+    name: "Mi-35 Hind"
+    faction: india
+    category: attack
+    speed_kmh: 300
+    range_km: 450
+    payload_kg: 1500
+    armor: 70
+    agility: 60
+    sensors:
+      radar: false
+      flir: true
+      targeting: true
+    weapons:
+      - ataka
+      - rockets_80mm
+      - yak_b_gun
+    troop_capacity: 8
+    survivability: 65
+
+  chinook:
+    id: chinook
+    name: "CH-47F Chinook"
+    faction: india
+    category: transport
+    speed_kmh: 240
+    range_km: 370
+    payload_kg: 10000
+    armor: 40
+    agility: 45
+    sensors:
+      radar: false
+      flir: true
+      targeting: false
+    weapons: []
+    troop_capacity: 55
+    survivability: 40
+
+  mi17:
+    id: mi17
+    name: "Mi-17V-5"
+    faction: india
+    category: utility
+    speed_kmh: 250
+    range_km: 400
+    payload_kg: 4000
+    armor: 50
+    agility: 55
+    sensors:
+      radar: false
+      flir: true
+      targeting: false
+    weapons:
+      - rockets_80mm
+      - door_guns
+    troop_capacity: 36
+    survivability: 50
+
+  # PAKISTAN
+  ah1_cobra:
+    id: ah1_cobra
+    name: "AH-1F Cobra"
+    faction: pakistan
+    category: attack
+    speed_kmh: 277
+    range_km: 500
+    payload_kg: 600
+    armor: 55
+    agility: 70
+    sensors:
+      radar: false
+      flir: true
+      targeting: true
+    weapons:
+      - tow
+      - hydra_rockets
+      - m197_cannon
+    troop_capacity: 0
+    survivability: 50
+
+  t129:
+    id: t129
+    name: "TAI T129 ATAK"
+    faction: pakistan
+    category: attack
+    speed_kmh: 270
+    range_km: 400
+    payload_kg: 500
+    armor: 60
+    agility: 80
+    sensors:
+      radar: false
+      flir: true
+      targeting: true
+    weapons:
+      - umtas
+      - cirit
+      - turret_gun
+    troop_capacity: 0
+    survivability: 60
+
+  z10:
+    id: z10
+    name: "CAIC Z-10"
+    faction: pakistan
+    category: attack
+    speed_kmh: 270
+    range_km: 400
+    payload_kg: 500
+    armor: 60
+    agility: 75
+    sensors:
+      radar: false
+      flir: true
+      targeting: true
+    weapons:
+      - hj10
+      - rockets_90mm
+      - turret_gun
+    troop_capacity: 0
+    survivability: 58
+
+  mi17_pak:
+    id: mi17_pak
+    name: "Mi-17"
+    faction: pakistan
+    category: utility
+    speed_kmh: 250
+    range_km: 400
+    payload_kg: 4000
+    armor: 45
+    agility: 55
+    sensors:
+      radar: false
+      flir: false
+      targeting: false
+    weapons:
+      - door_guns
+    troop_capacity: 36
+    survivability: 45
+
+helicopter_unit:
+  # Schema for helicopter unit deployment
+  # - id: unique identifier
+  # - name: unit name
+  # - faction: india | pakistan
+  # - helicopter_type: reference to helicopter_types
+  # - helicopter_count: number of helicopters
+  # - helicopters_available: operational helicopters
+  # - base_id: operating base
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - mission: attack | transport | scout | rtb
+  # - status: ready | airborne | refueling | damaged | destroyed
+
+example_helicopter_unit:
+  id: "apache_squadron_01"
+  name: "125 Helicopter Squadron (Gladiators)"
+  faction: india
+  helicopter_type: apache
+  helicopter_count: 8
+  helicopters_available: 7
+  base_id: "army_pathankot"
+  location:
+    lat: 32.2
+    lon: 75.6
+    grid: null
+  mission: ready
+  status: ready
+
+# Helicopter operations
+helicopter_operations:
+  # Attack helicopter engagement
+  attack_vs_armor: 75
+  attack_vs_infantry: 85
+  attack_vs_soft_vehicle: 90
+  attack_vs_helicopter: 45
+
+  # Pop-up attack bonus (using terrain masking)
+  terrain_masking_bonus: 15
+
+  # Vulnerability
+  vulnerable_to_manpads: true
+  manpads_pk: 40
+  aaa_pk: 30
+  fighter_pk: 70
+
+  # Transport operations
+  troops_per_sortie: "helicopter.troop_capacity"
+  cargo_per_sortie: "helicopter.payload_kg"
+
+  # Air assault rules
+  air_assault_surprise_bonus: 20
+  fast_rope_dismount_turns: 0  # same turn

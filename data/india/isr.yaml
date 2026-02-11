@@ -1,0 +1,154 @@
+# Indian ISR Assets
+# AWACS, satellites, and reconnaissance
+# Data compiled from public sources
+
+awacs_units:
+  # Phalcon AWACS
+  - id: phalcon_det
+    name: "Phalcon AWACS Detachment"
+    faction: india
+    type: phalcon
+    aircraft_count: 3
+    aircraft_available: 2
+    base_id: iaf_agra
+    orbit:
+      lat: 31.0
+      lon: 75.0
+    mission: ground_alert
+    hours_on_station: 0
+    status: operational
+    notes: "Primary AWACS capability"
+
+  # Netra AEW&C
+  - id: netra_det
+    name: "Netra AEW&C Detachment"
+    faction: india
+    type: netra
+    aircraft_count: 3
+    aircraft_available: 2
+    base_id: iaf_agra
+    orbit:
+      lat: 28.0
+      lon: 74.0
+    mission: ground_alert
+    hours_on_station: 0
+    status: operational
+    notes: "Indigenous AEWC"
+
+satellites:
+  # RISAT (Radar Imaging Satellite)
+  - id: risat_2br1
+    name: "RISAT-2BR1"
+    faction: india
+    type: sar
+    resolution_m: 0.35
+    revisit_hours: 12
+    coverage_priority:
+      - kashmir_loc
+      - punjab_central
+      - punjab_north
+    status: operational
+    notes: "All-weather capability"
+
+  # Cartosat (Optical)
+  - id: cartosat_3
+    name: "Cartosat-3"
+    faction: india
+    type: optical
+    resolution_m: 0.25
+    revisit_hours: 24
+    coverage_priority:
+      - punjab_central
+      - rajasthan
+    weather_dependent: true
+    status: operational
+
+  # EMISAT (ELINT)
+  - id: emisat
+    name: "EMISAT"
+    faction: india
+    type: sigint
+    resolution_m: null
+    revisit_hours: 6
+    coverage: regional
+    status: operational
+    notes: "Signals intelligence"
+
+  # GSAT (Communication for ISR)
+  - id: gsat_7a
+    name: "GSAT-7A"
+    faction: india
+    type: communication
+    purpose: military_satcom
+    coverage: india_subcontinent
+    status: operational
+
+# Ground-based sensors
+ground_sensors:
+  - id: bfsr_punjab
+    name: "BSF Radar Punjab"
+    faction: india
+    type: bsr
+    location:
+      lat: 31.0
+      lon: 74.8
+    detection_range_km: 30
+    status: operational
+
+  - id: bfsr_rajasthan
+    name: "BSF Radar Rajasthan"
+    faction: india
+    type: bsr
+    location:
+      lat: 27.0
+      lon: 71.0
+    detection_range_km: 30
+    status: operational
+
+# EW/SIGINT Ground Stations
+ew_units:
+  - id: samyukta_1
+    name: "Samyukta EW Det 1"
+    faction: india
+    type: samyukta
+    system_count: 4
+    systems_available: 4
+    location:
+      lat: 31.5
+      lon: 75.0
+    active: false
+    status: ready
+    sector: "Punjab"
+
+  - id: samyukta_2
+    name: "Samyukta EW Det 2"
+    faction: india
+    type: samyukta
+    system_count: 4
+    systems_available: 3
+    location:
+      lat: 27.5
+      lon: 72.5
+    active: false
+    status: ready
+    sector: "Rajasthan"
+
+  - id: himshakti_1
+    name: "Himshakti EW Det"
+    faction: india
+    type: himshakti
+    system_count: 2
+    systems_available: 2
+    location:
+      lat: 32.0
+      lon: 75.5
+    active: false
+    status: ready
+    sector: "Jammu"
+
+# Summary:
+# 3 Phalcon AWACS
+# 3 Netra AEW&C
+# Multiple imaging satellites (SAR + optical)
+# ELINT satellite capability
+# Ground-based EW systems

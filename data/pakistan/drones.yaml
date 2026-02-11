@@ -1,0 +1,314 @@
+# Pakistan Drone/UAV Assets
+# Data compiled from public sources
+
+drone_units:
+  # Burraq (Armed)
+  - id: burraq_unit_1
+    name: "Burraq Unit 1"
+    faction: pakistan
+    drone_type: burraq
+    drone_count: 6
+    drones_available: 5
+    base_id: paf_sargodha
+    location:
+      lat: 32.0
+      lon: 72.6
+    mission: ready
+    status: ready
+    sector: "Northern Punjab"
+    weapons_loadout:
+      barq_atgm: 20
+
+  - id: burraq_unit_2
+    name: "Burraq Unit 2"
+    faction: pakistan
+    drone_type: burraq
+    drone_count: 6
+    drones_available: 5
+    base_id: paf_jacobabad
+    location:
+      lat: 28.2
+      lon: 68.4
+    mission: ready
+    status: ready
+    sector: "Sindh"
+    weapons_loadout:
+      barq_atgm: 20
+
+  # Shahpar (Reconnaissance)
+  - id: shahpar_unit_1
+    name: "Shahpar Unit 1"
+    faction: pakistan
+    drone_type: shahpar
+    drone_count: 8
+    drones_available: 7
+    base_id: paf_multan
+    location:
+      lat: 30.2
+      lon: 71.4
+    mission: ready
+    status: ready
+    sector: "Central Punjab"
+
+  - id: shahpar_unit_2
+    name: "Shahpar Unit 2"
+    faction: pakistan
+    drone_type: shahpar
+    drone_count: 8
+    drones_available: 6
+    base_id: paf_kamra
+    location:
+      lat: 33.8
+      lon: 72.4
+    mission: ready
+    status: ready
+    sector: "Northern"
+
+  - id: shahpar_unit_3
+    name: "Shahpar Unit 3"
+    faction: pakistan
+    drone_type: shahpar
+    drone_count: 8
+    drones_available: 7
+    base_id: paf_peshawar
+    location:
+      lat: 33.9
+      lon: 71.5
+    mission: ready
+    status: ready
+    sector: "KPK/Kashmir"
+
+  # Shahpar-II (Armed)
+  - id: shahpar2_unit_1
+    name: "Shahpar-II Unit 1"
+    faction: pakistan
+    drone_type: shahpar2
+    drone_count: 6
+    drones_available: 5
+    base_id: paf_sargodha
+    location:
+      lat: 32.0
+      lon: 72.6
+    mission: ready
+    status: ready
+    sector: "Punjab"
+    weapons_loadout:
+      barq_atgm: 18
+
+  # Wing Loong II (Chinese, Armed MALE)
+  - id: wing_loong_unit_1
+    name: "Wing Loong II Unit 1"
+    faction: pakistan
+    drone_type: wing_loong2
+    drone_count: 6
+    drones_available: 5
+    base_id: paf_jacobabad
+    location:
+      lat: 28.2
+      lon: 68.4
+    mission: ready
+    status: ready
+    sector: "Southern"
+    weapons_loadout:
+      ba7_atgm: 24
+      fei_teng: 12
+
+  - id: wing_loong_unit_2
+    name: "Wing Loong II Unit 2"
+    faction: pakistan
+    drone_type: wing_loong2
+    drone_count: 6
+    drones_available: 4
+    base_id: paf_rafiqui
+    location:
+      lat: 30.7
+      lon: 72.2
+    mission: ready
+    status: ready
+    sector: "Central"
+    weapons_loadout:
+      ba7_atgm: 20
+      fei_teng: 10
+
+  # ANKA (Turkish, if delivered)
+  - id: anka_unit_1
+    name: "ANKA UAV Unit"
+    faction: pakistan
+    drone_type: wing_loong2  # Using similar stats
+    drone_count: 4
+    drones_available: 3
+    base_id: paf_kamra
+    location:
+      lat: 33.8
+      lon: 72.4
+    mission: ready
+    status: ready
+    sector: "Reserve"
+    notes: "Newer acquisition"
+
+  # ---------------------------------------------------------------------------
+  # LOITERING MUNITIONS & SWARM DRONES
+  # Critical for Operation Sindoor May 7-9 drone saturation attacks
+  # ---------------------------------------------------------------------------
+
+  # Yihaa-III Swarm Units (Chinese loitering munitions)
+  - id: yihaa_swarm_1
+    name: "Yihaa-III Swarm Unit 1"
+    faction: pakistan
+    drone_type: yihaa_iii
+    drone_count: 100
+    drones_available: 100
+    base_id: paf_sargodha
+    location:
+      lat: 32.0
+      lon: 72.6
+    mission: ready
+    status: ready
+    sector: "Punjab Strike"
+    notes: "Primary swarm unit. 300-600 per wave doctrine"
+
+  - id: yihaa_swarm_2
+    name: "Yihaa-III Swarm Unit 2"
+    faction: pakistan
+    drone_type: yihaa_iii
+    drone_count: 100
+    drones_available: 100
+    base_id: paf_rafiqui
+    location:
+      lat: 30.7
+      lon: 72.2
+    mission: ready
+    status: ready
+    sector: "Central Strike"
+
+  - id: yihaa_swarm_3
+    name: "Yihaa-III Swarm Unit 3"
+    faction: pakistan
+    drone_type: yihaa_iii
+    drone_count: 100
+    drones_available: 100
+    base_id: paf_jacobabad
+    location:
+      lat: 28.2
+      lon: 68.4
+    mission: ready
+    status: ready
+    sector: "Southern Strike"
+
+  # Bayraktar TB2 Units (Turkish MALE)
+  - id: tb2_unit_1
+    name: "TB2 Squadron 1"
+    faction: pakistan
+    drone_type: tb2
+    drone_count: 12
+    drones_available: 10
+    base_id: paf_kamra
+    location:
+      lat: 33.8
+      lon: 72.4
+    mission: ready
+    status: ready
+    sector: "Northern"
+    weapons_loadout:
+      mam_l: 24
+      mam_c: 24
+
+  - id: tb2_unit_2
+    name: "TB2 Squadron 2"
+    faction: pakistan
+    drone_type: tb2
+    drone_count: 12
+    drones_available: 11
+    base_id: paf_multan
+    location:
+      lat: 30.2
+      lon: 71.4
+    mission: ready
+    status: ready
+    sector: "Central"
+    weapons_loadout:
+      mam_l: 24
+      mam_c: 24
+
+  # Bayraktar Akinci (Turkish heavy UCAV)
+  - id: akinci_unit_1
+    name: "Akinci Squadron"
+    faction: pakistan
+    drone_type: akinci
+    drone_count: 6
+    drones_available: 5
+    base_id: paf_sargodha
+    location:
+      lat: 32.0
+      lon: 72.6
+    mission: ready
+    status: ready
+    sector: "Strategic Reserve"
+    weapons_loadout:
+      som_cruise: 6
+      teber_guided_bomb: 12
+      mam_l: 18
+    notes: "Heavy strike capability. SOM cruise missile range 250km"
+
+  # Songar Swarm Units (Turkish rotary-wing)
+  - id: songar_swarm_1
+    name: "Songar Swarm Unit 1"
+    faction: pakistan
+    drone_type: songar
+    drone_count: 50
+    drones_available: 45
+    base_id: paf_sargodha
+    location:
+      lat: 32.0
+      lon: 72.6
+    mission: ready
+    status: ready
+    sector: "Close Support"
+    weapons_loadout:
+      machine_gun_762: 50
+      grenade_40mm: 200
+    notes: "Short-range swarm attacks on ground targets"
+
+  # Decoy Drones (Mixed with attack swarms)
+  - id: decoy_swarm_1
+    name: "Decoy Drone Reserve 1"
+    faction: pakistan
+    drone_type: decoy_drone
+    drone_count: 200
+    drones_available: 200
+    base_id: paf_sargodha
+    location:
+      lat: 32.0
+      lon: 72.6
+    mission: ready
+    status: ready
+    sector: "All Sectors"
+    notes: "Mixed with attack drones to saturate air defenses"
+
+  - id: decoy_swarm_2
+    name: "Decoy Drone Reserve 2"
+    faction: pakistan
+    drone_type: decoy_drone
+    drone_count: 200
+    drones_available: 200
+    base_id: paf_rafiqui
+    location:
+      lat: 30.7
+      lon: 72.2
+    mission: ready
+    status: ready
+    sector: "All Sectors"
+
+# =============================================================================
+# SUMMARY
+# =============================================================================
+# Summary:
+# 12 Burraq (armed, indigenous)
+# 24 Shahpar (reconnaissance)
+# 6 Shahpar-II (armed)
+# 12+ Wing Loong II (Chinese armed MALE)
+# 300 Yihaa-III (loitering munitions - swarm capable)
+# 24 TB2 Bayraktar (Turkish MALE)
+# 6 Akinci (Turkish heavy UCAV)
+# 50 Songar (rotary-wing armed)
+# 400 Decoy drones (radar saturation)

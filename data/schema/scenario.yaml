@@ -1,0 +1,321 @@
+# Scenario Configuration Schema Definition
+
+scenario:
+  # Top-level scenario configuration
+  # - id: unique identifier
+  # - name: scenario name
+  # - description: narrative description
+  # - start_date: scenario start date/time
+  # - duration_turns: total turns
+  # - turn_length_hours: hours per turn
+  # - factions: list of participating factions
+  # - victory_conditions: how to win
+  # - special_rules: scenario-specific rules
+
+  example:
+    id: "hot_start_2025"
+    name: "Operation Thunder Strike"
+    description: |
+      Following weeks of escalating tensions after a major terrorist attack,
+      both nations have mobilized forces along the border. Diplomatic efforts
+      have failed. Both sides have orders to commence operations at dawn.
+    start_date: "2025-03-15T06:00:00"
+    duration_turns: 16  # 4 days
+    turn_length_hours: 6
+    factions:
+      - india
+      - pakistan
+    victory_conditions:
+      - territorial_control
+      - force_attrition
+      - objective_capture
+    special_rules:
+      - no_nuclear
+      - no_naval
+      - limited_civilian_collateral
+
+faction_setup:
+  # Per-faction initial configuration
+  # - faction: faction ID
+  # - objectives: list of strategic objectives
+  # - constraints: operational constraints
+  # - agent_config: AI agent parameters
+  # - initial_state: starting conditions
+
+  india:
+    faction: india
+    objectives:
+      primary:
+        - id: "destroy_terror_camps"
+          type: destroy
+          targets: ["camp_1", "camp_2", "camp_3"]
+          points: 30
+
+        - id: "air_superiority"
+          type: achieve
+          condition: "enemy_air_strength < 50%"
+          points: 25
+
+      secondary:
+        - id: "limit_own_losses"
+          type: preserve
+          condition: "own_strength > 70%"
+          points: 15
+
+        - id: "capture_forward_posts"
+          type: capture
+          targets: ["post_alpha", "post_bravo"]
+          points: 10
+
+    constraints:
+      - no_strikes_on_cities
+      - no_nuclear_facilities
+      - minimize_civilian_casualties
+      - no_deep_penetration_beyond_50km
+
+    agent_config:
+      doctrine: "offensive_air_land"
+      risk_tolerance: medium  # 0.4-0.6
+      aggression: 0.6
+      force_preservation: 0.5
+      intel_priority: 0.7
+      combined_arms_preference: high
+
+    initial_state:
+      alert_level: high
+      mobilization: complete
+      supplies: full
+      morale: high
+
+  pakistan:
+    faction: pakistan
+    objectives:
+      primary:
+        - id: "defend_territory"
+          type: hold
+          targets: ["all_national_territory"]
+          points: 30
+
+        - id: "inflict_attrition"
+          type: attrit
+          condition: "enemy_losses > 20%"
+          points: 25
+
+      secondary:
+        - id: "preserve_air_force"
+          type: preserve
+          condition: "air_strength > 60%"
+          points: 15
+
+        - id: "counter_attack_success"
+          type: capture
+          targets: ["any_enemy_territory"]
+          points: 10
+
+    constraints:
+      - defensive_posture_unless_opportunity
+      - preserve_strategic_reserves
+      - no_first_strike_on_cities
+
+    agent_config:
+      doctrine: "defensive_in_depth"
+      risk_tolerance: low  # 0.3-0.4
+      aggression: 0.3
+      force_preservation: 0.8
+      intel_priority: 0.8
+      counter_attack_threshold: 0.7  # wait for good opportunity
+
+    initial_state:
+      alert_level: maximum
+      mobilization: complete
+      supplies: full
+      morale: high
+
+victory_conditions:
+  # Victory condition definitions
+  territorial_control:
+    description: "Control of key terrain and objectives"
+    calculation: |
+      Points based on hexes controlled beyond start line
+      Bonus for key locations (cities, bases)
+    weights:
+      hex_controlled: 1
+      city_controlled: 10
+      base_controlled: 15
+
+  force_attrition:
+    description: "Destruction of enemy combat power"
+    calculation: |
+      Points based on enemy losses vs own losses
+    thresholds:
+      decisive_victory: 0.3  # enemy at 30% or below
+      major_victory: 0.5
+      minor_victory: 0.7
+      draw: 0.85
+      defeat: 1.0
+
+  objective_capture:
+    description: "Achievement of stated objectives"
+    calculation: |
+      Sum of objective points achieved
+
+  time_limit:
+    description: "Situation at end of scenario"
+    calculation: |
+      If no decisive result, compare total points
+
+# Turn structure
+turn_structure:
+  phases:
+    - id: intel
+      name: "Intelligence Phase"
+      description: "ISR updates, fog of war refresh"
+      actions:
+        - satellite_pass
+        - awacs_update
+        - recon_results
+        - sigint_collection
+
+    - id: planning
+      name: "Planning Phase"
+      description: "Agent decision making"
+      actions:
+        - agent_receives_state
+        - agent_generates_orders
+        - orders_validated
+
+    - id: ew
+      name: "Electronic Warfare Phase"
+      description: "Jamming and cyber effects"
+      actions:
+        - jammer_activation
+        - cyber_attacks
+        - ew_effects_applied
+
+    - id: missile
+      name: "Missile Phase"
+      description: "Cruise and ballistic missile operations"
+      actions:
+        - launch_decisions
+        - bmd_intercepts
+        - impact_damage
+
+    - id: air
+      name: "Air Operations Phase"
+      description: "Fixed-wing air operations"
+      actions:
+        - cap_establishment
+        - oca_strikes
+        - air_to_air_combat
+        - sead_missions
+        - strike_missions
+        - cas_missions
+
+    - id: drone
+      name: "Drone Phase"
+      description: "UAV operations"
+      actions:
+        - recon_missions
+        - armed_drone_strikes
+        - loitering_munitions
+
+    - id: artillery
+      name: "Artillery Phase"
+      description: "Fire support"
+      actions:
+        - fire_missions
+        - counter_battery
+        - smoke_illumination
+
+    - id: helicopter
+      name: "Helicopter Phase"
+      description: "Rotary-wing operations"
+      actions:
+        - attack_helo_missions
+        - air_assault
+        - transport
+
+    - id: ground
+      name: "Ground Phase"
+      description: "Ground force operations"
+      actions:
+        - movement
+        - ground_combat
+        - exploitation
+
+    - id: sf
+      name: "Special Forces Phase"
+      description: "Special operations"
+      actions:
+        - insertion
+        - mission_execution
+        - exfiltration
+
+    - id: logistics
+      name: "Logistics Phase"
+      description: "Supply and maintenance"
+      actions:
+        - supply_consumption
+        - resupply
+        - repair
+        - reinforcement
+
+    - id: assessment
+      name: "Assessment Phase"
+      description: "End of turn assessment"
+      actions:
+        - casualty_reporting
+        - morale_update
+        - victory_point_calculation
+        - turn_log_generation
+
+# Escalation rules
+escalation:
+  levels:
+    - id: limited
+      description: "Limited strikes, careful targeting"
+      restrictions:
+        - no_cities
+        - no_strategic_infrastructure
+        - proportional_response
+
+    - id: conventional
+      description: "Full conventional operations"
+      restrictions:
+        - no_cities
+        - military_targets_only
+
+    - id: total
+      description: "No restrictions on conventional targets"
+      restrictions:
+        - no_nuclear_only
+
+  triggers:
+    escalate_to_conventional:
+      - "more than 10% force losses"
+      - "enemy deep strike"
+
+    escalate_to_total:
+      - "more than 30% force losses"
+      - "capital area threatened"
+      - "strategic infrastructure destroyed"
+
+# Game state
+game_state:
+  # Complete game state structure
+  turn: 0
+  phase: intel
+  factions:
+    india:
+      points: 0
+      alerts: []
+      intel_picture: {}
+    pakistan:
+      points: 0
+      alerts: []
+      intel_picture: {}
+  units: {}  # all unit states
+  map: {}    # hex control and fortification
+  weather: clear
+  time_of_day: day
+  events: []  # log of events this turn

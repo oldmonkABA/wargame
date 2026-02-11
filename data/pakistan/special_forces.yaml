@@ -1,0 +1,158 @@
+# Pakistan Special Forces
+# Data compiled from public sources
+
+sf_units:
+  # Special Service Group (SSG)
+  - id: ssg_1
+    name: "1 SSG (Musa Company)"
+    faction: pakistan
+    type: ssg
+    team_count: 8
+    teams_available: 8
+    base_id: cherat
+    location:
+      lat: 33.8
+      lon: 71.9
+    insertion_status: standby
+    mission: null
+    status: ready
+    notes: "Elite SSG unit"
+
+  - id: ssg_2
+    name: "2 SSG (Zarrar Company)"
+    faction: pakistan
+    type: zarrar
+    team_count: 8
+    teams_available: 7
+    base_id: cherat
+    location:
+      lat: 33.8
+      lon: 71.9
+    insertion_status: standby
+    mission: null
+    status: ready
+    notes: "Counter-terrorism specialists"
+
+  - id: ssg_3
+    name: "3 SSG"
+    faction: pakistan
+    type: ssg
+    team_count: 8
+    teams_available: 8
+    base_id: cherat
+    location:
+      lat: 33.8
+      lon: 71.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  - id: ssg_4
+    name: "4 SSG"
+    faction: pakistan
+    type: ssg
+    team_count: 8
+    teams_available: 7
+    base_id: cherat
+    location:
+      lat: 33.8
+      lon: 71.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  - id: ssg_5
+    name: "5 SSG"
+    faction: pakistan
+    type: ssg
+    team_count: 8
+    teams_available: 8
+    base_id: cherat
+    location:
+      lat: 33.8
+      lon: 71.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  - id: ssg_6
+    name: "6 SSG"
+    faction: pakistan
+    type: ssg
+    team_count: 8
+    teams_available: 7
+    base_id: cherat
+    location:
+      lat: 33.8
+      lon: 71.9
+    insertion_status: standby
+    mission: null
+    status: ready
+
+  # SSG (Navy) - SSGN
+  - id: ssgn_det
+    name: "SSG(N) Detachment"
+    faction: pakistan
+    type: ssg_navy
+    team_count: 4
+    teams_available: 4
+    base_id: karachi_navy
+    location:
+      lat: 24.8
+      lon: 67.0
+    insertion_status: standby
+    mission: null
+    status: ready
+    notes: "Maritime special ops"
+
+  # SSG attached to Corps
+  - id: ssg_det_1_corps
+    name: "SSG Detachment I Corps"
+    faction: pakistan
+    type: ssg
+    team_count: 4
+    teams_available: 4
+    base_id: null
+    location:
+      lat: 32.9
+      lon: 73.7
+    insertion_status: standby
+    mission: null
+    status: ready
+    parent: 1_corps_pak
+
+  - id: ssg_det_10_corps
+    name: "SSG Detachment X Corps"
+    faction: pakistan
+    type: ssg
+    team_count: 4
+    teams_available: 4
+    base_id: null
+    location:
+      lat: 33.6
+      lon: 73.0
+    insertion_status: standby
+    mission: null
+    status: ready
+    parent: 10_corps_pak
+    notes: "Kashmir/LOC operations"
+
+  - id: ssg_det_4_corps
+    name: "SSG Detachment IV Corps"
+    faction: pakistan
+    type: ssg
+    team_count: 4
+    teams_available: 3
+    base_id: null
+    location:
+      lat: 31.5
+      lon: 74.3
+    insertion_status: standby
+    mission: null
+    status: ready
+    parent: 4_corps_pak
+
+# Summary:
+# 6 SSG battalions at Cherat (~48 teams)
+# 1 SSGN detachment (~4 teams)
+# 4 SSG detachments attached to corps (~15 teams)

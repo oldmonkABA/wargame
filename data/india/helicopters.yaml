@@ -1,0 +1,201 @@
+# Indian Army/Air Force Helicopter Assets
+# Data compiled from public sources
+
+helicopter_units:
+  # Apache Attack Helicopters
+  - id: apache_sqn_1
+    name: "125 Helicopter Squadron (Gladiators)"
+    faction: india
+    helicopter_type: apache
+    helicopter_count: 8
+    helicopters_available: 7
+    base_id: army_pathankot
+    location:
+      lat: 32.2
+      lon: 75.6
+    mission: ready
+    status: ready
+    sector: "Punjab North"
+
+  - id: apache_sqn_2
+    name: "Apache Squadron 2"
+    faction: india
+    helicopter_type: apache
+    helicopter_count: 8
+    helicopters_available: 7
+    base_id: army_jodhpur
+    location:
+      lat: 26.2
+      lon: 73.0
+    mission: ready
+    status: ready
+    sector: "Rajasthan"
+
+  - id: apache_sqn_3
+    name: "Apache Squadron 3"
+    faction: india
+    helicopter_type: apache
+    helicopter_count: 6
+    helicopters_available: 5
+    base_id: army_srinagar
+    location:
+      lat: 33.9
+      lon: 74.7
+    mission: ready
+    status: ready
+    sector: "Kashmir"
+
+  # Rudra (HAL ALH WSI) Attack Helicopters
+  - id: rudra_sqn_1
+    name: "Rudra Squadron 1"
+    faction: india
+    helicopter_type: rudra
+    helicopter_count: 8
+    helicopters_available: 6
+    base_id: army_amritsar
+    location:
+      lat: 31.6
+      lon: 74.8
+    mission: ready
+    status: ready
+    sector: "Punjab Central"
+
+  - id: rudra_sqn_2
+    name: "Rudra Squadron 2"
+    faction: india
+    helicopter_type: rudra
+    helicopter_count: 8
+    helicopters_available: 7
+    base_id: army_jammu
+    location:
+      lat: 32.6
+      lon: 74.8
+    mission: ready
+    status: ready
+    sector: "Jammu"
+
+  # LCH (Light Combat Helicopter)
+  - id: lch_sqn_1
+    name: "LCH Squadron 1"
+    faction: india
+    helicopter_type: lch
+    helicopter_count: 8
+    helicopters_available: 6
+    base_id: army_srinagar
+    location:
+      lat: 33.9
+      lon: 74.7
+    mission: ready
+    status: ready
+    sector: "Kashmir"
+    notes: "High altitude capable"
+
+  - id: lch_sqn_2
+    name: "LCH Squadron 2"
+    faction: india
+    helicopter_type: lch
+    helicopter_count: 6
+    helicopters_available: 5
+    base_id: army_leh
+    location:
+      lat: 34.1
+      lon: 77.5
+    mission: ready
+    status: ready
+    sector: "Ladakh"
+    notes: "High altitude specialized"
+
+  # Mi-35 Attack/Transport
+  - id: mi35_sqn_1
+    name: "Mi-35 Squadron 1"
+    faction: india
+    helicopter_type: mi35
+    helicopter_count: 6
+    helicopters_available: 5
+    base_id: army_pathankot
+    location:
+      lat: 32.2
+      lon: 75.6
+    mission: ready
+    status: ready
+    sector: "Punjab"
+
+  # Chinook Transport
+  - id: chinook_sqn_1
+    name: "Chinook Squadron 1"
+    faction: india
+    helicopter_type: chinook
+    helicopter_count: 8
+    helicopters_available: 7
+    base_id: iaf_chandigarh
+    location:
+      lat: 30.6
+      lon: 76.7
+    mission: ready
+    status: ready
+    sector: "Western Reserve"
+
+  - id: chinook_sqn_2
+    name: "Chinook Squadron 2"
+    faction: india
+    helicopter_type: chinook
+    helicopter_count: 7
+    helicopters_available: 6
+    base_id: iaf_jammu
+    location:
+      lat: 32.6
+      lon: 74.8
+    mission: ready
+    status: ready
+    sector: "Kashmir"
+
+  # Mi-17 Transport
+  - id: mi17_sqn_1
+    name: "Mi-17 Squadron 1"
+    faction: india
+    helicopter_type: mi17
+    helicopter_count: 12
+    helicopters_available: 10
+    base_id: iaf_srinagar
+    location:
+      lat: 33.9
+      lon: 74.7
+    mission: ready
+    status: ready
+    sector: "Kashmir"
+
+  - id: mi17_sqn_2
+    name: "Mi-17 Squadron 2"
+    faction: india
+    helicopter_type: mi17
+    helicopter_count: 12
+    helicopters_available: 10
+    base_id: iaf_pathankot
+    location:
+      lat: 32.2
+      lon: 75.6
+    mission: ready
+    status: ready
+    sector: "Punjab"
+
+  - id: mi17_sqn_3
+    name: "Mi-17 Squadron 3"
+    faction: india
+    helicopter_type: mi17
+    helicopter_count: 12
+    helicopters_available: 9
+    base_id: army_jodhpur
+    location:
+      lat: 26.2
+      lon: 73.0
+    mission: ready
+    status: ready
+    sector: "Rajasthan"
+
+# Summary:
+# 22 Apache AH-64E
+# 16 Rudra (ALH WSI)
+# 14 LCH
+# 6 Mi-35
+# 15 Chinook CH-47F
+# 36+ Mi-17V-5

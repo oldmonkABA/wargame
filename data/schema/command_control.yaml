@@ -1,0 +1,201 @@
+# Command and Control Schema Definition
+
+hq_types:
+  # Schema for headquarters type definitions
+  # - id: unique identifier
+  # - name: HQ type name
+  # - level: strategic | operational | tactical
+  # - command_capacity: max units it can effectively command
+  # - communication_range_km: max distance to subordinate units
+  # - staff_functions: [intel, operations, logistics, fires]
+  # - hardness: 0-100 (protection level)
+  # - mobility: static | semi_mobile | mobile
+  # - setup_time_hours: time to establish after move
+  # - signature: 0-100 (how easy to detect)
+
+  # Strategic level
+  strategic_hq:
+    id: strategic_hq
+    name: "Strategic Command HQ"
+    level: strategic
+    command_capacity: 10  # corps
+    communication_range_km: 1000
+    staff_functions: [intel, operations, logistics, fires, air_coordination]
+    hardness: 80  # hardened bunker
+    mobility: static
+    setup_time_hours: null  # doesn't move
+    signature: 60  # large, lots of comms
+
+  # Operational level
+  corps_hq:
+    id: corps_hq
+    name: "Corps Headquarters"
+    level: operational
+    command_capacity: 6  # divisions
+    communication_range_km: 200
+    staff_functions: [intel, operations, logistics, fires]
+    hardness: 50
+    mobility: semi_mobile
+    setup_time_hours: 12
+    signature: 70
+
+  division_hq:
+    id: division_hq
+    name: "Division Headquarters"
+    level: operational
+    command_capacity: 6  # brigades
+    communication_range_km: 80
+    staff_functions: [intel, operations, logistics, fires]
+    hardness: 30
+    mobility: semi_mobile
+    setup_time_hours: 6
+    signature: 60
+
+  # Tactical level
+  brigade_hq:
+    id: brigade_hq
+    name: "Brigade Headquarters"
+    level: tactical
+    command_capacity: 6  # battalions
+    communication_range_km: 30
+    staff_functions: [operations, fires]
+    hardness: 20
+    mobility: mobile
+    setup_time_hours: 2
+    signature: 50
+
+  # Air Force
+  air_operations_center:
+    id: air_operations_center
+    name: "Air Operations Center"
+    level: operational
+    command_capacity: 20  # squadrons
+    communication_range_km: 500
+    staff_functions: [intel, operations, air_tasking]
+    hardness: 70
+    mobility: static
+    setup_time_hours: null
+    signature: 80
+
+  sector_operations_center:
+    id: sector_operations_center
+    name: "Sector Operations Center"
+    level: tactical
+    command_capacity: 8  # airbases in sector
+    communication_range_km: 300
+    staff_functions: [operations, air_defense]
+    hardness: 60
+    mobility: static
+    setup_time_hours: null
+    signature: 70
+
+hq_node:
+  # Schema for deployed HQ
+  # - id: unique identifier
+  # - name: unit designation
+  # - faction: india | pakistan
+  # - type: reference to hq_types
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - subordinates: list of unit IDs under command
+  # - superior: parent HQ ID
+  # - commander_rating: 0-100 (quality of commander)
+  # - staff_rating: 0-100 (quality of staff work)
+  # - comms_status: full | degraded | severed
+  # - status: operational | disrupted | destroyed
+
+example_hq:
+  id: "10_corps_hq"
+  name: "X Corps HQ"
+  faction: india
+  type: corps_hq
+  location:
+    lat: 30.8
+    lon: 75.5
+    grid: null
+  subordinates:
+    - "16_infantry_division"
+    - "18_armored_division"
+    - "corps_artillery_brigade"
+  superior: "western_command_hq"
+  commander_rating: 85
+  staff_rating: 80
+  comms_status: full
+  status: operational
+
+# Communication network
+communication:
+  # Comm links between HQs
+  # - id: unique identifier
+  # - from_hq: source HQ ID
+  # - to_hq: destination HQ ID
+  # - type: radio | landline | satellite
+  # - bandwidth: 0-100 (data capacity)
+  # - encryption: 0-100 (security level)
+  # - jamming_resistance: 0-100
+  # - status: operational | jammed | cut
+
+  link_types:
+    radio:
+      bandwidth: 60
+      encryption: 70
+      jamming_resistance: 50
+      range_limited: true
+
+    landline:
+      bandwidth: 90
+      encryption: 90
+      jamming_resistance: 100  # can't jam
+      range_limited: false
+      vulnerable_to: sabotage
+
+    satellite:
+      bandwidth: 80
+      encryption: 85
+      jamming_resistance: 70
+      range_limited: false
+
+# Command effects
+command_effects:
+  # Bonus when HQ is functional
+  in_command_bonus:
+    coordination: 1.2  # 20% better combined arms
+    reaction_time: 0.8  # 20% faster response
+    intel_sharing: true
+
+  # Penalty when HQ is disrupted
+  hq_disrupted:
+    coordination: 0.8
+    reaction_time: 1.5  # 50% slower
+    intel_sharing: false
+    initiative_penalty: 20
+
+  # Penalty when HQ is destroyed
+  hq_destroyed:
+    coordination: 0.5
+    reaction_time: 2.0
+    intel_sharing: false
+    morale_penalty: 15
+    turns_to_reconstitute: 4
+
+  # Out of command range
+  out_of_command:
+    coordination: 0.6
+    can_attack: false  # can only defend
+    intel_sharing: false
+
+# Decapitation strike effects
+decapitation:
+  # If strategic HQ hit
+  strategic_hq_loss:
+    coordination_penalty: 0.3  # severe
+    turns_to_recover: 8
+    morale_army_wide: -20
+
+  # If corps HQ hit
+  corps_hq_loss:
+    subordinate_coordination: 0.5
+    turns_to_recover: 4
+    morale_corps: -15

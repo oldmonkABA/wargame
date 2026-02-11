@@ -1,0 +1,367 @@
+# Pakistan Air Force Bases
+# Data compiled from public sources (IISS, news reports, Wikipedia)
+
+airbases:
+  # Northern Sector (facing Punjab/Kashmir)
+  - id: paf_sargodha
+    name: "PAF Base Mushaf (Sargodha)"
+    faction: pakistan
+    location:
+      lat: 32.0486
+      lon: 72.6650
+      province: Punjab
+    type: fighter
+    runways:
+      - length_m: 3000
+        surface: concrete
+        hardened: true
+    capacity: 50
+    facilities:
+      hardened_shelters: 30
+      maintenance: 85
+    squadrons:
+      - id: "14_sqn_shaheens"
+        name: "No. 14 Squadron"
+        nickname: "Shaheens"
+        aircraft_type: jf17_block3
+        aircraft_count: 18
+      - id: "23_sqn_talons"
+        name: "No. 23 Squadron"
+        nickname: "Talons"
+        aircraft_type: f16
+        aircraft_count: 14
+      - id: "2_sqn_minhasians"
+        name: "No. 2 Squadron"
+        nickname: "Minhasians"
+        aircraft_type: mirage3
+        aircraft_count: 12
+    status: operational
+    notes: "Major PAF base, multiple squadrons"
+
+  - id: paf_mianwali
+    name: "PAF Base Mianwali"
+    faction: pakistan
+    location:
+      lat: 32.5631
+      lon: 71.5706
+      province: Punjab
+    type: fighter
+    runways:
+      - length_m: 2750
+        surface: concrete
+        hardened: true
+    capacity: 40
+    facilities:
+      hardened_shelters: 22
+      maintenance: 82
+    squadrons:
+      - id: "15_sqn_cobras"
+        name: "No. 15 Squadron"
+        nickname: "Cobras"
+        aircraft_type: mirage5
+        aircraft_count: 14
+    status: operational
+
+  - id: paf_peshawar
+    name: "PAF Base Peshawar"
+    faction: pakistan
+    location:
+      lat: 33.9939
+      lon: 71.5147
+      province: KPK
+    type: fighter
+    runways:
+      - length_m: 2700
+        surface: concrete
+        hardened: true
+    capacity: 35
+    facilities:
+      hardened_shelters: 18
+      maintenance: 78
+    squadrons:
+      - id: "26_sqn_black_spiders"
+        name: "No. 26 Squadron"
+        nickname: "Black Spiders"
+        aircraft_type: jf17
+        aircraft_count: 16
+    status: operational
+
+  - id: paf_kamra
+    name: "PAF Base Kamra"
+    faction: pakistan
+    location:
+      lat: 33.8697
+      lon: 72.4014
+      province: Punjab
+    type: mixed
+    runways:
+      - length_m: 3200
+        surface: concrete
+        hardened: true
+    capacity: 45
+    facilities:
+      hardened_shelters: 20
+      maintenance: 90
+    squadrons:
+      - id: "awacs_sqn"
+        name: "AWACS Squadron"
+        aircraft_type: erieye
+        aircraft_count: 4
+      - id: "jf17_testing"
+        name: "JF-17 Test & Eval"
+        aircraft_type: jf17_block3
+        aircraft_count: 6
+    status: operational
+    notes: "PAC manufacturing facility, AWACS operations"
+
+  # Central Sector (near Lahore)
+  - id: paf_lahore
+    name: "PAF Base Walton (Lahore)"
+    faction: pakistan
+    location:
+      lat: 31.4978
+      lon: 74.3556
+      province: Punjab
+    type: fighter
+    runways:
+      - length_m: 2500
+        surface: concrete
+        hardened: true
+    capacity: 30
+    facilities:
+      hardened_shelters: 16
+      maintenance: 75
+    squadrons:
+      - id: "33_sqn_wolves"
+        name: "No. 33 Squadron"
+        nickname: "Wolves"
+        aircraft_type: jf17
+        aircraft_count: 16
+    status: operational
+
+  - id: paf_rafiqui
+    name: "PAF Base Rafiqui (Shorkot)"
+    faction: pakistan
+    location:
+      lat: 30.7581
+      lon: 72.2828
+      province: Punjab
+    type: fighter
+    runways:
+      - length_m: 2750
+        surface: concrete
+        hardened: true
+    capacity: 40
+    facilities:
+      hardened_shelters: 22
+      maintenance: 82
+    squadrons:
+      - id: "27_sqn_zarrars"
+        name: "No. 27 Squadron"
+        nickname: "Zarrars"
+        aircraft_type: jf17_block3
+        aircraft_count: 18
+      - id: "16_sqn_black_panthers"
+        name: "No. 16 Squadron"
+        nickname: "Black Panthers"
+        aircraft_type: jf17
+        aircraft_count: 16
+    status: operational
+    notes: "JF-17 main operating base"
+
+  - id: paf_multan
+    name: "PAF Base Multan"
+    faction: pakistan
+    location:
+      lat: 30.2033
+      lon: 71.4189
+      province: Punjab
+    type: fighter
+    runways:
+      - length_m: 2800
+        surface: concrete
+        hardened: true
+    capacity: 35
+    facilities:
+      hardened_shelters: 18
+      maintenance: 80
+    squadrons:
+      - id: "7_sqn_bandits"
+        name: "No. 7 Squadron"
+        nickname: "Bandits"
+        aircraft_type: mirage5
+        aircraft_count: 14
+    status: operational
+
+  # Southern Sector (Sindh)
+  - id: paf_jacobabad
+    name: "PAF Base Shahbaz (Jacobabad)"
+    faction: pakistan
+    location:
+      lat: 28.2844
+      lon: 68.4497
+      province: Sindh
+    type: fighter
+    runways:
+      - length_m: 3000
+        surface: concrete
+        hardened: true
+    capacity: 50
+    facilities:
+      hardened_shelters: 28
+      maintenance: 85
+    squadrons:
+      - id: "9_sqn_griffins"
+        name: "No. 9 Squadron"
+        nickname: "Griffins"
+        aircraft_type: f16
+        aircraft_count: 16
+      - id: "8_sqn_haiders"
+        name: "No. 8 Squadron"
+        nickname: "Haiders"
+        aircraft_type: mirage3
+        aircraft_count: 12
+    status: operational
+    notes: "Major southern base"
+
+  - id: paf_karachi
+    name: "PAF Base Faisal (Karachi)"
+    faction: pakistan
+    location:
+      lat: 24.8935
+      lon: 67.1608
+      province: Sindh
+    type: mixed
+    runways:
+      - length_m: 3200
+        surface: concrete
+        hardened: true
+    capacity: 40
+    facilities:
+      hardened_shelters: 20
+      maintenance: 85
+    squadrons:
+      - id: "5_sqn_falcons"
+        name: "No. 5 Squadron"
+        nickname: "Falcons"
+        aircraft_type: f16
+        aircraft_count: 14
+      - id: "zdk_det"
+        name: "ZDK-03 AWACS Det"
+        aircraft_type: zdk03
+        aircraft_count: 2
+    status: operational
+
+  - id: paf_masroor
+    name: "PAF Base Masroor"
+    faction: pakistan
+    location:
+      lat: 24.8939
+      lon: 66.9386
+      province: Sindh
+    type: fighter
+    runways:
+      - length_m: 2800
+        surface: concrete
+        hardened: true
+    capacity: 40
+    facilities:
+      hardened_shelters: 22
+      maintenance: 82
+    squadrons:
+      - id: "18_sqn_thunderbolts"
+        name: "No. 18 Squadron"
+        nickname: "Thunderbolts"
+        aircraft_type: jf17
+        aircraft_count: 16
+    status: operational
+
+  # Western Sector (Balochistan)
+  - id: paf_quetta
+    name: "PAF Base Quetta"
+    faction: pakistan
+    location:
+      lat: 30.2514
+      lon: 66.9381
+      province: Balochistan
+    type: fighter
+    runways:
+      - length_m: 2600
+        surface: concrete
+        hardened: true
+    capacity: 30
+    facilities:
+      hardened_shelters: 16
+      maintenance: 75
+    squadrons:
+      - id: "25_sqn"
+        name: "No. 25 Squadron"
+        aircraft_type: mirage5
+        aircraft_count: 12
+    status: operational
+
+  # Forward Operating Bases
+  - id: paf_skardu
+    name: "PAF Base Skardu"
+    faction: pakistan
+    location:
+      lat: 35.3361
+      lon: 75.5361
+      province: Gilgit_Baltistan
+    type: forward
+    runways:
+      - length_m: 2400
+        surface: asphalt
+        hardened: false
+    capacity: 20
+    facilities:
+      hardened_shelters: 8
+      maintenance: 60
+    squadrons: []  # Forward deployment only
+    status: operational
+    notes: "High altitude FOB, close to LOC"
+
+  - id: paf_gilgit
+    name: "PAF Base Gilgit"
+    faction: pakistan
+    location:
+      lat: 35.9189
+      lon: 74.3336
+      province: Gilgit_Baltistan
+    type: forward
+    runways:
+      - length_m: 2200
+        surface: asphalt
+        hardened: false
+    capacity: 15
+    facilities:
+      hardened_shelters: 6
+      maintenance: 55
+    squadrons: []
+    status: operational
+    notes: "High altitude FOB"
+
+  # J-10C Base (New acquisition)
+  - id: paf_minhas
+    name: "PAF Base Minhas (Kamra)"
+    faction: pakistan
+    location:
+      lat: 33.8500
+      lon: 72.4000
+      province: Punjab
+    type: fighter
+    runways:
+      - length_m: 3000
+        surface: concrete
+        hardened: true
+    capacity: 40
+    facilities:
+      hardened_shelters: 20
+      maintenance: 85
+    squadrons:
+      - id: "j10c_sqn"
+        name: "No. 15 Squadron (reformed)"
+        aircraft_type: j10c
+        aircraft_count: 25
+    status: operational
+    notes: "J-10C operations"

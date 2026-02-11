@@ -1,0 +1,520 @@
+# Loadout System Schema
+# Defines weapon statistics and loadout structure
+# Based on Operation Sindoor (May 2025) combat data
+
+# =============================================================================
+# WEAPON STATISTICS
+# =============================================================================
+
+weapon_stats:
+
+  # ---------------------------------------------------------------------------
+  # AIR-TO-AIR MISSILES - BVR (Beyond Visual Range)
+  # ---------------------------------------------------------------------------
+
+  meteor:
+    name: "MBDA Meteor"
+    type: bvr_aam
+    origin: european
+    range_km: 150
+    nez_km: 60                    # No Escape Zone
+    min_range_km: 5
+    pk_head_on: 0.85
+    pk_beam: 0.70
+    pk_tail: 0.92
+    guidance: active_radar_ramjet
+    propulsion: ramjet            # Maintains energy in terminal phase
+    ecm_resistance: 85
+    max_speed_mach: 4.0
+    platforms: [rafale]
+    notes: "Ramjet sustains speed through terminal maneuvers"
+
+  pl15:
+    name: "PL-15"
+    type: bvr_aam
+    origin: chinese
+    range_km: 200
+    nez_km: 75
+    min_range_km: 5
+    pk_head_on: 0.75
+    pk_beam: 0.60
+    pk_tail: 0.85
+    guidance: active_radar
+    propulsion: dual_pulse_rocket
+    ecm_resistance: 70
+    max_speed_mach: 4.5
+    platforms: [j10c, jf17_block3, jf17_block2]
+    notes: "Range advantage but lower Pk than Meteor. Used with AEW&C cooperative engagement"
+
+  pl12:
+    name: "PL-12 (SD-10)"
+    type: bvr_aam
+    origin: chinese
+    range_km: 100
+    nez_km: 35
+    min_range_km: 3
+    pk_head_on: 0.72
+    pk_beam: 0.55
+    pk_tail: 0.80
+    guidance: active_radar
+    propulsion: rocket
+    ecm_resistance: 60
+    max_speed_mach: 4.0
+    platforms: [jf17, jf17_block2, jf17_block3, j10c]
+    notes: "Standard PAF BVR missile"
+
+  aim120c:
+    name: "AIM-120C AMRAAM"
+    type: bvr_aam
+    origin: american
+    range_km: 105
+    nez_km: 40
+    min_range_km: 3
+    pk_head_on: 0.82
+    pk_beam: 0.68
+    pk_tail: 0.88
+    guidance: active_radar
+    propulsion: rocket
+    ecm_resistance: 78
+    max_speed_mach: 4.0
+    platforms: [f16]
+    notes: "US-supplied, restricted to F-16 only. Proven in 2019 Balakot"
+
+  r77:
+    name: "R-77 (AA-12 Adder)"
+    type: bvr_aam
+    origin: russian
+    range_km: 80
+    nez_km: 30
+    min_range_km: 3
+    pk_head_on: 0.70
+    pk_beam: 0.55
+    pk_tail: 0.78
+    guidance: active_radar
+    propulsion: rocket
+    ecm_resistance: 55
+    max_speed_mach: 4.0
+    platforms: [su30mki, mig29]
+    notes: "Underperformed vs AIM-120C in 2019. Being replaced by Astra"
+
+  r27er:
+    name: "R-27ER"
+    type: bvr_aam
+    origin: russian
+    range_km: 130
+    nez_km: 45
+    min_range_km: 5
+    pk_head_on: 0.60
+    pk_beam: 0.45
+    pk_tail: 0.70
+    guidance: semi_active_radar   # Requires continuous illumination
+    propulsion: rocket
+    ecm_resistance: 45
+    max_speed_mach: 4.5
+    platforms: [su30mki, mig29]
+    notes: "Long range but semi-active guidance limits utility. Difficult to employ in 2019"
+
+  mica_em:
+    name: "MICA EM"
+    type: bvr_aam
+    origin: french
+    range_km: 80
+    nez_km: 30
+    min_range_km: 0.5
+    pk_head_on: 0.82
+    pk_beam: 0.70
+    pk_tail: 0.88
+    guidance: active_radar
+    propulsion: rocket
+    ecm_resistance: 75
+    max_speed_mach: 4.0
+    platforms: [rafale, mirage2000]
+    notes: "Versatile, can be used at very short range"
+
+  astra_mk1:
+    name: "Astra Mk.1"
+    type: bvr_aam
+    origin: indian
+    range_km: 110
+    nez_km: 40
+    min_range_km: 3
+    pk_head_on: 0.75
+    pk_beam: 0.60
+    pk_tail: 0.82
+    guidance: active_radar
+    propulsion: rocket
+    ecm_resistance: 65
+    max_speed_mach: 4.5
+    platforms: [su30mki, tejas, mig29]
+    notes: "Indigenous replacement for R-77"
+
+  derby:
+    name: "Rafael Derby"
+    type: bvr_aam
+    origin: israeli
+    range_km: 50
+    nez_km: 20
+    min_range_km: 2
+    pk_head_on: 0.78
+    pk_beam: 0.62
+    pk_tail: 0.85
+    guidance: active_radar
+    propulsion: rocket
+    ecm_resistance: 70
+    max_speed_mach: 4.0
+    platforms: [tejas]
+    notes: "Short-range BVR for Tejas"
+
+  # ---------------------------------------------------------------------------
+  # AIR-TO-AIR MISSILES - WVR (Within Visual Range)
+  # ---------------------------------------------------------------------------
+
+  mica_ir:
+    name: "MICA IR"
+    type: wvr_aam
+    origin: french
+    range_km: 20
+    min_range_km: 0.3
+    pk_head_on: 0.75
+    pk_beam: 0.85
+    pk_tail: 0.92
+    guidance: imaging_infrared
+    off_boresight_deg: 90
+    ecm_resistance: 80
+    max_speed_mach: 3.0
+    platforms: [rafale, mirage2000]
+    notes: "Lock-on after launch capable"
+
+  pl10:
+    name: "PL-10"
+    type: wvr_aam
+    origin: chinese
+    range_km: 20
+    min_range_km: 0.3
+    pk_head_on: 0.72
+    pk_beam: 0.82
+    pk_tail: 0.90
+    guidance: imaging_infrared
+    off_boresight_deg: 90
+    ecm_resistance: 75
+    max_speed_mach: 3.0
+    platforms: [j10c, jf17_block3]
+    notes: "High off-boresight, helmet-mounted sight compatible"
+
+  pl5e:
+    name: "PL-5E"
+    type: wvr_aam
+    origin: chinese
+    range_km: 16
+    min_range_km: 0.5
+    pk_head_on: 0.60
+    pk_beam: 0.72
+    pk_tail: 0.85
+    guidance: infrared
+    off_boresight_deg: 40
+    ecm_resistance: 55
+    max_speed_mach: 2.5
+    platforms: [jf17, jf17_block2, jf17_block3]
+    notes: "Older Chinese WVR missile"
+
+  aim9x:
+    name: "AIM-9X Sidewinder"
+    type: wvr_aam
+    origin: american
+    range_km: 18
+    min_range_km: 0.2
+    pk_head_on: 0.78
+    pk_beam: 0.88
+    pk_tail: 0.95
+    guidance: imaging_infrared
+    off_boresight_deg: 90
+    ecm_resistance: 82
+    max_speed_mach: 3.0
+    platforms: [f16]
+    notes: "Best-in-class WVR missile"
+
+  r73:
+    name: "R-73 (AA-11 Archer)"
+    type: wvr_aam
+    origin: russian
+    range_km: 20
+    min_range_km: 0.3
+    pk_head_on: 0.65
+    pk_beam: 0.78
+    pk_tail: 0.88
+    guidance: infrared
+    off_boresight_deg: 60
+    ecm_resistance: 60
+    max_speed_mach: 2.5
+    platforms: [su30mki, mig29, mig21]
+    notes: "Helmet-mounted sight compatible. Used by Abhinandan in 2019"
+
+  python5:
+    name: "Python-5"
+    type: wvr_aam
+    origin: israeli
+    range_km: 20
+    min_range_km: 0.3
+    pk_head_on: 0.80
+    pk_beam: 0.88
+    pk_tail: 0.95
+    guidance: imaging_infrared
+    off_boresight_deg: 90
+    ecm_resistance: 85
+    max_speed_mach: 3.0
+    platforms: [tejas]
+    notes: "Lock-on after launch, full-sphere engagement"
+
+  magic2:
+    name: "Magic 2"
+    type: wvr_aam
+    origin: french
+    range_km: 10
+    min_range_km: 0.3
+    pk_head_on: 0.55
+    pk_beam: 0.70
+    pk_tail: 0.82
+    guidance: infrared
+    off_boresight_deg: 30
+    ecm_resistance: 45
+    max_speed_mach: 2.5
+    platforms: [mirage2000]
+    notes: "Older generation, being phased out"
+
+  # ---------------------------------------------------------------------------
+  # AIR-TO-GROUND - CRUISE MISSILES
+  # ---------------------------------------------------------------------------
+
+  scalp_eg:
+    name: "SCALP-EG (Storm Shadow)"
+    type: alcm
+    origin: european
+    range_km: 500
+    cep_m: 3
+    warhead_kg: 450
+    warhead_type: tandem_penetrator
+    speed: subsonic
+    speed_mach: 0.8
+    penetration: 90
+    guidance: [terrain_reference, gps, ir_terminal]
+    low_observable: true
+    platforms: [rafale]
+    notes: "Primary deep strike weapon. Used May 10 against PAF airbases"
+
+  brahmos_air:
+    name: "BrahMos-A"
+    type: alcm
+    origin: indo_russian
+    range_km: 450
+    cep_m: 5
+    warhead_kg: 300
+    warhead_type: semi_armor_piercing
+    speed: supersonic
+    speed_mach: 2.8
+    penetration: 88
+    guidance: [inertial, gps, active_radar_terminal]
+    low_observable: false
+    platforms: [su30mki]
+    notes: "Supersonic cruise missile. Heavy - limits to 1 per Su-30MKI"
+
+  raad:
+    name: "Ra'ad (Hatf-8)"
+    type: alcm
+    origin: pakistani
+    range_km: 350
+    cep_m: 10
+    warhead_kg: 450
+    warhead_type: unitary
+    speed: subsonic
+    speed_mach: 0.7
+    penetration: 70
+    guidance: [terrain_reference, gps]
+    low_observable: true
+    platforms: [mirage3, mirage5]
+    notes: "Carried by Mirage III/V only"
+
+  # ---------------------------------------------------------------------------
+  # AIR-TO-GROUND - STANDOFF WEAPONS
+  # ---------------------------------------------------------------------------
+
+  cm400akg:
+    name: "CM-400AKG"
+    type: aero_ballistic
+    origin: chinese
+    range_km: 250
+    cep_m: 10
+    warhead_kg: 150
+    warhead_type: penetrator
+    speed: hypersonic
+    speed_mach: 4.0
+    penetration: 85
+    guidance: [inertial, passive_radar_homing]
+    platforms: [jf17, jf17_block2, jf17_block3]
+    notes: "Anti-radiation/anti-ship. Used vs S-400 on May 9-10"
+
+  rampage:
+    name: "Rampage"
+    type: standoff_missile
+    origin: israeli
+    range_km: 250
+    cep_m: 5
+    warhead_kg: 150
+    warhead_type: penetrator
+    speed: supersonic
+    speed_mach: 2.0
+    penetration: 80
+    guidance: [gps, ins]
+    platforms: [jaguar, su30mki, mig29k]
+    notes: "Used May 10 airbase strikes from Jaguars"
+
+  spice2000:
+    name: "SPICE 2000"
+    type: glide_bomb
+    origin: israeli
+    range_km: 60
+    cep_m: 3
+    warhead_kg: 900
+    warhead_type: penetrator
+    speed: subsonic
+    penetration: 85
+    guidance: [gps, electro_optical, scene_matching]
+    platforms: [mirage2000]
+    notes: "Used in 2019 Balakot strike"
+
+  hammer:
+    name: "AASM Hammer"
+    type: glide_bomb
+    origin: french
+    range_km: 70
+    cep_m: 1
+    warhead_kg: 250
+    warhead_type: multi_purpose
+    speed: subsonic
+    penetration: 75
+    guidance: [gps, ins, ir_terminal, laser_terminal]
+    platforms: [rafale]
+    notes: "Precision strike, multiple guidance options"
+
+  h4:
+    name: "H-4"
+    type: glide_bomb
+    origin: south_african
+    range_km: 120
+    cep_m: 10
+    warhead_kg: 900
+    warhead_type: unitary
+    speed: subsonic
+    penetration: 70
+    guidance: [tv_guidance, gps]
+    platforms: [mirage3, mirage5]
+    notes: "Upgraded South African glide bomb on PAF Mirages"
+
+  # ---------------------------------------------------------------------------
+  # PRECISION GUIDED MUNITIONS
+  # ---------------------------------------------------------------------------
+
+  paveway_iv:
+    name: "Paveway IV"
+    type: lgb
+    origin: british
+    range_km: 15
+    cep_m: 3
+    warhead_kg: 225
+    warhead_type: multi_purpose
+    guidance: [laser, gps]
+    platforms: [rafale, jaguar]
+
+  gbu12:
+    name: "GBU-12 Paveway II"
+    type: lgb
+    origin: american
+    range_km: 10
+    cep_m: 5
+    warhead_kg: 227
+    warhead_type: general_purpose
+    guidance: [laser]
+    platforms: [f16, mirage2000, jaguar]
+
+  jdam:
+    name: "JDAM (GBU-31/38)"
+    type: gps_bomb
+    origin: american
+    range_km: 15
+    cep_m: 10
+    warhead_kg: 450
+    warhead_type: general_purpose
+    guidance: [gps, ins]
+    platforms: [f16]
+
+  ls6:
+    name: "LS-6"
+    type: glide_bomb
+    origin: chinese
+    range_km: 60
+    cep_m: 15
+    warhead_kg: 250
+    warhead_type: general_purpose
+    guidance: [gps, ins]
+    platforms: [jf17, jf17_block2, jf17_block3, j10c]
+
+# =============================================================================
+# LOADOUT SCHEMA
+# =============================================================================
+
+loadout_schema:
+  # Each loadout defines:
+  # - name: Display name
+  # - role: air_superiority | strike | sead | multirole | cas
+  # - weapons: List of weapon loads
+  # - performance_modifiers: How loadout affects aircraft performance
+  # - endurance_hours: Time on station
+  # - notes: Tactical notes
+
+  example:
+    name: "Example Loadout"
+    role: multirole
+    weapons:
+      bvr: { type: meteor, count: 4 }
+      wvr: { type: mica_ir, count: 2 }
+      a2g: { type: hammer, count: 2 }
+    performance:
+      speed_modifier: -5        # Percent reduction
+      maneuver_modifier: -10    # Percent reduction
+      range_modifier: -15       # Percent reduction
+    endurance_hours: 2.5
+    bvr_range_km: 150          # Max engagement range
+    standoff_range_km: 70      # For A2G
+    air_to_air_rating: 75      # Effective A2A capability (0-100)
+    ground_attack_rating: 60   # Effective A2G capability (0-100)
+
+# =============================================================================
+# COOPERATIVE ENGAGEMENT
+# =============================================================================
+
+cooperative_engagement:
+  # Models AEW&C + Fighter cooperative targeting (used by PAF on May 7)
+  description: >
+    Fighter can fire BVR missiles using targeting data from AEW&C,
+    keeping own radar silent. Missile receives mid-course updates
+    via datalink until terminal phase.
+
+  requirements:
+    - awacs_datalink: true       # AEW&C must have compatible datalink
+    - fighter_datalink: true     # Fighter must have Link-17 or equivalent
+    - weapon_datalink: true      # Missile must accept remote targeting
+
+  compatible_systems:
+    pakistan:
+      awacs: [erieye, zdk03]
+      datalink: link17
+      missiles: [pl15, pl12]
+    india:
+      awacs: [phalcon, netra]
+      datalink: link_india
+      missiles: [astra_mk1, r77]  # Limited capability
+
+  effects:
+    shooter_radar: silent
+    detection_range_bonus: 50    # Percent - AEW&C extends detection
+    pk_modifier: -10             # Percent - slightly lower Pk without own radar
+    reaction_time_enemy: reduced # Enemy RWR doesn't see fighter radar

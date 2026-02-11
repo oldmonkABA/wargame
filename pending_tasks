@@ -1,0 +1,61 @@
+# Operation Sindoor Wargame - Pending Tasks
+# Last updated: 2026-02-03
+
+## COMPLETED
+- [x] Created /data/schema/loadouts.yaml - weapon statistics and loadout schema
+- [x] Created /data/india/loadouts.yaml - IAF aircraft loadout definitions
+- [x] Created /data/pakistan/loadouts.yaml - PAF aircraft loadout definitions
+- [x] Added loitering munitions to /data/schema/drones.yaml (Yihaa-III, TB2, Akinci, Songar, decoy, Harpy, Mini Harpy)
+- [x] Added Pakistani drone swarm units to /data/pakistan/drones.yaml
+- [x] Added Indian SEAD drone units to /data/india/drones.yaml
+
+## PENDING
+
+### High Priority
+1. Add swarm operations mechanics to /data/schema/drones.yaml
+   - Saturation attack modeling (300-600 drones per wave)
+   - Defense penetration probability based on wave size vs defender intercept capacity
+   - Decoy mixing ratios and their effect on PK
+
+2. Add Turkish weapon definitions to loadouts schema
+   - MAM-L (smart munition)
+   - MAM-C (smart munition)
+   - SOM cruise missile (250km range)
+   - TEBER guided bomb
+   - Roketsan Cirit
+
+3. Create /data/schema/awacs.yaml
+   - AEW&C platform definitions (Erieye, ZDK-03, Phalcon, Netra)
+   - Datalink specifications (Link-17 for PAF)
+   - Cooperative engagement mechanics
+   - Detection ranges and coverage
+
+### Medium Priority
+4. Create scenario files for Operation Sindoor phases
+   - /data/scenarios/sindoor_day1_may7.yaml (PAF drone swarms, IAF scramble)
+   - /data/scenarios/sindoor_day2_may8.yaml (Escalation, BVR engagements)
+   - /data/scenarios/sindoor_day3_may9.yaml (SEAD, S-400 engagement)
+   - /data/scenarios/sindoor_day4_may10.yaml (Deep strikes, ceasefire)
+
+5. Add naval assets
+   - INS Vikrant carrier group
+   - Pakistani naval aviation
+   - Anti-ship missile definitions (Harpoon, C-802)
+
+6. Add electronic warfare definitions
+   - SPECTRA (Rafale)
+   - Tarang (Indian RWR)
+   - ECM pods
+   - Jamming effectiveness
+
+### Low Priority
+7. Create victory conditions and scoring system
+8. Add logistics/attrition modeling (sortie rates, maintenance)
+9. Add weather effects on operations
+10. Create map/hex grid for the theater
+
+## NOTES
+- Weapon-platform dependencies enforced via loadout system (e.g., Meteor only on Rafale)
+- Cooperative engagement modeled (AEW&C + fighter with datalink)
+- Key Sindoor lesson: Drone swarms can saturate point defenses
+- PL-15 200km range vs Meteor 150km created standoff disadvantage for IAF

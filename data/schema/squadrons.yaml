@@ -1,0 +1,70 @@
+# Squadron Schema Definition
+
+squadron:
+  # Schema for each squadron entry
+  # - id: unique identifier
+  # - name: squadron name/number
+  # - nickname: traditional squadron name
+  # - faction: india | pakistan
+  # - base_id: airbase where stationed
+  # - aircraft_type: reference to aircraft_types
+  # - aircraft_count: number of aircraft
+  # - aircraft_available: current operational count
+  # - pilot_quality: 0-100 (training level)
+  # - morale: 0-100
+  # - readiness: 0-100 (maintenance state)
+  # - role_primary: cap | oca | cas | sead | strike | recon
+  # - role_secondary: optional secondary role
+  # - weapons_loadout: current weapon configuration
+
+example_squadron:
+  id: "17_squadron_golden_arrows"
+  name: "No. 17 Squadron"
+  nickname: "Golden Arrows"
+  faction: india
+  base_id: "iaf_ambala"
+  aircraft_type: rafale
+  aircraft_count: 18
+  aircraft_available: 16
+  pilot_quality: 90
+  morale: 85
+  readiness: 90
+  role_primary: air_superiority
+  role_secondary: strike
+  weapons_loadout:
+    air_to_air:
+      - type: meteor
+        quantity: 32
+      - type: mica
+        quantity: 48
+    air_to_ground:
+      - type: scalp
+        quantity: 12
+      - type: hammer
+        quantity: 24
+
+# Sortie generation model
+sortie_model:
+  # Base sorties per aircraft per turn (6 hours)
+  base_rate: 0.4  # ~2-3 sorties per day
+
+  # Modifiers
+  readiness_factor: 0.01  # per point of readiness
+  pilot_quality_factor: 0.005  # per point above 50
+  night_modifier: 0.7  # reduced at night
+  weather_modifier:
+    clear: 1.0
+    cloudy: 0.9
+    rain: 0.6
+    storm: 0.2
+
+# Attrition and recovery
+attrition:
+  # Aircraft loss triggers
+  shot_down: destroyed
+  damaged_light: 1  # turns to repair
+  damaged_heavy: 4  # turns to repair
+
+  # Pilot loss
+  ejection_survival: 0.70
+  capture_if_over_enemy: 0.80

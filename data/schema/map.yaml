@@ -1,0 +1,291 @@
+# Map and Terrain Schema Definition
+
+map_config:
+  # Overall map parameters
+  projection: "WGS84"
+  bounds:
+    north: 37.0   # Northern Kashmir
+    south: 23.5   # Southern Rajasthan
+    east: 78.0    # Eastern Punjab
+    west: 66.0    # Western Pakistan
+
+  grid:
+    type: hexagonal
+    cell_size_km: 10
+    orientation: flat_top  # vs pointy_top
+
+terrain_types:
+  # Each terrain type and its effects
+  mountain:
+    id: mountain
+    name: "Mountain"
+    description: "High altitude mountainous terrain, >3000m"
+    movement_cost:
+      infantry: 3
+      mechanized: 6
+      armor: 8
+      wheeled: 10
+    defense_bonus: 2.5
+    concealment: 80
+    air_ops: restricted  # hard for helicopters
+    los_blocking: true   # blocks line of sight
+    color: "#8B4513"
+
+  hills:
+    id: hills
+    name: "Hills"
+    description: "Hilly terrain, 500-3000m elevation"
+    movement_cost:
+      infantry: 2
+      mechanized: 3
+      armor: 4
+      wheeled: 4
+    defense_bonus: 1.5
+    concealment: 60
+    air_ops: normal
+    los_blocking: partial
+    color: "#A0522D"
+
+  desert:
+    id: desert
+    name: "Desert"
+    description: "Arid desert terrain (Thar)"
+    movement_cost:
+      infantry: 2
+      mechanized: 1.5
+      armor: 1.5
+      wheeled: 2
+    defense_bonus: 0.8
+    concealment: 20
+    air_ops: normal
+    los_blocking: false
+    special: sandstorm_possible
+    color: "#F4A460"
+
+  plains:
+    id: plains
+    name: "Plains"
+    description: "Flat agricultural land (Punjab)"
+    movement_cost:
+      infantry: 1
+      mechanized: 1
+      armor: 1
+      wheeled: 1
+    defense_bonus: 1.0
+    concealment: 30
+    air_ops: ideal
+    los_blocking: false
+    color: "#90EE90"
+
+  urban:
+    id: urban
+    name: "Urban"
+    description: "Cities and built-up areas"
+    movement_cost:
+      infantry: 2
+      mechanized: 3
+      armor: 4
+      wheeled: 2
+    defense_bonus: 2.0
+    concealment: 70
+    air_ops: restricted  # collateral concern
+    los_blocking: true
+    special: civilian_presence
+    color: "#808080"
+
+  forest:
+    id: forest
+    name: "Forest"
+    description: "Dense forest or jungle"
+    movement_cost:
+      infantry: 2
+      mechanized: 4
+      armor: 6
+      wheeled: 5
+    defense_bonus: 1.6
+    concealment: 85
+    air_ops: restricted
+    los_blocking: true
+    color: "#228B22"
+
+  marsh:
+    id: marsh
+    name: "Marsh/Wetland"
+    description: "Swampy or waterlogged terrain"
+    movement_cost:
+      infantry: 3
+      mechanized: 8
+      armor: 10
+      wheeled: impassable
+    defense_bonus: 1.3
+    concealment: 50
+    air_ops: normal
+    los_blocking: false
+    color: "#20B2AA"
+
+  river:
+    id: river
+    name: "River"
+    description: "Major river (Indus, Sutlej, Ravi, etc.)"
+    movement_cost:
+      infantry: impassable  # need crossing
+      mechanized: impassable
+      armor: impassable
+      wheeled: impassable
+    defense_bonus: 0.5  # penalty to attacker crossing
+    concealment: 0
+    air_ops: normal
+    los_blocking: false
+    special: requires_crossing
+    color: "#4169E1"
+
+# River crossings
+crossing_types:
+  bridge:
+    capacity: 100  # vehicles per turn
+    defense_bonus: 0.8  # attackers still penalized
+    vulnerable_to: [air_strike, artillery, sabotage]
+    repair_turns_if_destroyed: 8
+
+  ford:
+    capacity: 20
+    defense_bonus: 0.6
+    infantry_only: false
+    armor_risk: 0.1  # 10% chance of getting stuck
+
+  assault_crossing:
+    # Engineer-enabled
+    capacity: 10
+    defense_bonus: 0.4
+    requires: engineer_unit
+    setup_turns: 1
+
+# Special locations
+location_types:
+  city:
+    id: city
+    population_significance: true
+    supply_source: true
+    victory_points: variable
+
+  airbase:
+    id: airbase
+    critical_infrastructure: true
+    repair_facility: true
+
+  port:
+    id: port
+    supply_source: true
+    not_relevant: true  # no naval in this scenario
+
+  dam:
+    id: dam
+    critical_infrastructure: true
+    collateral_if_hit: extreme
+
+  power_plant:
+    id: power_plant
+    critical_infrastructure: true
+    affects: regional_logistics
+
+  rail_junction:
+    id: rail_junction
+    logistics_node: true
+    throughput_multiplier: 2.0
+
+  mountain_pass:
+    id: mountain_pass
+    chokepoint: true
+    defense_bonus: 3.0
+
+hex_cell:
+  # Schema for individual hex cell
+  # - grid_ref: unique grid reference (e.g., "A1", "B2")
+  # - center:
+  #     lat: center latitude
+  #     lon: center longitude
+  # - terrain: terrain_type ID
+  # - elevation_m: average elevation
+  # - features: list of special features
+  # - location_id: reference to location if any
+  # - control: india | pakistan | contested
+  # - fortification: 0-3 (prepared defenses)
+  # - infrastructure:
+  #     road: none | minor | major | highway
+  #     rail: true | false
+  # - units: list of unit IDs present
+
+example_hex:
+  grid_ref: "J15"
+  center:
+    lat: 31.5
+    lon: 74.8
+  terrain: plains
+  elevation_m: 220
+  features:
+    - irrigated
+  location_id: null
+  control: pakistan
+  fortification: 1
+  infrastructure:
+    road: major
+    rail: true
+  units: []
+
+# Line of sight
+los_rules:
+  # Visibility between hexes
+  terrain_blocks:
+    mountain: true
+    hills: true  # blocks if in between
+    urban: true
+    forest: true
+
+  # Elevation advantage
+  elevation_advantage:
+    spotting_bonus_per_100m: 5
+    range_bonus_per_100m: 2
+
+# Weather
+weather:
+  types:
+    clear:
+      visibility: 100
+      air_ops_modifier: 1.0
+      movement_modifier: 1.0
+
+    cloudy:
+      visibility: 80
+      air_ops_modifier: 0.9
+      movement_modifier: 1.0
+
+    rain:
+      visibility: 50
+      air_ops_modifier: 0.5
+      movement_modifier: 0.8
+      affects: [desert: flood_risk, plains: mud]
+
+    storm:
+      visibility: 20
+      air_ops_modifier: 0.1
+      movement_modifier: 0.5
+
+    fog:
+      visibility: 10
+      air_ops_modifier: 0.2
+      movement_modifier: 0.9
+
+    sandstorm:
+      visibility: 10
+      air_ops_modifier: 0.1
+      movement_modifier: 0.6
+      regions: [desert]
+
+  # Day/night cycle (4 turns = 1 day)
+  day_night:
+    day_turns: [1, 2, 3]  # turns 1-3 are daylight
+    night_turn: [4]       # turn 4 is night
+    night_effects:
+      visibility: 0.3
+      air_ops_modifier: 0.7  # reduced but possible with NVG
+      infantry_bonus: 1.2    # infantry better at night

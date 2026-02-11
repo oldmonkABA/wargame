@@ -1,0 +1,236 @@
+# Indian Drone/UAV Assets
+# Data compiled from public sources
+
+drone_units:
+  # Heron (Reconnaissance)
+  - id: heron_det_1
+    name: "Heron Detachment 1"
+    faction: india
+    drone_type: heron
+    drone_count: 6
+    drones_available: 5
+    base_id: iaf_pathankot
+    location:
+      lat: 32.2
+      lon: 75.6
+    mission: ready
+    status: ready
+    sector: "Punjab North"
+
+  - id: heron_det_2
+    name: "Heron Detachment 2"
+    faction: india
+    drone_type: heron
+    drone_count: 6
+    drones_available: 5
+    base_id: iaf_jodhpur
+    location:
+      lat: 26.2
+      lon: 73.0
+    mission: ready
+    status: ready
+    sector: "Rajasthan"
+
+  - id: heron_det_3
+    name: "Heron Detachment 3"
+    faction: india
+    drone_type: heron
+    drone_count: 6
+    drones_available: 4
+    base_id: iaf_srinagar
+    location:
+      lat: 33.9
+      lon: 74.7
+    mission: ready
+    status: ready
+    sector: "Kashmir"
+
+  # Heron TP (Armed)
+  - id: heron_tp_det_1
+    name: "Heron TP Detachment 1"
+    faction: india
+    drone_type: heron_tp
+    drone_count: 4
+    drones_available: 3
+    base_id: iaf_adampur
+    location:
+      lat: 31.4
+      lon: 75.7
+    mission: ready
+    status: ready
+    sector: "Punjab Central"
+    weapons_loadout:
+      spike_atgm: 12
+      gbu_small: 8
+
+  - id: heron_tp_det_2
+    name: "Heron TP Detachment 2"
+    faction: india
+    drone_type: heron_tp
+    drone_count: 4
+    drones_available: 4
+    base_id: iaf_jammu
+    location:
+      lat: 32.6
+      lon: 74.8
+    mission: ready
+    status: ready
+    sector: "Jammu"
+    weapons_loadout:
+      spike_atgm: 16
+      gbu_small: 8
+
+  # Harop (Loitering Munitions)
+  - id: harop_unit_1
+    name: "Harop Unit 1"
+    faction: india
+    drone_type: harop
+    drone_count: 24
+    drones_available: 20
+    base_id: iaf_halwara
+    location:
+      lat: 30.7
+      lon: 75.6
+    mission: ready
+    status: ready
+    sector: "Punjab"
+    notes: "High-value target / SEAD role"
+
+  - id: harop_unit_2
+    name: "Harop Unit 2"
+    faction: india
+    drone_type: harop
+    drone_count: 24
+    drones_available: 22
+    base_id: iaf_jodhpur
+    location:
+      lat: 26.2
+      lon: 73.0
+    mission: ready
+    status: ready
+    sector: "Rajasthan"
+
+  - id: harop_unit_3
+    name: "Harop Unit 3"
+    faction: india
+    drone_type: harop
+    drone_count: 24
+    drones_available: 20
+    base_id: iaf_srinagar
+    location:
+      lat: 33.9
+      lon: 74.7
+    mission: ready
+    status: ready
+    sector: "Kashmir"
+
+  # Rustom-2 (Indigenous MALE)
+  - id: rustom_det_1
+    name: "Rustom-2 Detachment"
+    faction: india
+    drone_type: rustom2
+    drone_count: 4
+    drones_available: 3
+    base_id: iaf_agra
+    location:
+      lat: 27.1
+      lon: 77.9
+    mission: ready
+    status: ready
+    sector: "Central Reserve"
+
+  # MQ-9 SeaGuardian (Limited numbers)
+  - id: mq9_det_1
+    name: "MQ-9 Detachment 1"
+    faction: india
+    drone_type: predator_mq9
+    drone_count: 2
+    drones_available: 2
+    base_id: iaf_jodhpur
+    location:
+      lat: 26.2
+      lon: 73.0
+    mission: ready
+    status: ready
+    sector: "Rajasthan"
+    weapons_loadout:
+      hellfire: 8
+      gbu_small: 4
+    notes: "Recently acquired, high-capability asset"
+
+  # ---------------------------------------------------------------------------
+  # ADDITIONAL LOITERING MUNITIONS
+  # SEAD operations for Operation Sindoor
+  # ---------------------------------------------------------------------------
+
+  # Harpy (Anti-radiation loitering munition)
+  - id: harpy_unit_1
+    name: "Harpy Unit 1"
+    faction: india
+    drone_type: harpy
+    drone_count: 30
+    drones_available: 28
+    base_id: iaf_halwara
+    location:
+      lat: 30.7
+      lon: 75.6
+    mission: ready
+    status: ready
+    sector: "Punjab SEAD"
+    notes: "Anti-radiation. Targets radar emitters"
+
+  - id: harpy_unit_2
+    name: "Harpy Unit 2"
+    faction: india
+    drone_type: harpy
+    drone_count: 30
+    drones_available: 26
+    base_id: iaf_jodhpur
+    location:
+      lat: 26.2
+      lon: 73.0
+    mission: ready
+    status: ready
+    sector: "Rajasthan SEAD"
+
+  # Mini Harpy (Dual seeker - EO/radar)
+  - id: mini_harpy_unit_1
+    name: "Mini Harpy Unit 1"
+    faction: india
+    drone_type: mini_harpy
+    drone_count: 40
+    drones_available: 36
+    base_id: iaf_adampur
+    location:
+      lat: 31.4
+      lon: 75.7
+    mission: ready
+    status: ready
+    sector: "Punjab Flexible"
+    notes: "Dual seeker for flexible targeting"
+
+  - id: mini_harpy_unit_2
+    name: "Mini Harpy Unit 2"
+    faction: india
+    drone_type: mini_harpy
+    drone_count: 40
+    drones_available: 38
+    base_id: iaf_srinagar
+    location:
+      lat: 33.9
+      lon: 74.7
+    mission: ready
+    status: ready
+    sector: "Kashmir SEAD"
+
+# =============================================================================
+# SUMMARY
+# =============================================================================
+# Summary:
+# 18 Heron (reconnaissance)
+# 8 Heron TP (armed MALE)
+# 72 Harop (loitering munitions - anti-armor/personnel)
+# 4 Rustom-2 (indigenous MALE)
+# 2+ MQ-9 (armed MALE, new acquisition)
+# 60 Harpy (anti-radiation loitering munitions)
+# 80 Mini Harpy (dual-seeker loitering munitions)

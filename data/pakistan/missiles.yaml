@@ -1,0 +1,176 @@
+# Pakistan Missile Forces
+# Conventional cruise and ballistic missiles
+# Data compiled from public sources
+
+missile_units:
+  # Babur Cruise Missile
+  - id: babur_battery_1
+    name: "Babur Battery 1"
+    faction: pakistan
+    missile_type: babur
+    launcher_count: 4
+    missiles_ready: 12
+    missiles_reload: 24
+    location:
+      lat: 32.5
+      lon: 72.0
+      sector: "Northern Punjab"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 65
+    status: ready
+
+  - id: babur_battery_2
+    name: "Babur Battery 2"
+    faction: pakistan
+    missile_type: babur
+    launcher_count: 4
+    missiles_ready: 12
+    missiles_reload: 24
+    location:
+      lat: 31.5
+      lon: 73.5
+      sector: "Central Punjab"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 65
+    status: ready
+
+  - id: babur_battery_3
+    name: "Babur Battery 3"
+    faction: pakistan
+    missile_type: babur2
+    launcher_count: 4
+    missiles_ready: 12
+    missiles_reload: 24
+    location:
+      lat: 30.0
+      lon: 71.0
+      sector: "Southern Punjab"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 65
+    status: ready
+
+  - id: babur_battery_4
+    name: "Babur Battery 4"
+    faction: pakistan
+    missile_type: babur2
+    launcher_count: 4
+    missiles_ready: 12
+    missiles_reload: 24
+    location:
+      lat: 28.5
+      lon: 68.5
+      sector: "Sindh"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 60
+    status: ready
+
+  # Ra'ad Air-Launched Cruise Missile
+  - id: raad_stockpile
+    name: "Ra'ad ALCM Stockpile"
+    faction: pakistan
+    missile_type: raad
+    launcher_count: 0  # Air-launched
+    missiles_ready: 36
+    missiles_reload: 24
+    location:
+      lat: 32.0
+      lon: 72.6
+      base: "Sargodha"
+    reload_time_turns: 1
+    mobility: airborne
+    concealment: 0
+    status: ready
+    notes: "Carried by Mirage III/V"
+
+  # Ghaznavi (Hatf-3) SRBM
+  - id: ghaznavi_battery_1
+    name: "Ghaznavi Battery 1"
+    faction: pakistan
+    missile_type: ghaznavi
+    launcher_count: 4
+    missiles_ready: 12
+    missiles_reload: 24
+    location:
+      lat: 33.0
+      lon: 72.5
+      sector: "Northern Punjab"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 60
+    status: ready
+
+  - id: ghaznavi_battery_2
+    name: "Ghaznavi Battery 2"
+    faction: pakistan
+    missile_type: ghaznavi
+    launcher_count: 4
+    missiles_ready: 12
+    missiles_reload: 24
+    location:
+      lat: 31.0
+      lon: 72.0
+      sector: "Central Punjab"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 60
+    status: ready
+
+  - id: ghaznavi_battery_3
+    name: "Ghaznavi Battery 3"
+    faction: pakistan
+    missile_type: ghaznavi
+    launcher_count: 4
+    missiles_ready: 12
+    missiles_reload: 24
+    location:
+      lat: 29.0
+      lon: 69.0
+      sector: "Sindh/Balochistan"
+    reload_time_turns: 2
+    mobility: mobile
+    concealment: 55
+    status: ready
+
+  # Shaheen-I (Hatf-4) MRBM - Conventional role
+  - id: shaheen_battery_1
+    name: "Shaheen Battery 1"
+    faction: pakistan
+    missile_type: shaheen1
+    launcher_count: 4
+    missiles_ready: 8
+    missiles_reload: 16
+    location:
+      lat: 32.0
+      lon: 71.5
+      sector: "Northern Punjab"
+    reload_time_turns: 3
+    mobility: mobile
+    concealment: 70
+    status: ready
+    notes: "Can carry conventional warhead"
+
+  - id: shaheen_battery_2
+    name: "Shaheen Battery 2"
+    faction: pakistan
+    missile_type: shaheen1
+    launcher_count: 4
+    missiles_ready: 8
+    missiles_reload: 16
+    location:
+      lat: 30.5
+      lon: 70.5
+      sector: "Central Punjab"
+    reload_time_turns: 3
+    mobility: mobile
+    concealment: 70
+    status: ready
+
+# Total summary:
+# Babur: 16 launchers, 48 ready missiles
+# Ra'ad: 36 ready (air-launched)
+# Ghaznavi: 12 launchers, 36 ready
+# Shaheen-I: 8 launchers, 16 ready (conventional role)

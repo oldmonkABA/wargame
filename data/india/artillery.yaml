@@ -1,0 +1,277 @@
+# Indian Army Artillery
+# Regiments and units relevant to Western Theater
+# Data compiled from public sources
+
+artillery_units:
+  # PINAKA MLRS REGIMENTS
+  - id: pinaka_regiment_1
+    name: "1st Pinaka Regiment"
+    faction: india
+    artillery_type: pinaka_mk2
+    gun_count: 18
+    guns_available: 16
+    ammo_basic_load: 36
+    ammo_remaining: 648
+    location:
+      lat: 31.5
+      lon: 75.5
+      sector: "Punjab North"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 1_corps
+
+  - id: pinaka_regiment_2
+    name: "2nd Pinaka Regiment"
+    faction: india
+    artillery_type: pinaka_mk2
+    gun_count: 18
+    guns_available: 17
+    ammo_basic_load: 36
+    ammo_remaining: 612
+    location:
+      lat: 30.5
+      lon: 75.0
+      sector: "Punjab Central"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 2_corps
+
+  - id: pinaka_regiment_3
+    name: "3rd Pinaka Regiment"
+    faction: india
+    artillery_type: pinaka
+    gun_count: 18
+    guns_available: 16
+    ammo_basic_load: 36
+    ammo_remaining: 576
+    location:
+      lat: 27.5
+      lon: 73.0
+      sector: "Rajasthan"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: sw_command
+
+  # SMERCH MLRS REGIMENTS
+  - id: smerch_regiment_1
+    name: "1st Smerch Regiment"
+    faction: india
+    artillery_type: smerch
+    gun_count: 12
+    guns_available: 11
+    ammo_basic_load: 24
+    ammo_remaining: 264
+    location:
+      lat: 31.0
+      lon: 75.2
+      sector: "Punjab"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 1_corps
+
+  - id: smerch_regiment_2
+    name: "2nd Smerch Regiment"
+    faction: india
+    artillery_type: smerch
+    gun_count: 12
+    guns_available: 10
+    ammo_basic_load: 24
+    ammo_remaining: 240
+    location:
+      lat: 28.0
+      lon: 73.5
+      sector: "Rajasthan"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 12_corps
+
+  # K9 VAJRA REGIMENTS (Self-Propelled)
+  - id: k9_regiment_1
+    name: "K9 Vajra Regiment 1"
+    faction: india
+    artillery_type: k9_vajra
+    gun_count: 18
+    guns_available: 16
+    ammo_basic_load: 100
+    ammo_remaining: 1600
+    location:
+      lat: 27.0
+      lon: 72.5
+      sector: "Rajasthan"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: sw_command
+    notes: "Self-propelled, high mobility"
+
+  - id: k9_regiment_2
+    name: "K9 Vajra Regiment 2"
+    faction: india
+    artillery_type: k9_vajra
+    gun_count: 18
+    guns_available: 17
+    ammo_basic_load: 100
+    ammo_remaining: 1700
+    location:
+      lat: 31.0
+      lon: 74.5
+      sector: "Punjab"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 10_corps
+
+  # M777 REGIMENTS (Light, Air-Transportable)
+  - id: m777_regiment_1
+    name: "M777 Regiment 1"
+    faction: india
+    artillery_type: m777
+    gun_count: 18
+    guns_available: 17
+    ammo_basic_load: 80
+    ammo_remaining: 1360
+    location:
+      lat: 34.0
+      lon: 74.5
+      sector: "Kashmir"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 15_corps
+    notes: "Mountain deployment capable"
+
+  - id: m777_regiment_2
+    name: "M777 Regiment 2"
+    faction: india
+    artillery_type: m777
+    gun_count: 18
+    guns_available: 16
+    ammo_basic_load: 80
+    ammo_remaining: 1280
+    location:
+      lat: 32.5
+      lon: 75.0
+      sector: "Jammu"
+    deployed: true
+    counter_battery_radar: true
+    status: ready
+    parent: 16_corps
+
+  # DHANUSH REGIMENTS
+  - id: dhanush_regiment_1
+    name: "Dhanush Regiment 1"
+    faction: india
+    artillery_type: dhanush
+    gun_count: 18
+    guns_available: 16
+    ammo_basic_load: 100
+    ammo_remaining: 1600
+    location:
+      lat: 31.5
+      lon: 74.8
+      sector: "Punjab"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 10_corps
+
+  - id: dhanush_regiment_2
+    name: "Dhanush Regiment 2"
+    faction: india
+    artillery_type: dhanush
+    gun_count: 18
+    guns_available: 15
+    ammo_basic_load: 100
+    ammo_remaining: 1500
+    location:
+      lat: 30.0
+      lon: 74.5
+      sector: "Punjab South"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 11_corps
+
+  # BOFORS REGIMENTS
+  - id: bofors_regiment_1
+    name: "Bofors Regiment 1"
+    faction: india
+    artillery_type: bofors
+    gun_count: 18
+    guns_available: 14
+    ammo_basic_load: 100
+    ammo_remaining: 1400
+    location:
+      lat: 32.0
+      lon: 75.5
+      sector: "Pathankot"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 9_corps
+
+  - id: bofors_regiment_2
+    name: "Bofors Regiment 2"
+    faction: india
+    artillery_type: bofors
+    gun_count: 18
+    guns_available: 15
+    ammo_basic_load: 100
+    ammo_remaining: 1500
+    location:
+      lat: 27.0
+      lon: 71.5
+      sector: "Jaisalmer"
+    deployed: true
+    counter_battery_radar: false
+    status: ready
+    parent: 12_corps
+
+# Counter-Battery Radars
+counter_battery_radars:
+  - id: swathi_1
+    name: "Swathi WLR 1"
+    faction: india
+    type: weapon_locating_radar
+    range_km: 50
+    location:
+      lat: 31.5
+      lon: 74.9
+    status: operational
+    attached_to: pinaka_regiment_1
+
+  - id: swathi_2
+    name: "Swathi WLR 2"
+    faction: india
+    type: weapon_locating_radar
+    range_km: 50
+    location:
+      lat: 30.5
+      lon: 74.5
+    status: operational
+    attached_to: pinaka_regiment_2
+
+  - id: swathi_3
+    name: "Swathi WLR 3"
+    faction: india
+    type: weapon_locating_radar
+    range_km: 50
+    location:
+      lat: 27.0
+      lon: 72.0
+    status: operational
+    attached_to: k9_regiment_1
+
+# Summary:
+# 3 Pinaka Regiments (54 launchers)
+# 2 Smerch Regiments (24 launchers)
+# 2 K9 Vajra Regiments (36 SPH)
+# 2 M777 Regiments (36 guns)
+# 2 Dhanush Regiments (36 guns)
+# 2 Bofors Regiments (36 guns)
+# 3+ Weapon Locating Radars

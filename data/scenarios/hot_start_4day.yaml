@@ -1,0 +1,277 @@
+# 4-Day Hot Start Scenario
+# Forces fully mobilized, shooting begins turn 1
+
+scenario:
+  id: hot_start_4day
+  name: "4-Day Hot Start"
+  description: |
+    Full-scale conventional conflict between India and Pakistan.
+    Both sides have completed mobilization. Air and missile strikes
+    commence immediately. Ground forces positioned for offensive operations.
+
+  duration_turns: 16  # 4 days x 4 turns/day
+  start_date: "2025-10-15"
+  start_time: "0600"  # Dawn, Turn 1
+
+# Victory Conditions
+victory_conditions:
+  india:
+    primary:
+      - id: capture_lahore
+        description: "Capture Lahore"
+        vp: 50
+        type: territory
+        target: lahore
+      - id: destroy_pak_air
+        description: "Destroy 60% of PAF combat aircraft"
+        vp: 30
+        type: attrition
+        target_category: aircraft
+        target_faction: pakistan
+        threshold: 0.6
+    secondary:
+      - id: sialkot_salient
+        description: "Advance 30km into Sialkot sector"
+        vp: 15
+        type: territorial_gain
+        sector: punjab_north
+        distance_km: 30
+      - id: air_superiority
+        description: "Achieve air superiority over Punjab"
+        vp: 20
+        type: air_control
+        region: punjab
+        duration_turns: 4
+    defensive:
+      - id: hold_kashmir
+        description: "Prevent loss of any major Kashmir position"
+        vp: -30
+        type: territory_loss
+        targets: [srinagar, uri, poonch]
+
+  pakistan:
+    primary:
+      - id: blunt_offensive
+        description: "Halt Indian offensive with <20km penetration"
+        vp: 40
+        type: defensive
+        max_penetration_km: 20
+      - id: destroy_indian_armor
+        description: "Destroy 40% of Indian strike corps armor"
+        vp: 35
+        type: attrition
+        target_category: armor
+        target_faction: india
+        threshold: 0.4
+    secondary:
+      - id: airbase_strikes
+        description: "Render 3+ Indian airbases non-operational"
+        vp: 25
+        type: infrastructure
+        target_type: airbase
+        target_faction: india
+        count: 3
+      - id: counterattack
+        description: "Successful counterattack gains 15km"
+        vp: 20
+        type: territorial_gain
+        distance_km: 15
+    defensive:
+      - id: hold_lahore
+        description: "Prevent fall of Lahore"
+        vp: -50
+        type: territory_loss
+        targets: [lahore]
+
+# Initial Deployment - India
+india_deployment:
+  # Western Air Command - Forward deployed
+  air_forces:
+    - base: iaf_ambala
+      squadrons:
+        - {type: rafale, count: 18, alert_status: high}
+        - {type: rafale, count: 18, alert_status: high}
+    - base: iaf_adampur
+      squadrons:
+        - {type: su30mki, count: 18, alert_status: high}
+    - base: iaf_halwara
+      squadrons:
+        - {type: su30mki, count: 18, alert_status: high}
+    - base: iaf_pathankot
+      squadrons:
+        - {type: mig29, count: 16, alert_status: high}
+    - base: iaf_jodhpur
+      squadrons:
+        - {type: su30mki, count: 18, alert_status: medium}
+        - {type: jaguar, count: 16, alert_status: medium}
+    - base: iaf_jaisalmer
+      squadrons:
+        - {type: mirage2000, count: 14, alert_status: high}
+
+  # Strike Corps positioning
+  ground_forces:
+    # I Corps (Strike) - Mathura, positioned for Lahore axis
+    - corps: 1_strike_corps
+      hq_location: {lat: 31.0, lon: 75.2}
+      posture: attack_ready
+      divisions:
+        - {id: 4_armored_div, type: armored, location: {lat: 31.2, lon: 74.9}, strength: 95}
+        - {id: 16_infantry_div, type: mechanized, location: {lat: 31.1, lon: 75.0}, strength: 90}
+        - {id: 7_infantry_div, type: infantry, location: {lat: 30.9, lon: 75.1}, strength: 92}
+
+    # II Corps (Strike) - Ambala, positioned for Sialkot axis
+    - corps: 2_strike_corps
+      hq_location: {lat: 32.2, lon: 75.5}
+      posture: attack_ready
+      divisions:
+        - {id: 1_armored_div, type: armored, location: {lat: 32.3, lon: 75.3}, strength: 93}
+        - {id: 14_infantry_div, type: mechanized, location: {lat: 32.1, lon: 75.4}, strength: 88}
+
+    # Holding Corps - Defensive positions
+    - corps: 11_corps
+      hq_location: {lat: 32.7, lon: 74.9}
+      posture: defend
+      divisions:
+        - {id: 25_infantry_div, type: mountain, location: {lat: 33.0, lon: 74.8}, strength: 90}
+        - {id: 19_infantry_div, type: infantry, location: {lat: 32.5, lon: 74.7}, strength: 88}
+
+    - corps: 10_corps
+      hq_location: {lat: 30.5, lon: 74.8}
+      posture: defend
+      divisions:
+        - {id: 24_infantry_div, type: infantry, location: {lat: 30.7, lon: 74.6}, strength: 85}
+
+  # Missile forces
+  missiles:
+    - {type: brahmos, launchers: 12, location: {lat: 31.5, lon: 75.5}, target_priority: airbases}
+    - {type: brahmos, launchers: 8, location: {lat: 30.8, lon: 74.5}, target_priority: c2}
+    - {type: pralay, launchers: 6, location: {lat: 32.0, lon: 76.0}, target_priority: sam_sites}
+
+  # Air Defense
+  air_defense:
+    - {type: s400, batteries: 2, location: {lat: 31.5, lon: 76.5}, coverage_km: 400}
+    - {type: akash, batteries: 4, location: {lat: 31.0, lon: 75.0}, coverage_km: 30}
+    - {type: spyder, batteries: 6, location: {lat: 32.0, lon: 75.5}, coverage_km: 15}
+
+# Initial Deployment - Pakistan
+pakistan_deployment:
+  air_forces:
+    - base: paf_sargodha
+      squadrons:
+        - {type: jf17_block3, count: 20, alert_status: high}
+        - {type: f16, count: 18, alert_status: high}
+    - base: paf_minhas
+      squadrons:
+        - {type: j10c, count: 24, alert_status: high}
+    - base: paf_rafiqui
+      squadrons:
+        - {type: jf17, count: 18, alert_status: high}
+        - {type: mirage3, count: 12, alert_status: medium}
+    - base: paf_masroor
+      squadrons:
+        - {type: f16, count: 12, alert_status: medium}
+        - {type: jf17, count: 16, alert_status: medium}
+    - base: paf_peshawar
+      squadrons:
+        - {type: jf17, count: 14, alert_status: low}  # Reserve
+
+  ground_forces:
+    # I Corps - Mangla, defending Sialkot-Lahore
+    - corps: pak_1_corps
+      hq_location: {lat: 32.7, lon: 73.6}
+      posture: defend
+      divisions:
+        - {id: 6_armored_div, type: armored, location: {lat: 32.5, lon: 74.5}, strength: 90}
+        - {id: 17_infantry_div, type: infantry, location: {lat: 32.3, lon: 74.3}, strength: 88}
+        - {id: 8_infantry_div, type: infantry, location: {lat: 32.0, lon: 74.2}, strength: 85}
+
+    # II Corps - Strike reserve
+    - corps: pak_2_corps
+      hq_location: {lat: 31.4, lon: 73.1}
+      posture: reserve
+      divisions:
+        - {id: 1_armored_div_pak, type: armored, location: {lat: 31.5, lon: 73.5}, strength: 92}
+        - {id: 40_infantry_div, type: mechanized, location: {lat: 31.3, lon: 73.3}, strength: 87}
+
+    # IV Corps - Lahore defense
+    - corps: pak_4_corps
+      hq_location: {lat: 31.5, lon: 74.3}
+      posture: defend
+      divisions:
+        - {id: 10_infantry_div, type: infantry, location: {lat: 31.6, lon: 74.5}, strength: 88}
+        - {id: 11_infantry_div, type: infantry, location: {lat: 31.4, lon: 74.4}, strength: 86}
+        - {id: 14_infantry_div_pak, type: infantry, location: {lat: 31.2, lon: 74.3}, strength: 84}
+
+  missiles:
+    - {type: babur, launchers: 10, location: {lat: 33.0, lon: 72.5}, target_priority: airbases}
+    - {type: raad, launchers: 8, location: {lat: 32.5, lon: 73.0}, target_priority: sam_sites}
+    - {type: ghaznavi, launchers: 4, location: {lat: 31.0, lon: 72.0}, target_priority: logistics}
+
+  air_defense:
+    - {type: hq9, batteries: 2, location: {lat: 31.5, lon: 74.3}, coverage_km: 200}
+    - {type: hq16, batteries: 4, location: {lat: 32.5, lon: 74.0}, coverage_km: 40}
+    - {type: spada, batteries: 6, location: {lat: 31.8, lon: 73.8}, coverage_km: 15}
+
+# Weather forecast for scenario
+weather:
+  day_1:
+    - {turn: 1, weather: clear}
+    - {turn: 2, weather: clear}
+    - {turn: 3, weather: cloudy}
+    - {turn: 4, weather: clear}
+  day_2:
+    - {turn: 5, weather: clear}
+    - {turn: 6, weather: cloudy}
+    - {turn: 7, weather: rain}
+    - {turn: 8, weather: cloudy}
+  day_3:
+    - {turn: 9, weather: clear}
+    - {turn: 10, weather: clear}
+    - {turn: 11, weather: clear}
+    - {turn: 12, weather: fog}  # Night fog
+  day_4:
+    - {turn: 13, weather: clear}
+    - {turn: 14, weather: clear}
+    - {turn: 15, weather: cloudy}
+    - {turn: 16, weather: clear}
+
+# Agent behavior parameters
+agent_config:
+  india:
+    doctrine: "offensive_conventional"
+    risk_tolerance: 0.6  # Moderate-high
+    air_priority: "superiority_first"
+    ground_priority: "breakthrough_lahore"
+    escalation_threshold: "high"  # Won't use tactical nukes
+    constraints:
+      - "minimize_civilian_casualties"
+      - "avoid_pak_nuclear_sites"
+      - "no_strikes_beyond_loc_in_kashmir"
+
+  pakistan:
+    doctrine: "defensive_attrition"
+    risk_tolerance: 0.5  # Moderate
+    air_priority: "deny_superiority"
+    ground_priority: "defense_in_depth"
+    escalation_threshold: "medium"  # Will signal nuclear if existential
+    constraints:
+      - "defend_lahore_at_all_costs"
+      - "preserve_strike_corps_for_counter"
+      - "signal_nuclear_if_lahore_threatened"
+
+# Special rules
+special_rules:
+  - id: no_nuclear
+    description: "Nuclear weapons not available"
+    active: true
+
+  - id: limited_air_reinforcement
+    description: "No reinforcements from non-theater bases"
+    active: true
+
+  - id: ceasefire_possible
+    description: "International pressure may force ceasefire after day 3"
+    active: true
+    trigger:
+      condition: "either_side_loses_40_percent_combat_power"
+      probability: 0.3

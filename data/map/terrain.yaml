@@ -1,0 +1,285 @@
+# India-Pakistan Border Terrain Data
+# Simplified sector-based terrain for simulation
+# Full hex grid would be generated programmatically
+
+map_bounds:
+  north: 37.0   # Northern Ladakh
+  south: 23.5   # Rann of Kutch
+  east: 78.0    # Eastern Punjab (India)
+  west: 66.0    # Western Balochistan
+
+sectors:
+  # KASHMIR / LOC SECTOR
+  - id: kashmir_loc
+    name: "Kashmir LOC"
+    bounds:
+      north: 37.0
+      south: 33.0
+      east: 78.0
+      west: 73.5
+    terrain_primary: mountain
+    terrain_secondary: hills
+    elevation_range:
+      min: 1500
+      max: 6000
+    key_features:
+      - siachen_glacier
+      - kargil
+      - uri
+      - poonch
+      - rajouri
+    strategic_notes: "High altitude, limited mobility, strong defensive advantage"
+    weather_effects:
+      winter: severe
+      summer: moderate
+
+  - id: jammu_sector
+    name: "Jammu Sector"
+    bounds:
+      north: 33.0
+      south: 32.0
+      east: 75.5
+      west: 73.5
+    terrain_primary: hills
+    terrain_secondary: plains
+    elevation_range:
+      min: 300
+      max: 1500
+    key_features:
+      - jammu_city
+      - akhnoor
+      - chhamb
+      - jaurian
+    strategic_notes: "Mixed terrain, historical invasion route"
+
+  # PUNJAB SECTOR
+  - id: punjab_north
+    name: "Punjab North (Pathankot-Gurdaspur)"
+    bounds:
+      north: 32.5
+      south: 31.5
+      east: 76.0
+      west: 74.5
+    terrain_primary: plains
+    terrain_secondary: river
+    elevation_range:
+      min: 200
+      max: 400
+    key_features:
+      - pathankot
+      - gurdaspur
+      - dera_baba_nanak
+      - ravi_river
+    rivers:
+      - name: Ravi
+        crossings:
+          - {name: "Pathankot Bridge", lat: 32.25, lon: 75.5}
+          - {name: "Madhopur Headworks", lat: 32.22, lon: 75.32}
+
+  - id: punjab_central
+    name: "Punjab Central (Amritsar-Lahore)"
+    bounds:
+      north: 31.8
+      south: 30.8
+      east: 75.5
+      west: 74.0
+    terrain_primary: plains
+    terrain_secondary: urban
+    elevation_range:
+      min: 200
+      max: 250
+    key_features:
+      - amritsar
+      - lahore
+      - wagah_border
+      - attari
+      - kasur
+    strategic_notes: "Flat terrain, ideal for armor, dense population"
+    major_cities:
+      - {name: "Amritsar", lat: 31.63, lon: 74.87, population: 1200000}
+      - {name: "Lahore", lat: 31.55, lon: 74.35, population: 11000000}
+
+  - id: punjab_south
+    name: "Punjab South (Ferozepur-Fazilka)"
+    bounds:
+      north: 30.8
+      south: 29.5
+      east: 75.0
+      west: 73.5
+    terrain_primary: plains
+    terrain_secondary: river
+    elevation_range:
+      min: 180
+      max: 220
+    key_features:
+      - ferozepur
+      - fazilka
+      - hussainiwala
+      - sutlej_river
+    rivers:
+      - name: Sutlej
+        crossings:
+          - {name: "Hussainiwala", lat: 30.95, lon: 74.05}
+
+  # RAJASTHAN / THAR SECTOR
+  - id: thar_north
+    name: "Thar Desert North"
+    bounds:
+      north: 29.5
+      south: 27.0
+      east: 73.0
+      west: 70.5
+    terrain_primary: desert
+    terrain_secondary: plains
+    elevation_range:
+      min: 100
+      max: 250
+    key_features:
+      - sri_ganganagar
+      - bikaner
+      - jaisalmer
+      - longewala
+    strategic_notes: "Desert terrain, armor friendly but logistically challenging"
+    weather_effects:
+      sandstorm_risk: high
+      extreme_heat: summer
+
+  - id: thar_south
+    name: "Thar Desert South / Rann of Kutch"
+    bounds:
+      north: 27.0
+      south: 23.5
+      east: 72.0
+      west: 68.0
+    terrain_primary: desert
+    terrain_secondary: marsh
+    elevation_range:
+      min: 0
+      max: 100
+    key_features:
+      - rann_of_kutch
+      - bhuj
+      - barmer
+    strategic_notes: "Salt marshes, seasonal flooding, limited trafficability"
+    seasonal_effects:
+      monsoon: flooded
+      dry_season: traversable
+
+  # SINDH BORDER
+  - id: sindh_border
+    name: "Sindh-Rajasthan Border"
+    bounds:
+      north: 27.0
+      south: 24.5
+      east: 71.0
+      west: 68.5
+    terrain_primary: desert
+    terrain_secondary: plains
+    elevation_range:
+      min: 20
+      max: 150
+    key_features:
+      - mirpur_khas
+      - hyderabad_pak
+      - tharparkar
+    strategic_notes: "Remote, sparse population"
+
+# MAJOR RIVERS
+rivers:
+  - id: indus
+    name: "Indus River"
+    path:
+      - {lat: 35.0, lon: 75.0}
+      - {lat: 33.5, lon: 73.0}
+      - {lat: 31.5, lon: 71.5}
+      - {lat: 28.0, lon: 68.5}
+      - {lat: 24.0, lon: 67.5}
+    width_avg_m: 500
+    obstacle_type: major
+
+  - id: jhelum
+    name: "Jhelum River"
+    path:
+      - {lat: 34.5, lon: 74.5}
+      - {lat: 33.0, lon: 73.7}
+      - {lat: 32.5, lon: 73.5}
+    width_avg_m: 200
+    obstacle_type: moderate
+
+  - id: chenab
+    name: "Chenab River"
+    path:
+      - {lat: 33.0, lon: 75.5}
+      - {lat: 32.0, lon: 74.0}
+      - {lat: 31.0, lon: 72.5}
+    width_avg_m: 300
+    obstacle_type: major
+
+  - id: ravi
+    name: "Ravi River"
+    path:
+      - {lat: 32.5, lon: 76.0}
+      - {lat: 31.5, lon: 74.5}
+      - {lat: 30.5, lon: 73.5}
+    width_avg_m: 150
+    obstacle_type: moderate
+
+  - id: beas
+    name: "Beas River"
+    path:
+      - {lat: 32.0, lon: 77.0}
+      - {lat: 31.5, lon: 75.5}
+      - {lat: 31.0, lon: 75.0}
+    width_avg_m: 150
+    obstacle_type: moderate
+
+  - id: sutlej
+    name: "Sutlej River"
+    path:
+      - {lat: 31.5, lon: 77.5}
+      - {lat: 31.0, lon: 75.5}
+      - {lat: 30.5, lon: 74.0}
+      - {lat: 29.5, lon: 72.0}
+    width_avg_m: 250
+    obstacle_type: major
+
+# KEY CITIES
+major_cities:
+  # India
+  - {id: delhi, name: "New Delhi", lat: 28.61, lon: 77.21, faction: india, population: 20000000, type: capital}
+  - {id: amritsar, name: "Amritsar", lat: 31.63, lon: 74.87, faction: india, population: 1200000, type: major}
+  - {id: jammu, name: "Jammu", lat: 32.73, lon: 74.87, faction: india, population: 600000, type: major}
+  - {id: srinagar, name: "Srinagar", lat: 34.08, lon: 74.79, faction: india, population: 1200000, type: major}
+  - {id: jodhpur, name: "Jodhpur", lat: 26.29, lon: 73.02, faction: india, population: 1100000, type: major}
+  - {id: jaisalmer, name: "Jaisalmer", lat: 26.91, lon: 70.91, faction: india, population: 100000, type: minor}
+  - {id: pathankot, name: "Pathankot", lat: 32.27, lon: 75.64, faction: india, population: 200000, type: minor}
+
+  # Pakistan
+  - {id: islamabad, name: "Islamabad", lat: 33.68, lon: 73.04, faction: pakistan, population: 1100000, type: capital}
+  - {id: lahore, name: "Lahore", lat: 31.55, lon: 74.35, faction: pakistan, population: 11000000, type: major}
+  - {id: karachi, name: "Karachi", lat: 24.86, lon: 67.01, faction: pakistan, population: 15000000, type: major}
+  - {id: rawalpindi, name: "Rawalpindi", lat: 33.60, lon: 73.04, faction: pakistan, population: 2100000, type: major}
+  - {id: multan, name: "Multan", lat: 30.19, lon: 71.47, faction: pakistan, population: 1900000, type: major}
+  - {id: peshawar, name: "Peshawar", lat: 34.01, lon: 71.52, faction: pakistan, population: 2000000, type: major}
+  - {id: quetta, name: "Quetta", lat: 30.18, lon: 67.00, faction: pakistan, population: 1000000, type: major}
+  - {id: sialkot, name: "Sialkot", lat: 32.49, lon: 74.53, faction: pakistan, population: 700000, type: minor}
+  - {id: gujranwala, name: "Gujranwala", lat: 32.16, lon: 74.18, faction: pakistan, population: 2000000, type: major}
+
+# STRATEGIC PASSES AND CHOKE POINTS
+choke_points:
+  - {id: khyber_pass, name: "Khyber Pass", lat: 34.05, lon: 71.10, type: pass, control: pakistan}
+  - {id: bolan_pass, name: "Bolan Pass", lat: 29.89, lon: 67.25, type: pass, control: pakistan}
+  - {id: zojila_pass, name: "Zoji La Pass", lat: 34.28, lon: 75.47, type: pass, control: india}
+  - {id: haji_pir_pass, name: "Haji Pir Pass", lat: 33.95, lon: 74.15, type: pass, control: pakistan}
+  - {id: wagah_attari, name: "Wagah-Attari Border", lat: 31.60, lon: 74.57, type: border_crossing, control: neutral}
+
+# LINE OF CONTROL
+loc:
+  name: "Line of Control"
+  approximate_path:
+    - {lat: 35.5, lon: 76.8}  # Northern point
+    - {lat: 34.8, lon: 76.0}
+    - {lat: 34.0, lon: 74.5}
+    - {lat: 33.5, lon: 73.8}
+    - {lat: 33.0, lon: 73.7}  # South to international border
+  notes: "De facto border in Kashmir, heavily fortified on both sides"

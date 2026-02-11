@@ -1,0 +1,266 @@
+# Artillery Systems Schema Definition
+
+artillery_types:
+  # Schema for artillery type definitions
+  # - id: unique identifier
+  # - name: system name
+  # - faction: india | pakistan
+  # - category: tube | mlrs | mortar
+  # - caliber_mm: gun caliber or rocket size
+  # - range_km: maximum range
+  # - rate_of_fire: rounds per minute
+  # - burst_radius_m: lethal radius per round
+  # - accuracy: 0-100 (cep relative to range)
+  # - mobility: towed | self_propelled | truck_mounted
+  # - setup_time_minutes: time to deploy from march
+  # - ammo_types: [he, smoke, illumination, guided, cluster, thermobaric]
+
+  # INDIA - Tube Artillery
+  dhanush:
+    id: dhanush
+    name: "Dhanush 155mm"
+    faction: india
+    category: tube
+    caliber_mm: 155
+    range_km: 38
+    rate_of_fire: 3
+    burst_radius_m: 50
+    accuracy: 70
+    mobility: towed
+    setup_time_minutes: 10
+    ammo_types: [he, smoke, illumination, guided]
+
+  k9_vajra:
+    id: k9_vajra
+    name: "K9 Vajra 155mm SPH"
+    faction: india
+    category: tube
+    caliber_mm: 155
+    range_km: 40
+    rate_of_fire: 6
+    burst_radius_m: 50
+    accuracy: 75
+    mobility: self_propelled
+    setup_time_minutes: 1
+    ammo_types: [he, smoke, illumination, guided]
+
+  m777:
+    id: m777
+    name: "M777 155mm"
+    faction: india
+    category: tube
+    caliber_mm: 155
+    range_km: 30
+    rate_of_fire: 5
+    burst_radius_m: 50
+    accuracy: 80
+    mobility: towed  # can be airlifted
+    setup_time_minutes: 5
+    ammo_types: [he, smoke, illumination, guided]
+
+  bofors:
+    id: bofors
+    name: "FH-77B Bofors 155mm"
+    faction: india
+    category: tube
+    caliber_mm: 155
+    range_km: 30
+    rate_of_fire: 3
+    burst_radius_m: 50
+    accuracy: 75
+    mobility: towed
+    setup_time_minutes: 8
+    ammo_types: [he, smoke, illumination]
+
+  # INDIA - MLRS
+  pinaka:
+    id: pinaka
+    name: "Pinaka Mk1"
+    faction: india
+    category: mlrs
+    caliber_mm: 214
+    range_km: 40
+    rate_of_fire: 12  # 12 rockets in 44 seconds
+    burst_radius_m: 100
+    accuracy: 60
+    mobility: truck_mounted
+    setup_time_minutes: 3
+    ammo_types: [he, cluster, thermobaric]
+
+  pinaka_mk2:
+    id: pinaka_mk2
+    name: "Pinaka Mk2"
+    faction: india
+    category: mlrs
+    caliber_mm: 214
+    range_km: 75
+    rate_of_fire: 12
+    burst_radius_m: 100
+    accuracy: 70
+    mobility: truck_mounted
+    setup_time_minutes: 3
+    ammo_types: [he, cluster, thermobaric, guided]
+
+  smerch:
+    id: smerch
+    name: "BM-30 Smerch"
+    faction: india
+    category: mlrs
+    caliber_mm: 300
+    range_km: 90
+    rate_of_fire: 12
+    burst_radius_m: 150
+    accuracy: 65
+    mobility: truck_mounted
+    setup_time_minutes: 5
+    ammo_types: [he, cluster, thermobaric]
+
+  # PAKISTAN - Tube Artillery
+  m109:
+    id: m109
+    name: "M109A5 155mm SPH"
+    faction: pakistan
+    category: tube
+    caliber_mm: 155
+    range_km: 24
+    rate_of_fire: 4
+    burst_radius_m: 50
+    accuracy: 70
+    mobility: self_propelled
+    setup_time_minutes: 1
+    ammo_types: [he, smoke, illumination]
+
+  sh15:
+    id: sh15
+    name: "SH-15 155mm"
+    faction: pakistan
+    category: tube
+    caliber_mm: 155
+    range_km: 53
+    rate_of_fire: 5
+    burst_radius_m: 50
+    accuracy: 75
+    mobility: truck_mounted
+    setup_time_minutes: 3
+    ammo_types: [he, smoke, illumination, guided]
+
+  m198:
+    id: m198
+    name: "M198 155mm"
+    faction: pakistan
+    category: tube
+    caliber_mm: 155
+    range_km: 22
+    rate_of_fire: 4
+    burst_radius_m: 50
+    accuracy: 70
+    mobility: towed
+    setup_time_minutes: 10
+    ammo_types: [he, smoke, illumination]
+
+  # PAKISTAN - MLRS
+  a100:
+    id: a100
+    name: "A-100 MRL"
+    faction: pakistan
+    category: mlrs
+    caliber_mm: 300
+    range_km: 100
+    rate_of_fire: 10
+    burst_radius_m: 150
+    accuracy: 60
+    mobility: truck_mounted
+    setup_time_minutes: 5
+    ammo_types: [he, cluster]
+
+  ks1a:
+    id: ks1a
+    name: "KRL-122 MRL"
+    faction: pakistan
+    category: mlrs
+    caliber_mm: 122
+    range_km: 40
+    rate_of_fire: 40
+    burst_radius_m: 80
+    accuracy: 50
+    mobility: truck_mounted
+    setup_time_minutes: 3
+    ammo_types: [he]
+
+artillery_unit:
+  # Schema for artillery unit deployment
+  # - id: unique identifier
+  # - name: unit name
+  # - faction: india | pakistan
+  # - artillery_type: reference to artillery_types
+  # - gun_count: number of tubes/launchers
+  # - guns_available: operational guns
+  # - ammo_basic_load: rounds per gun
+  # - ammo_remaining: current ammo
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - deployed: true | false
+  # - counter_battery_radar: true | false
+  # - status: ready | firing | moving | destroyed
+
+example_artillery_unit:
+  id: "pinaka_regiment_01"
+  name: "1st Pinaka Regiment"
+  faction: india
+  artillery_type: pinaka_mk2
+  gun_count: 18
+  guns_available: 16
+  ammo_basic_load: 24
+  ammo_remaining: 432
+  location:
+    lat: 31.8
+    lon: 75.2
+    grid: null
+  deployed: true
+  counter_battery_radar: true
+  status: ready
+
+# Counter-battery operations
+counter_battery:
+  # Radar detection
+  detection_range_km: 50
+  detection_time_seconds: 30
+
+  # Response time (turns = 6 hours, so use fraction)
+  response_fire_delay: 0.05  # ~18 minutes
+
+  # Survival if not moving
+  attrition_if_stationary: 0.30
+
+  # Shoot and scoot
+  scoot_time_minutes:
+    self_propelled: 2
+    truck_mounted: 5
+    towed: 15
+
+# Fire mission resolution
+fire_missions:
+  # Effects vs unit types
+  suppression_vs_infantry: 0.40  # 40% effectiveness reduction
+  attrition_vs_infantry: 0.08   # 8% casualties per fire mission
+
+  suppression_vs_armor: 0.20
+  attrition_vs_armor: 0.02  # hard to kill with indirect fire
+
+  suppression_vs_artillery: 0.50
+  attrition_vs_artillery: 0.12
+
+  # Accuracy modifiers
+  spotter_bonus: 1.3  # with forward observer
+  drone_bonus: 1.5    # with drone spotting
+  counter_battery_bonus: 1.4  # with CB radar data
+
+  # Terrain effects on artillery effectiveness
+  terrain_modifier:
+    open: 1.0
+    forest: 0.6
+    urban: 0.4
+    mountain: 0.7
+    fortified: 0.3

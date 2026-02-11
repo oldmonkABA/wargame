@@ -1,0 +1,226 @@
+# Electronic Warfare Schema Definition
+
+ew_types:
+  # Schema for EW system type definitions
+  # - id: unique identifier
+  # - name: system name
+  # - faction: india | pakistan
+  # - category: jammer | sigint | cyber | decoy
+  # - target_types: [radar, communication, gps, datalink]
+  # - range_km: effective range
+  # - power: 0-100 (jamming effectiveness)
+  # - selectivity: 0-100 (ability to jam specific targets vs area)
+  # - mobility: static | vehicle | airborne
+  # - setup_time_minutes: time to deploy
+
+  # INDIA
+  samyukta:
+    id: samyukta
+    name: "Samyukta EW System"
+    faction: india
+    category: jammer
+    target_types: [radar, communication]
+    range_km: 150
+    power: 75
+    selectivity: 70
+    mobility: vehicle
+    setup_time_minutes: 30
+
+  himshakti:
+    id: himshakti
+    name: "Himshakti EW System"
+    faction: india
+    category: jammer
+    target_types: [radar, communication, datalink]
+    range_km: 200
+    power: 80
+    selectivity: 75
+    mobility: vehicle
+    setup_time_minutes: 45
+
+  divya_drishti:
+    id: divya_drishti
+    name: "Divya Drishti SIGINT"
+    faction: india
+    category: sigint
+    target_types: [communication, radar]
+    range_km: 300
+    power: null  # passive
+    selectivity: 85
+    mobility: static
+    setup_time_minutes: null
+
+  spectra:
+    id: spectra
+    name: "SPECTRA (Rafale)"
+    faction: india
+    category: jammer
+    target_types: [radar, missile_seeker]
+    range_km: 50  # self-protection
+    power: 90
+    selectivity: 95
+    mobility: airborne
+    setup_time_minutes: 0
+
+  # PAKISTAN
+  ew_pak_ground:
+    id: ew_pak_ground
+    name: "Ground EW System"
+    faction: pakistan
+    category: jammer
+    target_types: [radar, communication]
+    range_km: 120
+    power: 65
+    selectivity: 60
+    mobility: vehicle
+    setup_time_minutes: 30
+
+  kj500_ew:
+    id: kj500_ew
+    name: "KJ-500 EW Suite"
+    faction: pakistan
+    category: jammer
+    target_types: [radar, communication, datalink]
+    range_km: 180
+    power: 70
+    selectivity: 70
+    mobility: airborne
+    setup_time_minutes: 0
+
+ew_unit:
+  # Schema for deployed EW unit
+  # - id: unique identifier
+  # - name: unit designation
+  # - faction: india | pakistan
+  # - type: reference to ew_types
+  # - system_count: number of systems
+  # - systems_available: operational systems
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - active: true | false
+  # - targeting: list of target IDs or "area"
+  # - status: ready | active | moving | destroyed
+
+example_ew_unit:
+  id: "samyukta_det_01"
+  name: "94 EW Squadron Det-1"
+  faction: india
+  type: samyukta
+  system_count: 4
+  systems_available: 4
+  location:
+    lat: 31.2
+    lon: 75.1
+    grid: null
+  active: false
+  targeting: []
+  status: ready
+
+# Jamming effects
+jamming:
+  # Effects on target systems
+  radar_jamming:
+    # Detection range reduction
+    range_reduction_per_10_power: 0.15  # 15% reduction per 10 power points
+    # Tracking accuracy
+    accuracy_reduction: 0.20
+    # SAM effectiveness
+    sam_pk_reduction: 0.25
+
+  comm_jamming:
+    # Command and control effects
+    coordination_penalty: 0.15  # per active jammer
+    reaction_time_increase: 1.3
+    # AI tasking disruption
+    tasking_delay_turns: 0.5
+
+  gps_jamming:
+    # Precision weapon degradation
+    guided_weapon_cep_multiplier: 3.0  # CEP increases 3x
+    navigation_error_km: 5
+
+  datalink_jamming:
+    # AWACS effectiveness
+    awacs_coverage_reduction: 0.40
+    # Fighter coordination
+    bvr_engagement_penalty: 0.30
+
+# Electronic attack
+electronic_attack:
+  # Active measures
+  radar_burnthrough:
+    # High-power radars can burn through jamming
+    power_ratio_threshold: 1.5  # radar must be 1.5x jammer power
+
+  # Home-on-jam
+  arm_missiles:
+    # Anti-radiation missiles can target jammers
+    detection_range_km: 100
+    pk_vs_active_jammer: 75
+
+  # DRFM (Digital RF Memory) spoofing
+  spoofing:
+    # Can create false targets
+    false_target_count: 5
+    effectiveness_vs_old_radar: 80
+    effectiveness_vs_new_radar: 40
+
+# Cyber operations
+cyber:
+  # Cyber attack types
+  attack_types:
+    network_intrusion:
+      prep_turns: 2
+      success_base: 30
+      effects: [data_exfil, system_degradation]
+
+    scada_attack:
+      prep_turns: 4
+      success_base: 20
+      effects: [power_grid, fuel_systems]
+
+    comms_disruption:
+      prep_turns: 1
+      success_base: 50
+      effects: [c2_degradation]
+
+  # Effects
+  effects:
+    data_exfil:
+      reveals: [unit_positions, orders, logistics]
+
+    system_degradation:
+      target: [air_defense_network, logistics_tracking]
+      efficiency_reduction: 0.30
+
+    c2_degradation:
+      coordination_penalty: 0.25
+      duration_turns: 4
+
+# SIGINT
+sigint:
+  # Signals intelligence collection
+  collection:
+    # Can detect emitting systems
+    radar_detection_range_km: 400
+    comm_detection_range_km: 200
+
+    # Can locate emitters
+    location_accuracy_km: 5
+
+    # Can characterize
+    system_identification: true
+    order_of_battle_intel: true
+
+  # Countermeasures
+  emission_control:
+    # EMCON reduces SIGINT effectiveness
+    emcon_level:
+      normal: 1.0
+      reduced: 0.5
+      silent: 0.1  # only passive sensors
+    # But also reduces own capability
+    own_radar_penalty: 0.5  # at reduced
+    own_comms_penalty: 0.3

@@ -1,0 +1,458 @@
+# Indian Air Force Stations - Western Sector
+# Relevant for India-Pakistan theater
+# Data compiled from public sources (IISS, news reports, Wikipedia)
+
+airbases:
+  # WESTERN AIR COMMAND
+
+  # Punjab Sector
+  - id: iaf_adampur
+    name: "Adampur Air Force Station"
+    faction: india
+    location:
+      lat: 31.4333
+      lon: 75.7597
+      state: Punjab
+    command: western_air_command
+    type: fighter
+    runways:
+      - length_m: 2800
+        surface: concrete
+        hardened: true
+    capacity: 40
+    facilities:
+      hardened_shelters: 24
+      maintenance: 85
+    squadrons:
+      - id: "1_sqn_tigers"
+        name: "No. 1 Squadron"
+        nickname: "Tigers"
+        aircraft_type: mig21_bison  # Being upgraded
+        aircraft_count: 16
+      - id: "26_sqn_warriors"
+        name: "No. 26 Squadron"
+        nickname: "Warriors"
+        aircraft_type: su30mki
+        aircraft_count: 18
+    status: operational
+
+  - id: iaf_halwara
+    name: "Halwara Air Force Station"
+    faction: india
+    location:
+      lat: 30.7441
+      lon: 75.6325
+      state: Punjab
+    command: western_air_command
+    type: fighter
+    runways:
+      - length_m: 2750
+        surface: concrete
+        hardened: true
+    capacity: 45
+    facilities:
+      hardened_shelters: 28
+      maintenance: 85
+    squadrons:
+      - id: "7_sqn_battleaxes"
+        name: "No. 7 Squadron"
+        nickname: "Battle Axes"
+        aircraft_type: mig21_bison
+        aircraft_count: 14
+      - id: "220_sqn_desert_tigers"
+        name: "No. 220 Squadron"
+        nickname: "Desert Tigers"
+        aircraft_type: su30mki
+        aircraft_count: 18
+    status: operational
+
+  - id: iaf_pathankot
+    name: "Pathankot Air Force Station"
+    faction: india
+    location:
+      lat: 32.2336
+      lon: 75.6344
+      state: Punjab
+    command: western_air_command
+    type: fighter
+    runways:
+      - length_m: 2700
+        surface: concrete
+        hardened: true
+    capacity: 40
+    facilities:
+      hardened_shelters: 20
+      maintenance: 80
+    squadrons:
+      - id: "26_sqn"
+        name: "No. 9 Squadron"
+        nickname: "Wolf Pack"
+        aircraft_type: mig29
+        aircraft_count: 16
+    status: operational
+
+  - id: iaf_ambala
+    name: "Ambala Air Force Station"
+    faction: india
+    location:
+      lat: 30.3681
+      lon: 76.8172
+      state: Haryana
+    command: western_air_command
+    type: fighter
+    runways:
+      - length_m: 2750
+        surface: concrete
+        hardened: true
+    capacity: 40
+    facilities:
+      hardened_shelters: 24
+      maintenance: 90
+    squadrons:
+      - id: "17_sqn_golden_arrows"
+        name: "No. 17 Squadron"
+        nickname: "Golden Arrows"
+        aircraft_type: rafale
+        aircraft_count: 18
+      - id: "101_sqn_falcons"
+        name: "No. 101 Squadron"
+        nickname: "Falcons"
+        aircraft_type: rafale
+        aircraft_count: 18
+    status: operational
+
+  # Rajasthan Sector
+  - id: iaf_jodhpur
+    name: "Jodhpur Air Force Station"
+    faction: india
+    location:
+      lat: 26.2511
+      lon: 73.0489
+      state: Rajasthan
+    command: south_western_air_command
+    type: fighter
+    runways:
+      - length_m: 2800
+        surface: concrete
+        hardened: true
+    capacity: 50
+    facilities:
+      hardened_shelters: 28
+      maintenance: 85
+    squadrons:
+      - id: "31_sqn_lions"
+        name: "No. 31 Squadron"
+        nickname: "Lions"
+        aircraft_type: su30mki
+        aircraft_count: 18
+      - id: "106_sqn"
+        name: "No. 106 Squadron"
+        aircraft_type: jaguar
+        aircraft_count: 16
+    status: operational
+
+  - id: iaf_jaisalmer
+    name: "Jaisalmer Air Force Station"
+    faction: india
+    location:
+      lat: 26.8889
+      lon: 70.8650
+      state: Rajasthan
+    command: south_western_air_command
+    type: fighter
+    runways:
+      - length_m: 2700
+        surface: concrete
+        hardened: true
+    capacity: 35
+    facilities:
+      hardened_shelters: 18
+      maintenance: 75
+    squadrons:
+      - id: "12_sqn"
+        name: "No. 12 Squadron"
+        aircraft_type: mirage2000
+        aircraft_count: 14
+    status: operational
+
+  - id: iaf_uttarlai
+    name: "Uttarlai Air Force Station"
+    faction: india
+    location:
+      lat: 25.8167
+      lon: 71.3833
+      state: Rajasthan
+    command: south_western_air_command
+    type: fighter
+    runways:
+      - length_m: 2600
+        surface: concrete
+        hardened: true
+    capacity: 30
+    facilities:
+      hardened_shelters: 16
+      maintenance: 75
+    squadrons:
+      - id: "4_sqn_oorials"
+        name: "No. 4 Squadron"
+        nickname: "Oorials"
+        aircraft_type: mig21_bison
+        aircraft_count: 14
+    status: operational
+
+  - id: iaf_bhuj
+    name: "Bhuj Air Force Station"
+    faction: india
+    location:
+      lat: 23.2878
+      lon: 69.6700
+      state: Gujarat
+    command: south_western_air_command
+    type: fighter
+    runways:
+      - length_m: 2500
+        surface: concrete
+        hardened: true
+    capacity: 30
+    facilities:
+      hardened_shelters: 16
+      maintenance: 75
+    squadrons:
+      - id: "45_sqn_flying_daggers"
+        name: "No. 45 Squadron"
+        nickname: "Flying Daggers"
+        aircraft_type: mig21_bison
+        aircraft_count: 14
+    status: operational
+
+  - id: iaf_naliya
+    name: "Naliya Air Force Station"
+    faction: india
+    location:
+      lat: 23.2167
+      lon: 68.8500
+      state: Gujarat
+    command: south_western_air_command
+    type: fighter
+    runways:
+      - length_m: 2600
+        surface: concrete
+        hardened: true
+    capacity: 30
+    facilities:
+      hardened_shelters: 18
+      maintenance: 75
+    squadrons:
+      - id: "32_sqn_thunderbirds"
+        name: "No. 32 Squadron"
+        nickname: "Thunderbirds"
+        aircraft_type: mig29
+        aircraft_count: 16
+    status: operational
+
+  # Jammu & Kashmir Sector
+  - id: iaf_srinagar
+    name: "Srinagar Air Force Station"
+    faction: india
+    location:
+      lat: 33.9872
+      lon: 74.7742
+      state: Jammu_Kashmir
+    command: western_air_command
+    type: fighter
+    runways:
+      - length_m: 3000
+        surface: concrete
+        hardened: true
+    capacity: 35
+    facilities:
+      hardened_shelters: 18
+      maintenance: 80
+    squadrons:
+      - id: "19_sqn_tigers"
+        name: "No. 19 Squadron"
+        aircraft_type: mig21_bison
+        aircraft_count: 14
+    status: operational
+    notes: "High altitude, close to LOC"
+
+  - id: iaf_awantipur
+    name: "Awantipur Air Force Station"
+    faction: india
+    location:
+      lat: 33.8697
+      lon: 75.0239
+      state: Jammu_Kashmir
+    command: western_air_command
+    type: fighter
+    runways:
+      - length_m: 2700
+        surface: concrete
+        hardened: true
+    capacity: 30
+    facilities:
+      hardened_shelters: 16
+      maintenance: 78
+    squadrons:
+      - id: "51_sqn_swordarms"
+        name: "No. 51 Squadron"
+        nickname: "Sword Arms"
+        aircraft_type: mig21_bison
+        aircraft_count: 14
+    status: operational
+
+  - id: iaf_jammu
+    name: "Jammu Air Force Station"
+    faction: india
+    location:
+      lat: 32.6892
+      lon: 74.8378
+      state: Jammu_Kashmir
+    command: western_air_command
+    type: fighter
+    runways:
+      - length_m: 2600
+        surface: concrete
+        hardened: true
+    capacity: 30
+    facilities:
+      hardened_shelters: 16
+      maintenance: 78
+    squadrons:
+      - id: "3_sqn_cobras"
+        name: "No. 3 Squadron"
+        nickname: "Cobras"
+        aircraft_type: mig21_bison
+        aircraft_count: 14
+    status: operational
+
+  # Strike Aircraft Bases
+  - id: iaf_gorakhpur
+    name: "Gorakhpur Air Force Station"
+    faction: india
+    location:
+      lat: 26.7394
+      lon: 83.4483
+      state: Uttar_Pradesh
+    command: central_air_command
+    type: strike
+    runways:
+      - length_m: 2800
+        surface: concrete
+        hardened: true
+    capacity: 40
+    facilities:
+      hardened_shelters: 20
+      maintenance: 85
+    squadrons:
+      - id: "18_sqn_flying_bullets"
+        name: "No. 18 Squadron"
+        nickname: "Flying Bullets"
+        aircraft_type: su30mki
+        aircraft_count: 18
+    status: operational
+
+  - id: iaf_agra
+    name: "Agra Air Force Station"
+    faction: india
+    location:
+      lat: 27.1556
+      lon: 77.9611
+      state: Uttar_Pradesh
+    command: central_air_command
+    type: transport
+    runways:
+      - length_m: 3200
+        surface: concrete
+        hardened: true
+    capacity: 50
+    facilities:
+      hardened_shelters: 10
+      maintenance: 85
+    squadrons:
+      - id: "awacs_det"
+        name: "AWACS Detachment"
+        aircraft_type: phalcon_awacs
+        aircraft_count: 3
+      - id: "c17_sqn"
+        name: "C-17 Squadron"
+        aircraft_type: c17
+        aircraft_count: 10
+    status: operational
+
+  # Additional Western Sector
+  - id: iaf_chandigarh
+    name: "Chandigarh Air Force Station"
+    faction: india
+    location:
+      lat: 30.6733
+      lon: 76.7886
+      state: Chandigarh
+    command: western_air_command
+    type: fighter
+    runways:
+      - length_m: 2750
+        surface: concrete
+        hardened: true
+    capacity: 35
+    facilities:
+      hardened_shelters: 18
+      maintenance: 82
+    squadrons:
+      - id: "15_sqn_flying_lances"
+        name: "No. 15 Squadron"
+        nickname: "Flying Lances"
+        aircraft_type: mig21_bison
+        aircraft_count: 14
+    status: operational
+
+  - id: iaf_sirsa
+    name: "Sirsa Air Force Station"
+    faction: india
+    location:
+      lat: 29.5606
+      lon: 75.0261
+      state: Haryana
+    command: western_air_command
+    type: fighter
+    runways:
+      - length_m: 2700
+        surface: concrete
+        hardened: true
+    capacity: 35
+    facilities:
+      hardened_shelters: 18
+      maintenance: 80
+    squadrons:
+      - id: "21_sqn_ankush"
+        name: "No. 21 Squadron"
+        nickname: "Ankush"
+        aircraft_type: mig21_bison
+        aircraft_count: 14
+    status: operational
+
+  - id: iaf_hashimara
+    name: "Hashimara Air Force Station"
+    faction: india
+    location:
+      lat: 26.6972
+      lon: 89.3656
+      state: West_Bengal
+    command: eastern_air_command
+    type: fighter
+    runways:
+      - length_m: 2700
+        surface: concrete
+        hardened: true
+    capacity: 35
+    facilities:
+      hardened_shelters: 18
+      maintenance: 80
+    squadrons:
+      - id: "2_sqn_winged_arrows"
+        name: "No. 2 Squadron"
+        nickname: "Winged Arrows"
+        aircraft_type: rafale
+        aircraft_count: 0  # Being stood up
+    status: operational
+    notes: "Eastern sector, Rafale deployment planned"

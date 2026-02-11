@@ -1,0 +1,532 @@
+# Drone/UAV Systems Schema Definition
+
+drone_types:
+  # Schema for drone type definitions
+  # - id: unique identifier
+  # - name: drone name
+  # - faction: india | pakistan
+  # - category: recon | armed | loitering_munition
+  # - endurance_hours: max flight time
+  # - range_km: operational range from base
+  # - altitude_m: operational altitude
+  # - speed_kmh: cruise speed
+  # - sensors:
+  #     electro_optical: true | false
+  #     infrared: true | false
+  #     sar: true | false (synthetic aperture radar)
+  #     sigint: true | false (signals intelligence)
+  # - payload_kg: weapon payload (if armed)
+  # - weapons: list of compatible weapons (if armed)
+  # - stealth: 0-100 (low observable features)
+  # - survivability: 0-100 (ability to evade threats)
+
+  # INDIA
+  heron:
+    id: heron
+    name: "IAI Heron"
+    faction: india
+    category: recon
+    endurance_hours: 45
+    range_km: 350
+    altitude_m: 10500
+    speed_kmh: 210
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: true
+      sigint: false
+    payload_kg: 250
+    weapons: []
+    stealth: 25
+    survivability: 40
+
+  heron_tp:
+    id: heron_tp
+    name: "IAI Heron TP"
+    faction: india
+    category: armed
+    endurance_hours: 36
+    range_km: 400
+    altitude_m: 14000
+    speed_kmh: 220
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: true
+      sigint: true
+    payload_kg: 1000
+    weapons:
+      - spike_atgm
+      - gbu_small
+    stealth: 30
+    survivability: 45
+
+  harop:
+    id: harop
+    name: "IAI Harop"
+    faction: india
+    category: loitering_munition
+    endurance_hours: 6
+    range_km: 1000
+    altitude_m: 4500
+    speed_kmh: 185
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: false
+      sigint: false
+    payload_kg: 23  # warhead
+    weapons:
+      - self  # warhead is the weapon
+    stealth: 50
+    survivability: 55
+
+  rustom2:
+    id: rustom2
+    name: "DRDO Rustom-2"
+    faction: india
+    category: recon
+    endurance_hours: 24
+    range_km: 250
+    altitude_m: 10500
+    speed_kmh: 225
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: false
+      sigint: true
+    payload_kg: 350
+    weapons: []
+    stealth: 30
+    survivability: 35
+
+  predator_mq9:
+    id: predator_mq9
+    name: "MQ-9B SeaGuardian"
+    faction: india
+    category: armed
+    endurance_hours: 40
+    range_km: 500
+    altitude_m: 15000
+    speed_kmh: 400
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: true
+      sigint: true
+    payload_kg: 1700
+    weapons:
+      - hellfire
+      - gbu_small
+    stealth: 35
+    survivability: 40
+
+  # PAKISTAN
+  burraq:
+    id: burraq
+    name: "NESCOM Burraq"
+    faction: pakistan
+    category: armed
+    endurance_hours: 12
+    range_km: 150
+    altitude_m: 7500
+    speed_kmh: 200
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: false
+      sigint: false
+    payload_kg: 100
+    weapons:
+      - barq_atgm
+    stealth: 25
+    survivability: 35
+
+  shahpar:
+    id: shahpar
+    name: "GIDS Shahpar"
+    faction: pakistan
+    category: recon
+    endurance_hours: 7
+    range_km: 100
+    altitude_m: 4500
+    speed_kmh: 150
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: false
+      sigint: false
+    payload_kg: 50
+    weapons: []
+    stealth: 20
+    survivability: 30
+
+  shahpar2:
+    id: shahpar2
+    name: "GIDS Shahpar-II"
+    faction: pakistan
+    category: armed
+    endurance_hours: 10
+    range_km: 200
+    altitude_m: 6000
+    speed_kmh: 180
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: false
+      sigint: false
+    payload_kg: 100
+    weapons:
+      - barq_atgm
+    stealth: 25
+    survivability: 35
+
+  wing_loong2:
+    id: wing_loong2
+    name: "Wing Loong II"
+    faction: pakistan
+    category: armed
+    endurance_hours: 32
+    range_km: 400
+    altitude_m: 9000
+    speed_kmh: 340
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: true
+      sigint: false
+    payload_kg: 480
+    weapons:
+      - ba7_atgm
+      - fei_teng
+    stealth: 30
+    survivability: 40
+
+  # ---------------------------------------------------------------------------
+  # LOITERING MUNITIONS - PAKISTAN
+  # Critical for Operation Sindoor drone swarms (May 7-9, 2025)
+  # ---------------------------------------------------------------------------
+
+  yihaa_iii:
+    id: yihaa_iii
+    name: "Yihaa-III"
+    faction: pakistan
+    category: loitering_munition
+    origin: chinese
+    endurance_hours: 2
+    range_km: 120
+    altitude_m: 3000
+    speed_kmh: 150
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: false
+      sigint: false
+    payload_kg: 8  # warhead
+    weapons:
+      - self
+    warhead_type: shaped_charge
+    stealth: 45
+    survivability: 35
+    swarm_capable: true
+    notes: "Used in 300-600 drone waves May 7-9. Overwhelmed point defenses"
+
+  songar:
+    id: songar
+    name: "STM Songar"
+    faction: pakistan
+    category: armed
+    origin: turkish
+    endurance_hours: 0.5
+    range_km: 15
+    altitude_m: 500
+    speed_kmh: 70
+    sensors:
+      electro_optical: true
+      infrared: false
+      sar: false
+      sigint: false
+    payload_kg: 3
+    weapons:
+      - machine_gun_762
+      - grenade_40mm
+    stealth: 60
+    survivability: 25
+    swarm_capable: true
+    notes: "Rotary-wing armed drone. Close-range swarm attacks"
+
+  tb2:
+    id: tb2
+    name: "Bayraktar TB2"
+    faction: pakistan
+    category: armed
+    origin: turkish
+    endurance_hours: 27
+    range_km: 150
+    altitude_m: 7600
+    speed_kmh: 220
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: false
+      sigint: false
+    payload_kg: 150
+    weapons:
+      - mam_l
+      - mam_c
+      - roketsan_cirit
+    stealth: 35
+    survivability: 40
+    notes: "Combat proven in multiple conflicts. Used with drone swarms"
+
+  akinci:
+    id: akinci
+    name: "Bayraktar Akinci"
+    faction: pakistan
+    category: armed
+    origin: turkish
+    endurance_hours: 24
+    range_km: 300
+    altitude_m: 12000
+    speed_kmh: 360
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: true
+      sigint: true
+    payload_kg: 1350
+    weapons:
+      - mam_l
+      - som_cruise
+      - teber_guided_bomb
+    stealth: 40
+    survivability: 50
+    notes: "Heavy UCAV. Can carry cruise missiles. Used May 7-9"
+
+  decoy_drone:
+    id: decoy_drone
+    name: "Decoy Drone"
+    faction: pakistan
+    category: decoy
+    origin: various
+    endurance_hours: 1
+    range_km: 80
+    altitude_m: 3000
+    speed_kmh: 200
+    sensors:
+      electro_optical: false
+      infrared: false
+      sar: false
+      sigint: false
+    payload_kg: 0
+    weapons: []
+    radar_signature_multiplier: 3.0  # Appears as larger target
+    stealth: 0
+    survivability: 15
+    swarm_capable: true
+    notes: "Mixed with attack drones to saturate defenses. Expendable"
+
+  # ---------------------------------------------------------------------------
+  # LOITERING MUNITIONS - INDIA
+  # ---------------------------------------------------------------------------
+
+  harpy:
+    id: harpy
+    name: "IAI Harpy"
+    faction: india
+    category: loitering_munition
+    origin: israeli
+    endurance_hours: 4
+    range_km: 500
+    altitude_m: 4500
+    speed_kmh: 185
+    sensors:
+      electro_optical: false
+      infrared: false
+      sar: false
+      sigint: true  # Passive radar seeker
+    payload_kg: 32
+    weapons:
+      - self
+    warhead_type: fragmentation
+    target_type: radar_emitter
+    stealth: 55
+    survivability: 50
+    notes: "Anti-radiation loitering munition. Used for SEAD"
+
+  mini_harpy:
+    id: mini_harpy
+    name: "IAI Mini Harpy"
+    faction: india
+    category: loitering_munition
+    origin: israeli
+    endurance_hours: 2
+    range_km: 100
+    altitude_m: 3500
+    speed_kmh: 185
+    sensors:
+      electro_optical: true
+      infrared: true
+      sar: false
+      sigint: true
+    payload_kg: 8
+    weapons:
+      - self
+    warhead_type: shaped_charge
+    stealth: 50
+    survivability: 45
+    notes: "Dual seeker (EO/radar). Flexible targeting"
+
+drone_unit:
+  # Schema for drone unit deployment
+  # - id: unique identifier
+  # - name: unit name
+  # - faction: india | pakistan
+  # - drone_type: reference to drone_types
+  # - drone_count: number of drones
+  # - drones_available: operational drones
+  # - base_id: operating base
+  # - location:
+  #     lat: latitude
+  #     lon: longitude
+  #     grid: hex grid reference
+  # - mission: recon | strike | loiter | rtb
+  # - target_area: grid reference if on mission
+  # - status: ready | airborne | damaged | destroyed
+
+example_drone_unit:
+  id: "harop_squadron_01"
+  name: "Harop Detachment Alpha"
+  faction: india
+  drone_type: harop
+  drone_count: 12
+  drones_available: 10
+  base_id: "iaf_adampur"
+  location:
+    lat: 31.4
+    lon: 75.7
+    grid: null
+  mission: ready
+  target_area: null
+  status: ready
+
+# Drone operations
+drone_operations:
+  # Recon orbit reveals units in area
+  recon_reveal_radius_km: 20
+  recon_detail_level:
+    electro_optical: basic  # unit type, approximate strength
+    infrared: thermal  # +movement detection
+    sar: all_weather  # +concealed units
+    sigint: electronic  # +emitting systems (radars, comms)
+
+  # Armed drone strikes
+  strike_pk_vs_soft: 85
+  strike_pk_vs_armored: 45
+  strike_pk_vs_infantry: 70
+
+  # Loitering munitions
+  loiter_pk_vs_radar: 90  # excellent for SEAD
+  loiter_pk_vs_sam: 85
+  loiter_pk_vs_vehicle: 80
+
+  # Drone attrition
+  attrition_from_fighter: 0.80  # very vulnerable
+  attrition_from_short_range_sam: 0.60
+  attrition_from_manpads: 0.40
+
+# ---------------------------------------------------------------------------
+# Swarm Operations
+# Drone swarm mechanics based on saturation attack doctrine (Sindoor, May 2025)
+# ---------------------------------------------------------------------------
+swarm_operations:
+  # Wave size classifications
+  wave_sizes:
+    small:
+      min_drones: 50
+      max_drones: 100
+      coordination_difficulty: low
+      launch_time_minutes: 15
+    medium:
+      min_drones: 100
+      max_drones: 300
+      coordination_difficulty: medium
+      launch_time_minutes: 30
+    large:
+      min_drones: 300
+      max_drones: 600
+      coordination_difficulty: high
+      launch_time_minutes: 60
+      notes: "Matches Sindoor doctrine wave sizes (300-600 drones per wave)"
+
+  # Saturation formula
+  # When wave size exceeds intercept capacity, effective Pk drops:
+  #   effective_pk = base_pk * (intercept_capacity / wave_size)
+  saturation_mechanics:
+    formula: "effective_pk = base_pk * min(1.0, intercept_capacity / wave_size)"
+    per_system_pk:
+      s400:
+        base_pk: 0.85
+        intercept_capacity: 40  # simultaneous engagements
+      spyder:
+        base_pk: 0.70
+        intercept_capacity: 12
+      akash:
+        base_pk: 0.65
+        intercept_capacity: 16
+      barak8:
+        base_pk: 0.80
+        intercept_capacity: 24
+      hq16:
+        base_pk: 0.70
+        intercept_capacity: 12
+      manpads:
+        base_pk: 0.40
+        intercept_capacity: 2  # per launcher team
+      gun_ciws:
+        base_pk: 0.50
+        intercept_capacity: 8  # burst engagement
+    saturation_threshold_note: >
+      When total incoming drones exceed combined intercept capacity of all
+      defending systems, excess drones pass through unengaged. This is the
+      core mechanism that makes large swarms effective against point defenses.
+
+  # Decoy mixing ratios
+  decoy_mixing:
+    presets:
+      sead_heavy:
+        decoy_ratio: 0.70  # 70% decoys, 30% attack
+        purpose: "Maximize SAM missile expenditure"
+        surviving_attack_formula: "attack_drones * (1 - attrition_on_remaining)"
+      balanced:
+        decoy_ratio: 0.50  # 50/50 split
+        purpose: "General purpose saturation"
+        surviving_attack_formula: "attack_drones * (1 - attrition_on_remaining)"
+      strike_heavy:
+        decoy_ratio: 0.30  # 30% decoys, 70% attack
+        purpose: "Maximize warheads on target"
+        surviving_attack_formula: "attack_drones * (1 - attrition_on_remaining)"
+    mechanics:
+      description: >
+        Decoy drones are engaged first by AD systems (they appear identical on
+        radar). Each decoy absorbs one SAM engagement. Surviving attack drones
+        then proceed to target with reduced AD opposition.
+      decoy_rcs_multiplier: 3.0  # Decoys appear larger on radar
+      decoy_priority: "AD systems engage largest RCS first"
+
+  # Swarm coordination mechanics
+  swarm_coordination:
+    minimum_swarm_size: 20  # Below this, no coordination bonus
+    coordination_bonus:
+      accuracy_boost: 0.15  # +15% accuracy when coordinated
+      description: "Drones share target data and optimize attack angles"
+    terminal_ai_guidance:
+      enabled: true
+      effect: "Final approach uses onboard AI for terminal guidance"
+      accuracy_improvement: 0.10  # +10% terminal accuracy
+      requires_datalink: true
+    ew_vulnerability:
+      datalink_jamming: 0.30  # 30% effectiveness loss if datalink jammed
+      gps_denial: 0.20  # 20% accuracy loss under GPS jamming
+      autonomous_fallback: true  # Drones can switch to autonomous mode
+      autonomous_accuracy_penalty: 0.25  # 25% accuracy loss in autonomous mode

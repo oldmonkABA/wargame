@@ -1,0 +1,578 @@
+# Indian Air Force Aircraft Loadouts
+# Based on Operation Sindoor (May 2025) configurations
+# Reference: CHPM Exploratory Note No. 1
+
+# =============================================================================
+# DASSAULT RAFALE
+# =============================================================================
+# 36 aircraft in service. Premium multirole fighter.
+# Only platform for Meteor and SCALP-EG.
+# SPECTRA EW suite provides exceptional self-protection.
+
+rafale:
+  type_stats:
+    total_aircraft: 36
+    generation: 4.5
+    ew_suite: spectra
+    ew_rating: 92
+    radar: rbe2_aesa
+    radar_rating: 90
+    datalink: link16_india
+
+  loadouts:
+    air_superiority:
+      name: "Air Dominance"
+      role: air_superiority
+      description: "Maximum BVR capability with Meteor missiles"
+      weapons:
+        bvr: { type: meteor, count: 6 }
+        wvr: { type: mica_ir, count: 2 }
+      performance:
+        speed_modifier: -5
+        maneuver_modifier: -5
+        range_modifier: -10
+      endurance_hours: 3.0
+      bvr_range_km: 150
+      air_to_air_rating: 95
+      ground_attack_rating: 0
+      notes: "Primary CAP/escort configuration. Meteor's ramjet provides NEZ advantage"
+
+    deep_strike:
+      name: "SCALP Strike"
+      role: strike
+      description: "Standoff cruise missile delivery"
+      weapons:
+        a2g: { type: scalp_eg, count: 2 }
+        bvr: { type: mica_em, count: 3 }
+        wvr: { type: mica_ir, count: 1 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -15
+        range_modifier: -20
+      endurance_hours: 2.5
+      standoff_range_km: 500
+      bvr_range_km: 80
+      air_to_air_rating: 55
+      ground_attack_rating: 95
+      notes: "Used May 10 against PAF airbases. Can strike from inside Indian airspace"
+
+    precision_strike:
+      name: "Hammer Strike"
+      role: strike
+      description: "Medium-range precision attack"
+      weapons:
+        a2g: { type: hammer, count: 6 }
+        bvr: { type: mica_em, count: 2 }
+        wvr: { type: mica_ir, count: 2 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -12
+        range_modifier: -15
+      endurance_hours: 2.5
+      standoff_range_km: 70
+      bvr_range_km: 80
+      air_to_air_rating: 60
+      ground_attack_rating: 85
+      notes: "Multi-target precision capability"
+
+    multirole:
+      name: "Swing Role"
+      role: multirole
+      description: "Balanced air-to-air and strike capability"
+      weapons:
+        bvr: { type: meteor, count: 4 }
+        wvr: { type: mica_ir, count: 2 }
+        a2g: { type: hammer, count: 2 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -10
+        range_modifier: -12
+      endurance_hours: 2.8
+      bvr_range_km: 150
+      standoff_range_km: 70
+      air_to_air_rating: 80
+      ground_attack_rating: 50
+      notes: "Flexible configuration for evolving tactical situations"
+
+# =============================================================================
+# SUKHOI SU-30MKI
+# =============================================================================
+# 262+ aircraft. Heavy air superiority fighter.
+# Only platform for air-launched BrahMos.
+# Long range, high payload capacity.
+
+su30mki:
+  type_stats:
+    total_aircraft: 262
+    generation: 4.5
+    ew_suite: bars_ew
+    ew_rating: 70
+    radar: bars_pesa
+    radar_rating: 82
+    datalink: link_india
+
+  loadouts:
+    air_superiority:
+      name: "Heavy CAP"
+      role: air_superiority
+      description: "Maximum air-to-air loadout"
+      weapons:
+        bvr: { type: r77, count: 8 }
+        wvr: { type: r73, count: 4 }
+      performance:
+        speed_modifier: -5
+        maneuver_modifier: -8
+        range_modifier: -10
+      endurance_hours: 3.5
+      bvr_range_km: 80
+      air_to_air_rating: 85
+      ground_attack_rating: 0
+      notes: "High missile count but R-77 range inferior to PL-15/Meteor"
+
+    air_superiority_astra:
+      name: "Astra CAP"
+      role: air_superiority
+      description: "With indigenous Astra missiles"
+      weapons:
+        bvr: { type: astra_mk1, count: 6 }
+        wvr: { type: r73, count: 4 }
+      performance:
+        speed_modifier: -5
+        maneuver_modifier: -8
+        range_modifier: -10
+      endurance_hours: 3.5
+      bvr_range_km: 110
+      air_to_air_rating: 88
+      ground_attack_rating: 0
+      notes: "Improved BVR range with Astra over R-77"
+
+    brahmos_strike:
+      name: "BrahMos Carrier"
+      role: strike
+      description: "Supersonic cruise missile strike"
+      weapons:
+        a2g: { type: brahmos_air, count: 1 }
+        bvr: { type: r77, count: 2 }
+        wvr: { type: r73, count: 2 }
+      performance:
+        speed_modifier: -15
+        maneuver_modifier: -25
+        range_modifier: -20
+      endurance_hours: 2.0
+      standoff_range_km: 450
+      bvr_range_km: 80
+      air_to_air_rating: 35
+      ground_attack_rating: 95
+      notes: "Single BrahMos due to weight. Used May 10 against PAF airbases"
+
+    rampage_strike:
+      name: "Rampage Strike"
+      role: strike
+      description: "Medium standoff with Rampage missiles"
+      weapons:
+        a2g: { type: rampage, count: 2 }
+        bvr: { type: r77, count: 4 }
+        wvr: { type: r73, count: 2 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -15
+        range_modifier: -15
+      endurance_hours: 2.5
+      standoff_range_km: 250
+      bvr_range_km: 80
+      air_to_air_rating: 60
+      ground_attack_rating: 85
+      notes: "Balanced strike with self-defense capability"
+
+    ground_attack:
+      name: "Strike Package"
+      role: strike
+      description: "Heavy bomb load for ground attack"
+      weapons:
+        a2g: { type: gbu12, count: 8 }
+        wvr: { type: r73, count: 4 }
+      performance:
+        speed_modifier: -12
+        maneuver_modifier: -18
+        range_modifier: -15
+      endurance_hours: 2.5
+      standoff_range_km: 10
+      air_to_air_rating: 40
+      ground_attack_rating: 80
+      notes: "Close air support configuration"
+
+# =============================================================================
+# MIKOYAN MIG-29UPG
+# =============================================================================
+# ~100 aircraft (66 IAF + 40 Navy MiG-29K)
+# Upgraded with new radar and systems.
+# Point defense and fleet defense role.
+
+mig29:
+  type_stats:
+    total_aircraft: 100
+    generation: 4
+    ew_suite: standard
+    ew_rating: 50
+    radar: zhuk_me
+    radar_rating: 65
+    datalink: link_india
+
+  loadouts:
+    air_superiority:
+      name: "Point Defense"
+      role: air_superiority
+      description: "Air defense configuration"
+      weapons:
+        bvr: { type: r77, count: 4 }
+        wvr: { type: r73, count: 4 }
+      performance:
+        speed_modifier: -3
+        maneuver_modifier: -5
+        range_modifier: -8
+      endurance_hours: 1.8
+      bvr_range_km: 80
+      air_to_air_rating: 75
+      ground_attack_rating: 0
+      notes: "Limited range but good dogfighter"
+
+    air_superiority_astra:
+      name: "Astra Defense"
+      role: air_superiority
+      description: "With Astra BVR missiles"
+      weapons:
+        bvr: { type: astra_mk1, count: 4 }
+        wvr: { type: r73, count: 2 }
+      performance:
+        speed_modifier: -3
+        maneuver_modifier: -5
+        range_modifier: -8
+      endurance_hours: 1.8
+      bvr_range_km: 110
+      air_to_air_rating: 78
+      ground_attack_rating: 0
+      notes: "Extended BVR range with Astra"
+
+    light_strike:
+      name: "Light Attack"
+      role: strike
+      description: "Light ground attack"
+      weapons:
+        a2g: { type: gbu12, count: 4 }
+        wvr: { type: r73, count: 2 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -10
+        range_modifier: -12
+      endurance_hours: 1.5
+      standoff_range_km: 10
+      air_to_air_rating: 35
+      ground_attack_rating: 60
+      notes: "Limited strike capability"
+
+# =============================================================================
+# DASSAULT MIRAGE 2000I
+# =============================================================================
+# 49 aircraft upgraded to 2000-5 Mk2 standard.
+# Used in Balakot 2019 with SPICE 2000.
+# Good precision strike platform.
+
+mirage2000:
+  type_stats:
+    total_aircraft: 49
+    generation: 4
+    ew_suite: icms_mk2
+    ew_rating: 60
+    radar: rdy2
+    radar_rating: 68
+    datalink: link_india
+
+  loadouts:
+    air_superiority:
+      name: "Air Defense"
+      role: air_superiority
+      description: "Fleet defense configuration"
+      weapons:
+        bvr: { type: mica_em, count: 4 }
+        wvr: { type: mica_ir, count: 2 }
+      performance:
+        speed_modifier: -3
+        maneuver_modifier: -5
+        range_modifier: -8
+      endurance_hours: 2.5
+      bvr_range_km: 80
+      air_to_air_rating: 72
+      ground_attack_rating: 0
+      notes: "MICA provides good BVR capability"
+
+    precision_strike:
+      name: "SPICE Strike"
+      role: strike
+      description: "Precision penetration bombing"
+      weapons:
+        a2g: { type: spice2000, count: 2 }
+        bvr: { type: mica_em, count: 2 }
+        wvr: { type: mica_ir, count: 2 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -15
+        range_modifier: -15
+      endurance_hours: 2.2
+      standoff_range_km: 60
+      bvr_range_km: 80
+      air_to_air_rating: 55
+      ground_attack_rating: 88
+      notes: "Balakot configuration. Penetration warhead for hardened targets"
+
+    multirole:
+      name: "Balanced"
+      role: multirole
+      description: "Mixed air-to-air and strike"
+      weapons:
+        bvr: { type: mica_em, count: 2 }
+        wvr: { type: mica_ir, count: 2 }
+        a2g: { type: gbu12, count: 4 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -10
+        range_modifier: -12
+      endurance_hours: 2.3
+      standoff_range_km: 10
+      bvr_range_km: 80
+      air_to_air_rating: 55
+      ground_attack_rating: 65
+      notes: "Flexible swing-role configuration"
+
+# =============================================================================
+# SEPECAT JAGUAR (DARIN III)
+# =============================================================================
+# 114 aircraft with DARIN III upgrade.
+# Dedicated strike platform.
+# Rampage integration gives standoff capability.
+
+jaguar:
+  type_stats:
+    total_aircraft: 114
+    generation: 3
+    ew_suite: basic
+    ew_rating: 40
+    radar: agave
+    radar_rating: 45
+    datalink: link_india
+
+  loadouts:
+    rampage_strike:
+      name: "Standoff Strike"
+      role: strike
+      description: "Rampage missile delivery"
+      weapons:
+        a2g: { type: rampage, count: 2 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -12
+        range_modifier: -10
+      endurance_hours: 2.2
+      standoff_range_km: 250
+      air_to_air_rating: 10
+      ground_attack_rating: 82
+      notes: "Used May 10 strikes. No meaningful air-to-air capability"
+
+    close_strike:
+      name: "Heavy Strike"
+      role: strike
+      description: "Close air support with bombs"
+      weapons:
+        a2g: { type: gbu12, count: 4 }
+        rockets: { type: rockets, count: 2 }
+      performance:
+        speed_modifier: -12
+        maneuver_modifier: -18
+        range_modifier: -15
+      endurance_hours: 2.0
+      standoff_range_km: 10
+      air_to_air_rating: 5
+      ground_attack_rating: 72
+      notes: "Traditional strike role"
+
+    maritime_strike:
+      name: "Maritime"
+      role: strike
+      description: "Anti-ship configuration"
+      weapons:
+        a2g: { type: harpoon, count: 2 }
+      performance:
+        speed_modifier: -10
+        maneuver_modifier: -15
+        range_modifier: -12
+      endurance_hours: 2.0
+      standoff_range_km: 120
+      air_to_air_rating: 5
+      ground_attack_rating: 75
+      notes: "Anti-ship role"
+
+# =============================================================================
+# HAL TEJAS MK1
+# =============================================================================
+# ~30 aircraft in service.
+# Light combat aircraft with Israeli weapons.
+# Point defense role.
+
+tejas:
+  type_stats:
+    total_aircraft: 30
+    generation: 4
+    ew_suite: mayawi
+    ew_rating: 55
+    radar: elta_2032
+    radar_rating: 60
+    datalink: link_india
+
+  loadouts:
+    air_defense:
+      name: "Point Defense"
+      role: air_superiority
+      description: "Air defense with Israeli missiles"
+      weapons:
+        bvr: { type: derby, count: 2 }
+        wvr: { type: python5, count: 2 }
+      performance:
+        speed_modifier: -3
+        maneuver_modifier: -5
+        range_modifier: -5
+      endurance_hours: 1.5
+      bvr_range_km: 50
+      air_to_air_rating: 62
+      ground_attack_rating: 0
+      notes: "Limited BVR range but excellent WVR capability"
+
+    light_strike:
+      name: "Light Attack"
+      role: strike
+      description: "Light ground attack"
+      weapons:
+        a2g: { type: gbu12, count: 2 }
+        wvr: { type: python5, count: 2 }
+      performance:
+        speed_modifier: -8
+        maneuver_modifier: -10
+        range_modifier: -10
+      endurance_hours: 1.3
+      standoff_range_km: 10
+      air_to_air_rating: 40
+      ground_attack_rating: 55
+      notes: "Limited payload capacity"
+
+# =============================================================================
+# MIKOYAN MIG-21 BISON
+# =============================================================================
+# ~100 aircraft (being retired).
+# Upgraded with better radar and R-73.
+# Point defense only.
+
+mig21:
+  type_stats:
+    total_aircraft: 100
+    generation: 3
+    ew_suite: basic
+    ew_rating: 35
+    radar: kopyo
+    radar_rating: 45
+    datalink: limited
+
+  loadouts:
+    point_defense:
+      name: "Scramble"
+      role: air_superiority
+      description: "Quick reaction intercept"
+      weapons:
+        wvr: { type: r73, count: 4 }
+      performance:
+        speed_modifier: 0
+        maneuver_modifier: 0
+        range_modifier: 0
+      endurance_hours: 1.0
+      bvr_range_km: 0
+      air_to_air_rating: 45
+      ground_attack_rating: 0
+      notes: "No BVR capability. Abhinandan flew this in 2019. High sortie rate"
+
+    mixed:
+      name: "Alert"
+      role: air_superiority
+      description: "With R-73 and older R-60"
+      weapons:
+        wvr: { type: r73, count: 2 }
+        wvr_backup: { type: r60, count: 2 }
+      performance:
+        speed_modifier: 0
+        maneuver_modifier: 0
+        range_modifier: 0
+      endurance_hours: 1.0
+      bvr_range_km: 0
+      air_to_air_rating: 42
+      ground_attack_rating: 0
+      notes: "Legacy configuration"
+
+# =============================================================================
+# AEW&C PLATFORMS
+# =============================================================================
+
+phalcon:
+  type_stats:
+    total_aircraft: 3
+    type: awacs
+    radar: elta_phalcon
+    radar_range_km: 400
+    altitude_ceiling_ft: 30000
+    endurance_hours: 9
+    datalink: link_india
+
+  capabilities:
+    simultaneous_tracks: 60
+    fighter_control: 12
+    cooperative_engagement: true
+    ecm_resistance: 75
+    low_level_detection: good
+    notes: "Primary AWACS. Israeli Phalcon radar on Il-76 platform"
+
+netra:
+  type_stats:
+    total_aircraft: 3
+    type: aew
+    radar: drdo_aesa
+    radar_range_km: 250
+    altitude_ceiling_ft: 35000
+    endurance_hours: 5
+    datalink: link_india
+
+  capabilities:
+    simultaneous_tracks: 40
+    fighter_control: 8
+    cooperative_engagement: limited
+    ecm_resistance: 65
+    low_level_detection: moderate
+    notes: "Indigenous AEW on Embraer 145. Smaller but more agile"
+
+# =============================================================================
+# WEAPON STOCKS (Per Major Airbase)
+# =============================================================================
+
+weapon_stocks:
+  # Premium weapons - limited stocks
+  meteor: 180              # Total IAF stock
+  scalp_eg: 50             # French ALCM
+  brahmos_air: 80          # Indo-Russian
+  astra_mk1: 200           # Indigenous BVR
+  rampage: 100             # Israeli standoff
+
+  # Standard weapons - adequate stocks
+  mica_em: 400
+  mica_ir: 300
+  r77: 600
+  r73: 800
+  spice2000: 100
+  hammer: 200
+
+  # Legacy/training - large stocks
+  gbu12: 1500
+  bombs_500lb: 5000
