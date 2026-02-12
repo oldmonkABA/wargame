@@ -457,6 +457,159 @@ weapon_stats:
     guidance: [gps, ins]
     platforms: [jf17, jf17_block2, jf17_block3, j10c]
 
+  # ---------------------------------------------------------------------------
+  # TURKISH WEAPONS
+  # ---------------------------------------------------------------------------
+
+  mam_l:
+    name: "Roketsan MAM-L"
+    type: smart_munition
+    origin: turkish
+    range_km: 14
+    cep_m: 1
+    warhead_kg: 22
+    warhead_type: multi_purpose
+    guidance: [laser, gps]
+    platforms: [tb2, akinci]
+    notes: "Smart micro munition — laser/GPS dual guidance. Combat proven in Libya, Ukraine"
+
+  mam_c:
+    name: "Roketsan MAM-C"
+    type: smart_munition
+    origin: turkish
+    range_km: 8
+    cep_m: 1
+    warhead_kg: 6.5
+    warhead_type: fragmentation
+    guidance: [laser, imaging_infrared]
+    platforms: [tb2, akinci]
+    notes: "Lightweight precision munition — laser/IIR dual mode"
+
+  roketsan_cirit:
+    name: "Roketsan CIRIT"
+    type: guided_rocket
+    origin: turkish
+    range_km: 8
+    cep_m: 1
+    warhead_kg: 3
+    warhead_type: fragmentation
+    guidance: [laser]
+    platforms: [tb2]
+    notes: "70mm laser-guided rocket. Anti-personnel and light vehicle"
+
+  som_cruise:
+    name: "SOM"
+    type: alcm
+    origin: turkish
+    range_km: 250
+    cep_m: 5
+    warhead_kg: 230
+    warhead_type: penetrator
+    speed: subsonic
+    speed_mach: 0.9
+    penetration: 80
+    guidance: [gps, ins, terrain_reference, ir_terminal]
+    low_observable: true
+    platforms: [akinci]
+    notes: "Air-launched cruise missile. GPS/INS/terrain/IIR terminal guidance"
+
+  teber_guided_bomb:
+    name: "TEBER Guidance Kit"
+    type: glide_bomb
+    origin: turkish
+    range_km: 12
+    cep_m: 3
+    warhead_kg: 227
+    warhead_type: general_purpose
+    guidance: [laser, gps]
+    platforms: [akinci, tb2]
+    notes: "Guidance kit for Mk-82/83/84 bombs. Turkish JDAM equivalent"
+
+  hgk_bomb:
+    name: "HGK (JDAM-TR)"
+    type: glide_bomb
+    origin: turkish
+    range_km: 15
+    cep_m: 5
+    warhead_kg: 340
+    warhead_type: general_purpose
+    guidance: [gps, ins]
+    platforms: [akinci]
+    notes: "HGK guidance kit — Turkish JDAM equivalent with GPS/INS"
+
+  gokdogan:
+    name: "Gokdogan"
+    type: wvr_aam
+    origin: turkish
+    range_km: 18
+    min_range_km: 0.3
+    pk_head_on: 0.72
+    pk_beam: 0.82
+    pk_tail: 0.90
+    guidance: imaging_infrared
+    off_boresight_deg: 90
+    ecm_resistance: 70
+    max_speed_mach: 3.0
+    platforms: []
+    notes: "Turkish indigenous WVR AAM. IIR seeker with high off-boresight"
+
+  bozdogan:
+    name: "Bozdogan"
+    type: bvr_aam
+    origin: turkish
+    range_km: 65
+    nez_km: 25
+    min_range_km: 3
+    pk_head_on: 0.72
+    pk_beam: 0.58
+    pk_tail: 0.82
+    guidance: active_radar
+    propulsion: rocket
+    ecm_resistance: 65
+    max_speed_mach: 4.0
+    platforms: []
+    notes: "Turkish indigenous BVR AAM. Active radar seeker"
+
+  # ---------------------------------------------------------------------------
+  # DRONE-SPECIFIC WEAPONS (referenced in drones.yaml)
+  # ---------------------------------------------------------------------------
+
+  barq_atgm:
+    name: "Barq ATGM"
+    type: atgm
+    origin: pakistani
+    range_km: 7
+    cep_m: 1
+    warhead_kg: 8
+    warhead_type: tandem_heat
+    guidance: [laser]
+    platforms: [burraq, shahpar2]
+    notes: "Pakistani laser-guided ATGM for Burraq/Shahpar-II UAVs"
+
+  ba7_atgm:
+    name: "BA-7 ATGM"
+    type: atgm
+    origin: chinese
+    range_km: 7
+    cep_m: 1
+    warhead_kg: 8
+    warhead_type: tandem_heat
+    guidance: [laser]
+    platforms: [wing_loong2]
+    notes: "Chinese laser-guided ATGM for Wing Loong II"
+
+  fei_teng:
+    name: "FT-9 PGM"
+    type: pgm
+    origin: chinese
+    range_km: 10
+    cep_m: 3
+    warhead_kg: 25
+    warhead_type: fragmentation
+    guidance: [gps, laser]
+    platforms: [wing_loong2]
+    notes: "Chinese GPS/laser PGM for Wing Loong II UCAV"
+
 # =============================================================================
 # LOADOUT SCHEMA
 # =============================================================================

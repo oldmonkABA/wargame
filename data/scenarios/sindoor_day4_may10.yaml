@@ -1,0 +1,249 @@
+# Operation Sindoor — Day 4: The Blitz (May 10, 2025)
+# IAF multi-axis BrahMos/SCALP-EG/Rampage strikes on PAF airbases
+
+scenario:
+  id: sindoor_day4_may10
+  name: "Operation Sindoor — Day 4: The Blitz"
+  description: |
+    May 10, 2025. After 3 days of attrition, IAF launches decisive multi-axis
+    strikes. BrahMos, SCALP-EG, and Rampage missiles target Nur Khan AB (C2 hub),
+    Murid AB (drone operations center), Sargodha, Jacobabad, and Rafiqui.
+    PAF depleted from 3 days of losses. Ceasefire trigger active — international
+    pressure forces halt if either side loses 40% combat power.
+
+  duration_turns: 4
+  start_date: "2025-05-10"
+  start_time: "0300"
+
+# Victory Conditions
+victory_conditions:
+  india:
+    primary:
+      - id: destroy_nur_khan
+        description: "Destroy Nur Khan AB (PAF C2 hub)"
+        vp: 40
+        type: infrastructure
+        target_type: airbase
+        target_id: paf_nur_khan
+      - id: destroy_murid
+        description: "Destroy Murid AB (drone operations center)"
+        vp: 35
+        type: infrastructure
+        target_type: airbase
+        target_id: paf_murid
+    secondary:
+      - id: destroy_sargodha
+        description: "Render Sargodha AB non-operational"
+        vp: 20
+        type: infrastructure
+        target_type: airbase
+        target_id: paf_sargodha
+      - id: destroy_remaining_paf
+        description: "Destroy 70%+ of remaining PAF combat aircraft"
+        vp: 25
+        type: attrition
+        target_category: aircraft
+        target_faction: pakistan
+        threshold: 0.7
+    defensive:
+      - id: minimize_final_losses
+        description: "Complete strikes with fewer than 5 aircraft lost"
+        vp: -15
+        type: attrition
+        max_losses: 5
+
+  pakistan:
+    primary:
+      - id: survive_blitz
+        description: "Preserve 30%+ of PAF operational capability"
+        vp: 50
+        type: defensive
+        survival_ratio: 0.3
+      - id: force_ceasefire
+        description: "Trigger international ceasefire before total destruction"
+        vp: 30
+        type: diplomatic
+    secondary:
+      - id: last_stand_kills
+        description: "Shoot down 5+ Indian aircraft in final defense"
+        vp: 20
+        type: attrition
+        target_category: aircraft
+        target_faction: india
+        count: 5
+      - id: last_drone_wave
+        description: "Final drone wave damages Indian infrastructure"
+        vp: 15
+        type: infrastructure
+
+# Initial Deployment - India (full force commitment)
+india_deployment:
+  air_forces:
+    # Strike packages
+    - base: iaf_ambala
+      squadrons:
+        - {type: rafale, count: 12, alert_status: high, mission: scalp_deep_strike}
+    - base: iaf_adampur
+      squadrons:
+        - {type: su30mki, count: 12, alert_status: high, mission: brahmos_strike}
+    - base: iaf_halwara
+      squadrons:
+        - {type: su30mki, count: 12, alert_status: high, mission: escort}
+    - base: iaf_pathankot
+      squadrons:
+        - {type: mig29, count: 10, alert_status: high, mission: cap}
+    - base: iaf_jodhpur
+      squadrons:
+        - {type: jaguar, count: 12, alert_status: high, mission: rampage_strike}
+        - {type: mirage2000, count: 8, alert_status: high, mission: spice_strike}
+    # Southern axis
+    - base: iaf_bhuj
+      squadrons:
+        - {type: su30mki, count: 8, alert_status: high, mission: brahmos_south}
+    - base: iaf_jaisalmer
+      squadrons:
+        - {type: jaguar, count: 10, alert_status: high, mission: rampage_south}
+
+  ground_forces: []
+
+  missiles:
+    - {type: brahmos, launchers: 8, location: {lat: 30.5, lon: 74.5}, target_priority: airbases}
+    - {type: brahmos, launchers: 6, location: {lat: 29.5, lon: 73.5}, target_priority: airbases_south}
+    - {type: pralay, launchers: 8, location: {lat: 31.0, lon: 75.5}, target_priority: c2_nodes}
+
+  air_defense:
+    - {type: s400, batteries: 2, location: {lat: 31.5, lon: 76.5}, coverage_km: 400}
+    - {type: s400, batteries: 1, location: {lat: 30.2, lon: 75.0}, coverage_km: 400}
+    - {type: akash, batteries: 6, location: {lat: 31.0, lon: 75.0}, coverage_km: 30}
+    - {type: spyder, batteries: 6, location: {lat: 30.5, lon: 75.5}, coverage_km: 15}
+
+  drone_forces:
+    - {type: harop, count: 8, location: {lat: 30.5, lon: 76.5}, mission: sead_suppression}
+    - {type: heron_tp, count: 4, location: {lat: 31.5, lon: 76.0}, mission: isr_bda}
+
+# Initial Deployment - Pakistan (depleted after 3 days)
+pakistan_deployment:
+  air_forces:
+    # Severely depleted
+    - base: paf_sargodha
+      squadrons:
+        - {type: jf17_block3, count: 8, alert_status: high}
+        - {type: f16, count: 6, alert_status: high}
+    - base: paf_minhas
+      squadrons:
+        - {type: j10c, count: 10, alert_status: high}
+    - base: paf_nur_khan
+      squadrons:
+        - {type: f16, count: 4, alert_status: medium}
+    - base: paf_jacobabad
+      squadrons:
+        - {type: jf17, count: 6, alert_status: low}
+    - base: paf_minhas
+      squadrons:
+        - {type: erieye, count: 1, alert_status: high, mission: awacs}
+
+  ground_forces: []
+
+  missiles:
+    - {type: babur, launchers: 2, location: {lat: 33.0, lon: 72.5}, target_priority: airbases}
+    - {type: raad, launchers: 4, location: {lat: 32.0, lon: 72.0}, target_priority: sam_sites}
+
+  air_defense:
+    # Heavily degraded after Day 2 SEAD and Day 3 drone attacks
+    - {type: hq9, batteries: 1, location: {lat: 31.5, lon: 74.3}, coverage_km: 200, status: degraded}
+    - {type: hq16, batteries: 1, location: {lat: 32.5, lon: 74.0}, coverage_km: 40}
+    - {type: spada, batteries: 2, location: {lat: 31.8, lon: 73.8}, coverage_km: 15}
+
+  drone_forces:
+    # Mostly expended
+    - {type: yihaa_iii, count: 80, location: {lat: 32.0, lon: 72.5}, mission: last_wave}
+    - {type: decoy_drone, count: 30, location: {lat: 32.0, lon: 72.5}, mission: decoy}
+    - {type: tb2, count: 4, location: {lat: 31.5, lon: 72.0}, mission: isr}
+
+# Weather
+weather:
+  day_1:
+    - {turn: 1, weather: clear, time: pre_dawn}
+    - {turn: 2, weather: clear, time: dawn}
+    - {turn: 3, weather: clear, time: morning}
+    - {turn: 4, weather: clear, time: afternoon}
+
+# Agent behavior
+agent_config:
+  india:
+    doctrine: "decisive_strike"
+    risk_tolerance: 0.7
+    air_priority: "destroy_paf_infrastructure"
+    ground_priority: "none"
+    escalation_threshold: "high"
+    constraints:
+      - "multi_axis_simultaneous_strikes"
+      - "brahmos_on_nur_khan_and_murid_first"
+      - "scalp_eg_from_rafale_deep_strike_sargodha"
+      - "rampage_from_jaguar_on_jacobabad_rafiqui"
+      - "spice2000_on_hardened_shelters"
+      - "su30_brahmos_southern_axis_on_jacobabad"
+      - "overwhelming_force_accept_moderate_losses"
+      - "harop_suppress_surviving_sams_before_strike"
+
+  pakistan:
+    doctrine: "survival"
+    risk_tolerance: 0.4
+    air_priority: "preserve_remaining_assets"
+    ground_priority: "none"
+    escalation_threshold: "very_low"
+    constraints:
+      - "disperse_remaining_aircraft"
+      - "erieye_early_warning_priority"
+      - "f16_amraam_point_defense_only"
+      - "last_drone_wave_as_diversion"
+      - "activate_diplomatic_ceasefire_channel"
+      - "raad_launch_on_s400_as_desperation"
+      - "accept_ceasefire_if_offered"
+
+# Special rules
+special_rules:
+  - id: multi_axis_blitz
+    description: "Simultaneous strikes from north, central, and south axes"
+    active: true
+    axes:
+      north: {targets: [paf_minhas, paf_nur_khan], weapons: [brahmos, pralay]}
+      central: {targets: [paf_sargodha, paf_murid], weapons: [scalp_eg, brahmos]}
+      south: {targets: [paf_jacobabad, paf_rafiqui], weapons: [rampage, brahmos]}
+
+  - id: ceasefire_trigger
+    description: "International pressure forces ceasefire"
+    active: true
+    trigger:
+      condition: "either_side_loses_40_percent_combat_power"
+      probability: 0.6
+      turn_earliest: 3
+      mediators: [china, turkey, uae]
+      notes: "UN Security Council resolution pending. US pressure on both sides."
+
+  - id: paf_depleted
+    description: "PAF at 35% strength after 3 days of attrition"
+    active: true
+    effect:
+      aircraft_remaining_percent: 35
+      sam_remaining_percent: 25
+      drone_remaining_percent: 15
+      missile_remaining_percent: 20
+      pilot_fatigue: high
+      maintenance_degraded: true
+
+  - id: raad_desperation
+    description: "PAF Mirage III/V launch Ra'ad ALCMs as last resort"
+    active: true
+    trigger:
+      turn: 2
+      condition: "nur_khan_struck"
+      notes: "Surviving Mirages attempt Ra'ad launches from alternate strips"
+
+  - id: indian_bda_cycle
+    description: "Heron TP provides rapid BDA for restrike decisions"
+    active: true
+    effect:
+      bda_cycle_minutes: 30
+      restrike_authority: "tactical_commander"
+      notes: "If first strike misses, restrike within same turn"

@@ -310,13 +310,14 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wargame Replay</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#d0d0d0;overflow:hidden;height:100vh}
+body{font-family:'JetBrains Mono','Courier New','Consolas',monospace;background:#0a0a1a;color:#d0d0d0;overflow:hidden;height:100vh}
 
 /* Header */
 #header{position:fixed;top:0;left:0;right:0;z-index:1000;height:48px;background:#0f1729;border-bottom:1px solid #1e3a5f;display:flex;align-items:center;padding:0 16px;gap:10px}
@@ -360,7 +361,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#d0d0d
 /* Battle Feed — transparent left/right sidebars over map */
 .feed-col{position:fixed;top:48px;bottom:0;width:280px;z-index:999;
   background:rgba(6,10,18,.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
-  font-family:'Courier New','Consolas','Liberation Mono',monospace;font-size:12px;line-height:1.5;
+  font-family:'JetBrains Mono','Courier New','Consolas','Liberation Mono',monospace;font-size:12px;line-height:1.5;
   overflow-y:auto;padding:6px 12px;scroll-behavior:smooth}
 .feed-col::-webkit-scrollbar{width:4px}
 .feed-col::-webkit-scrollbar-track{background:transparent}
@@ -516,9 +517,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#d0d0d
 .float-text{font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
   white-space:nowrap;text-align:center;
   text-shadow:0 0 10px rgba(0,0,0,.9),0 0 20px rgba(0,0,0,.7),0 1px 3px rgba(0,0,0,.9);
-  animation:floatUp 2.5s ease-out forwards;pointer-events:none}
+  animation:floatUp 3.2s ease-out forwards;pointer-events:none}
+.float-text.ft-large{font-size:16px;letter-spacing:1.5px}
+.float-text.ft-small{font-size:11px;font-weight:700}
 .float-text.ft-red{color:#ff4444}.float-text.ft-green{color:#44ee44}.float-text.ft-amber{color:#ffaa22}
-@keyframes floatUp{0%{opacity:1;transform:translateY(0)}60%{opacity:.9}100%{opacity:0;transform:translateY(-40px)}}
+.float-text.ft-cyan{color:#44ddff}.float-text.ft-orange{color:#ff8844}.float-text.ft-purple{color:#cc88ff}.float-text.ft-teal{color:#66ccaa}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0)}50%{opacity:.95}80%{opacity:.5}100%{opacity:0;transform:translateY(-50px)}}
+
+/* CRT scanline overlay */
+#crt-overlay{position:fixed;inset:0;pointer-events:none;z-index:2000;mix-blend-mode:overlay;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0px,rgba(0,0,0,.15) 1px,transparent 1px,transparent 3px);
+  display:none}
+#crt-overlay.active{display:block}
 
 /* Screen shake */
 .shaking{animation:shake .4s ease-out}
@@ -541,6 +551,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#d0d0d
       <option value="3">3x</option>
     </select>
     <button id="sound-btn" onclick="toggleSound()" title="Toggle sound">&#128264;</button>
+    <button id="crt-btn" onclick="toggleCRT()" title="Toggle CRT effect">CRT</button>
   </div>
   <div class="vp-header">
     <span class="vp-h india">IND <div class="vp-bar-sm"><div class="vp-fill-sm india" id="vp-india-bar" style="width:50%"></div></div> <span id="india-vp">0</span></span>
@@ -555,6 +566,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0a0a1a;color:#d0d0d
 <div id="phase-overlay"></div>
 
 <div id="map"></div>
+<div id="crt-overlay"></div>
 
 <div class="feed-col" id="feed-pakistan"><div class="feed-col-label pakistan">Pakistan</div><span class="feed-cursor"></span></div>
 <div class="feed-col" id="feed-india"><div class="feed-col-label india">India</div><span class="feed-cursor"></span></div>
@@ -809,6 +821,7 @@ function feedPhaseHeader(text, color, faction) {
     el.appendChild(div);
     feedAddCursor(el);
   });
+  sfx.phaseChime();
 }
 
 function feedSeparator(faction) {
@@ -831,17 +844,26 @@ function eventToFeedLines(ev) {
   var isDef = ev.result && ev.result.indexOf('defeat') >= 0;
   var isStalem = ev.result && ev.result.indexOf('stalemate') >= 0;
   var fColor = ev.attacker_faction === 'india' ? 'fc-cyan' : 'fc-green';
-  var actionMap = {missile:'LAUNCH',air:'SORTIE',drone:'DRONE OPS',arty:'FIRE MISSION',heli:'HELI OPS',ground:'ASSAULT',sf:'SF OPS'};
+  var sfxMap = {missile:'missile',air:'air',drone:'drone',arty:'arty',heli:'heli',ground:'arty',sf:'sf'};
+  var sfxType = sfxMap[pd.type] || 'default';
+  var actionMap = {missile:'MISSILE LAUNCH',air:'AIR SORTIE',drone:'DRONE STRIKE',arty:'FIRE MISSION',heli:'HELI OPS',ground:'GROUND ASSAULT',sf:'SF OPS'};
   var action = actionMap[pd.type] || 'ENGAGE';
   var faction = ev.attacker_faction || 'india';
+  var facLabel = faction === 'india' ? '[INDIA]' : '[PAK]';
   var lines = [];
 
-  // Action line
-  lines.push({text:'\u25b8 '+action+' \u2014 '+fmtUnit(ev.attacker), color:fColor, faction:faction});
+  // Action line with sfx and richer formatting
+  lines.push({text:'\u25b8 '+action+' \u2014 '+fmtUnit(ev.attacker)+' '+facLabel, color:fColor, faction:faction, sfx:sfxType});
 
   // Target line
   if(ev.defender) {
     lines.push({text:'  \u21b3 Target: '+fmtUnit(ev.defender), color:'fc-white', faction:faction});
+  }
+
+  // Intercept-attempt line if notes mention intercept
+  var hasIntercept = ev.notes && ev.notes.some(function(n){ return /intercept/i.test(n); });
+  if(hasIntercept) {
+    lines.push({text:'  \u25b8 BMD INTERCEPT \u2014 engaging...', color:'fc-amber', faction:faction, sfx:'default', delay:600});
   }
 
   return {opening: lines, closing: eventResultLines(ev, isVic, isDef, isStalem, faction), faction: faction};
@@ -852,10 +874,17 @@ function eventResultLines(ev, isVic, isDef, isStalem, faction) {
   var sym = isVic ? '\u2726' : isDef ? '\u2717' : '\u2014';
   var rColor = isVic ? 'fc-green' : isDef ? 'fc-red' : 'fc-amber';
   var resultText = (ev.result||'engaged').toUpperCase();
-  lines.push({text:'  '+sym+' '+resultText, color:rColor, faction:faction});
+  var sfxResult = isVic ? 'success' : isDef ? 'fail' : 'default';
+  lines.push({text:'  '+sym+' '+resultText, color:rColor, faction:faction, sfx:sfxResult});
   if(ev.notes && ev.notes.length) {
     ev.notes.forEach(function(n){
-      lines.push({text:'    '+n, color:rColor, faction:faction});
+      // Color-code individual note lines by content
+      var nLower = n.toLowerCase();
+      var nColor = rColor;
+      if(/destroy|kill|lost|shot down|wipe|cratered|penetrat/.test(nLower)) nColor = 'fc-red';
+      else if(/success|intercept|secured|complete|confirm/.test(nLower)) nColor = 'fc-green';
+      else if(/track|detect|surveil|intel|map/.test(nLower)) nColor = 'fc-amber';
+      lines.push({text:'    '+n, color:nColor, faction:faction});
     });
   }
   return lines;
@@ -865,7 +894,19 @@ async function streamFeedLines(lines, ctx, delayMs) {
   for(var i=0;i<lines.length;i++){
     if(ctx && ctx.cancelled) return;
     feedLine(lines[i].text, lines[i].color, lines[i].tag, lines[i].faction);
-    if(delayMs && i < lines.length-1) await sleep((delayMs||60)/animSpeed);
+    // Dispatch sfx per line
+    var s = lines[i].sfx;
+    if(s==='missile') sfx.missileLaunch();
+    else if(s==='air') sfx.jetFlyby();
+    else if(s==='drone') sfx.droneBuzz();
+    else if(s==='arty') sfx.artyBoom();
+    else if(s==='heli') sfx.heliRotor();
+    else if(s==='sf') sfx.sfSilenced();
+    else if(s==='fail') sfx.explosion(false);
+    else if(s==='success') sfx.interceptHit();
+    else sfx.feedTick();
+    var d = lines[i].delay || delayMs || 60;
+    if(i < lines.length-1) await sleep(d/animSpeed);
   }
 }
 
@@ -1118,12 +1159,43 @@ var sfx = {
     g.gain.setValueAtTime(0.02, t0+0.55);
     g.gain.exponentialRampToValueAtTime(0.001, t0+0.65);
     o.connect(g); g.connect(c.destination); o.start(t0+0.55); o.stop(t0+0.65);
+  },
+  feedTick: function() {
+    if(!soundOn) return; this.ensure(); var c=this.ctx, t0=c.currentTime;
+    var o=c.createOscillator(), g=c.createGain();
+    o.type='sine'; o.frequency.value=1000;
+    g.gain.setValueAtTime(0.015, t0);
+    g.gain.exponentialRampToValueAtTime(0.001, t0+0.03);
+    o.connect(g); g.connect(c.destination); o.start(t0); o.stop(t0+0.03);
+  },
+  ewBuzz: function() {
+    if(!soundOn) return; this.ensure(); var c=this.ctx;
+    this._play(this._noise(0.08,'crack'), 'bandpass', 2500, 1500, 0.1, 0.06, 0);
+  },
+  phaseChime: function() {
+    if(!soundOn) return; this.ensure(); var c=this.ctx, t0=c.currentTime;
+    var o1=c.createOscillator(), g1=c.createGain();
+    o1.type='sine'; o1.frequency.value=800;
+    g1.gain.setValueAtTime(0.06, t0);
+    g1.gain.exponentialRampToValueAtTime(0.001, t0+0.3);
+    o1.connect(g1); g1.connect(c.destination); o1.start(t0); o1.stop(t0+0.3);
+    var o2=c.createOscillator(), g2=c.createGain();
+    o2.type='sine'; o2.frequency.value=1200;
+    g2.gain.setValueAtTime(0.06, t0+0.15);
+    g2.gain.exponentialRampToValueAtTime(0.001, t0+0.45);
+    o2.connect(g2); g2.connect(c.destination); o2.start(t0+0.15); o2.stop(t0+0.45);
   }
 };
 
 function toggleSound() {
   soundOn = !soundOn;
   document.getElementById('sound-btn').innerHTML = soundOn ? '&#128264;' : '&#128263;';
+}
+
+function toggleCRT() {
+  var el = document.getElementById('crt-overlay');
+  el.classList.toggle('active');
+  document.getElementById('crt-btn').classList.toggle('active');
 }
 
 // ── Screen shake ──
@@ -1154,15 +1226,33 @@ function showMapLabel(latlng, text, cssClass, duration) {
   return m;
 }
 
-function showFloatText(latlng, text, colorClass) {
-  var cls = 'float-text' + (colorClass ? ' '+colorClass : '');
+function showFloatText(latlng, text, colorClass, size) {
+  var cls = 'float-text';
+  if(size==='large') cls += ' ft-large';
+  else if(size==='small') cls += ' ft-small';
+  if(colorClass) cls += ' '+colorClass;
   var m = L.marker(latlng, {icon: L.divIcon({
     className:'anim-icon',
     html:'<div class="'+cls+'">'+text+'</div>',
     iconSize:[400,24], iconAnchor:[200,-10]
   })}).addTo(animLy);
-  setTimeout(function(){ try{animLy.removeLayer(m);}catch(e){} }, 2800/animSpeed);
+  setTimeout(function(){ try{animLy.removeLayer(m);}catch(e){} }, 3500/animSpeed);
   return m;
+}
+
+function resultFloatText(ev) {
+  if(ev.lat==null) return;
+  var pos = [ev.lat, ev.lon];
+  var isVic = ev.result && ev.result.indexOf('victory') >= 0;
+  var isDef = ev.result && ev.result.indexOf('defeat') >= 0;
+  var note = evNote(ev);
+  var colorCls = isVic ? 'ft-green' : isDef ? 'ft-red' : 'ft-amber';
+  var hasKill = /destroy|kill|shot down|wipe|crater/i.test(note);
+  var sz = hasKill ? 'large' : 'small';
+  var txt = note || (isVic ? 'TARGET HIT' : isDef ? 'FAILED' : 'ENGAGED');
+  // Truncate long text
+  if(txt.length > 50) txt = txt.substring(0, 47) + '...';
+  showFloatText(pos, txt, colorCls, sz);
 }
 
 // ── Explosion & flash makers ──
@@ -1913,7 +2003,7 @@ async function animateTurn(turnIndex) {
     // Phase header in feed + overlay
     feedPhaseHeader(g.def.label, g.def.color);
     showPhaseLabel(g.def.label, g.def.color);
-    await sleep(300/animSpeed);
+    await sleep(500/animSpeed);
     if(ctx.cancelled) return;
 
     // Stream opening feed lines for all events in this phase
@@ -1931,6 +2021,9 @@ async function animateTurn(turnIndex) {
     await Promise.all(promises);
     if(ctx.cancelled) return;
 
+    // Show floating combat text for each event result
+    g.events.forEach(function(ev){ resultFloatText(ev); });
+
     // Stream result lines after animations complete
     for(var ri=0; ri<allFeedData.length; ri++) {
       if(ctx.cancelled) return;
@@ -1938,7 +2031,7 @@ async function animateTurn(turnIndex) {
     }
 
     feedSeparator();
-    await sleep(300/animSpeed);
+    await sleep(500/animSpeed);
     animLy.clearLayers();
     hidePhaseLabel();
   }

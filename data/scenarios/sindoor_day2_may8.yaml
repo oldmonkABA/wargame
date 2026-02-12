@@ -1,0 +1,200 @@
+# Operation Sindoor — Day 2: SEAD Campaign (May 8, 2025)
+# IAF Harop/Harpy loitering munitions target border radars
+
+scenario:
+  id: sindoor_day2_may8
+  name: "Operation Sindoor — Day 2: SEAD Campaign"
+  description: |
+    May 8, 2025. IAF shifts from camp strikes to suppression of enemy air
+    defenses. Harop and Harpy loitering munitions hunt Pakistani radar
+    emitters along the border. 12 air defense sites targeted. Continued
+    air-to-air BVR engagements as PAF attempts to contest airspace.
+    India establishes SEAD corridors for follow-on strikes.
+
+  duration_turns: 4
+  start_date: "2025-05-08"
+  start_time: "0400"
+
+# Victory Conditions
+victory_conditions:
+  india:
+    primary:
+      - id: destroy_ad_sites
+        description: "Destroy 8+ Pakistani air defense sites"
+        vp: 40
+        type: infrastructure
+        target_type: air_defense
+        target_faction: pakistan
+        count: 8
+      - id: establish_sead_corridor
+        description: "Create SEAD corridor over Punjab border region"
+        vp: 30
+        type: air_control
+        region: punjab_border
+    secondary:
+      - id: suppress_erieye
+        description: "Force Erieye to operate beyond effective range"
+        vp: 20
+        type: special_tactic
+      - id: bda_coverage
+        description: "Complete BDA on all struck targets via drone ISR"
+        vp: 10
+        type: intelligence
+
+  pakistan:
+    primary:
+      - id: preserve_ad_network
+        description: "Keep 60%+ of air defense network operational"
+        vp: 40
+        type: defensive
+        survival_ratio: 0.6
+      - id: attrit_indian_air
+        description: "Shoot down 8+ Indian aircraft"
+        vp: 35
+        type: attrition
+        target_category: aircraft
+        target_faction: india
+        count: 8
+    secondary:
+      - id: counter_sead
+        description: "Ambush Indian SEAD packages with CAP fighters"
+        vp: 20
+        type: special_tactic
+      - id: drone_harassment
+        description: "Continue drone harassment of Indian airbases"
+        vp: 15
+        type: attrition
+
+# Initial Deployment - India
+india_deployment:
+  air_forces:
+    - base: iaf_ambala
+      squadrons:
+        - {type: rafale, count: 16, alert_status: high, mission: sead_escort}
+    - base: iaf_adampur
+      squadrons:
+        - {type: su30mki, count: 16, alert_status: high, mission: cap}
+    - base: iaf_halwara
+      squadrons:
+        - {type: su30mki, count: 16, alert_status: high, mission: sead_strike}
+    - base: iaf_pathankot
+      squadrons:
+        - {type: mig29, count: 14, alert_status: high, mission: cap}
+    - base: iaf_jodhpur
+      squadrons:
+        - {type: mirage2000, count: 12, alert_status: medium, mission: strike}
+        - {type: jaguar, count: 14, alert_status: medium, mission: sead}
+
+  ground_forces: []
+
+  missiles:
+    - {type: brahmos, launchers: 4, location: {lat: 30.5, lon: 74.5}, target_priority: sam_sites}
+    - {type: pralay, launchers: 6, location: {lat: 31.0, lon: 75.5}, target_priority: radars}
+
+  air_defense:
+    - {type: s400, batteries: 2, location: {lat: 31.5, lon: 76.5}, coverage_km: 400}
+    - {type: akash, batteries: 6, location: {lat: 31.0, lon: 75.0}, coverage_km: 30}
+    - {type: spyder, batteries: 6, location: {lat: 30.5, lon: 75.5}, coverage_km: 15}
+
+  drone_forces:
+    - {type: harop, count: 24, location: {lat: 30.5, lon: 76.5}, mission: sead}
+    - {type: harpy, count: 18, location: {lat: 31.0, lon: 76.0}, mission: sead}
+    - {type: heron_tp, count: 8, location: {lat: 31.5, lon: 76.0}, mission: isr_bda}
+    - {type: mini_harpy, count: 12, location: {lat: 30.0, lon: 75.5}, mission: sead}
+
+# Initial Deployment - Pakistan
+pakistan_deployment:
+  air_forces:
+    - base: paf_sargodha
+      squadrons:
+        - {type: jf17_block3, count: 18, alert_status: high}
+        - {type: f16, count: 16, alert_status: high}
+    - base: paf_minhas
+      squadrons:
+        - {type: j10c, count: 22, alert_status: high}
+    - base: paf_rafiqui
+      squadrons:
+        - {type: jf17, count: 16, alert_status: medium}
+    - base: paf_minhas
+      squadrons:
+        - {type: erieye, count: 3, alert_status: high, mission: awacs}
+
+  ground_forces: []
+
+  missiles:
+    - {type: babur, launchers: 6, location: {lat: 33.0, lon: 72.5}, target_priority: airbases}
+
+  air_defense:
+    - {type: hq9, batteries: 2, location: {lat: 31.5, lon: 74.3}, coverage_km: 200}
+    - {type: hq16, batteries: 4, location: {lat: 32.5, lon: 74.0}, coverage_km: 40}
+    - {type: hq16, batteries: 2, location: {lat: 30.5, lon: 73.0}, coverage_km: 40}
+    - {type: spada, batteries: 6, location: {lat: 31.8, lon: 73.8}, coverage_km: 15}
+    - {type: ly80, batteries: 2, location: {lat: 32.5, lon: 71.5}, coverage_km: 40}
+    - {type: fm90, batteries: 4, location: {lat: 31.0, lon: 73.5}, coverage_km: 15}
+    - {type: crotale, batteries: 4, location: {lat: 32.0, lon: 73.0}, coverage_km: 10}
+
+  drone_forces:
+    - {type: yihaa_iii, count: 100, location: {lat: 32.0, lon: 72.5}, mission: harassment}
+    - {type: tb2, count: 8, location: {lat: 31.5, lon: 72.0}, mission: strike}
+    - {type: burraq, count: 6, location: {lat: 32.5, lon: 73.0}, mission: isr}
+
+# Weather
+weather:
+  day_1:
+    - {turn: 1, weather: clear, time: pre_dawn}
+    - {turn: 2, weather: clear, time: morning}
+    - {turn: 3, weather: cloudy, time: afternoon}
+    - {turn: 4, weather: clear, time: night}
+
+# Agent behavior
+agent_config:
+  india:
+    doctrine: "sead_campaign"
+    risk_tolerance: 0.6
+    air_priority: "destroy_enemy_ad"
+    ground_priority: "none"
+    escalation_threshold: "high"
+    constraints:
+      - "harop_harpy_target_active_emitters"
+      - "brahmos_against_hq9_sites"
+      - "rafale_provide_escort_for_sead_packages"
+      - "heron_tp_bda_after_each_strike"
+      - "prioritize_border_region_ad_first"
+
+  pakistan:
+    doctrine: "active_defense"
+    risk_tolerance: 0.6
+    air_priority: "ambush_sead_packages"
+    ground_priority: "none"
+    escalation_threshold: "medium"
+    constraints:
+      - "radar_emission_control_when_harop_detected"
+      - "jf17_block3_counter_sead_cap"
+      - "erieye_maintain_picture_from_safe_distance"
+      - "relocate_surviving_sam_batteries"
+      - "continue_drone_harassment_at_night"
+
+# Special rules
+special_rules:
+  - id: emission_control
+    description: "Pakistani radars use emit-and-scoot tactics vs Harop"
+    active: true
+    effect:
+      radar_on_time_seconds: 30
+      relocate_after_emission: true
+
+  - id: harop_sead_swarm
+    description: "Multiple Harop can loiter and attack simultaneously"
+    active: true
+
+  - id: night_drone_wave
+    description: "PAF launches smaller 100-drone wave at night"
+    active: true
+    trigger:
+      turn: 4
+      wave_size: 100
+
+  - id: brahmos_sead
+    description: "BrahMos used against HQ-9 battery sites"
+    active: true
+    notes: "HQ-9 radar must be emitting for BrahMos ARM variant to home"

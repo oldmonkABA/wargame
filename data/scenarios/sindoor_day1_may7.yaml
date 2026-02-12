@@ -1,0 +1,205 @@
+# Operation Sindoor — Day 1: First Strike (May 7, 2025)
+# India precision strikes on JeM/LeT camps; PAF scrambles fighters
+
+scenario:
+  id: sindoor_day1_may7
+  name: "Operation Sindoor — Day 1: First Strike"
+  description: |
+    May 7, 2025. India launches precision strikes against JeM and LeT
+    training camps at Bahawalpur and Muridke. PAF scrambles 32 fighters
+    with Erieye AEW&C cooperative engagement. PL-15 BVR shots at 200km.
+    PAF launches 300-drone wave at dusk targeting Indian forward airbases.
+
+  duration_turns: 4
+  start_date: "2025-05-07"
+  start_time: "0400"
+
+# Victory Conditions
+victory_conditions:
+  india:
+    primary:
+      - id: destroy_jem_camps
+        description: "Destroy JeM training camps at Bahawalpur"
+        vp: 40
+        type: infrastructure
+        target_type: terrorist_camp
+        target_faction: pakistan
+      - id: destroy_let_camps
+        description: "Destroy LeT complex at Muridke"
+        vp: 40
+        type: infrastructure
+        target_type: terrorist_camp
+        target_faction: pakistan
+    secondary:
+      - id: air_superiority_day1
+        description: "Achieve local air superiority over strike corridors"
+        vp: 20
+        type: air_control
+        region: punjab_south
+      - id: minimize_losses
+        description: "Complete strikes with fewer than 3 aircraft lost"
+        vp: 15
+        type: attrition
+        max_losses: 3
+    defensive:
+      - id: protect_airbases
+        description: "Prevent significant damage to forward airbases"
+        vp: -25
+        type: territory_loss
+        targets: [iaf_adampur, iaf_ambala, iaf_halwara]
+
+  pakistan:
+    primary:
+      - id: intercept_strikes
+        description: "Intercept 50%+ of Indian strike packages"
+        vp: 40
+        type: defensive
+        intercept_ratio: 0.5
+      - id: drone_wave_success
+        description: "Inflict damage on Indian airbases with drone wave"
+        vp: 35
+        type: infrastructure
+        target_type: airbase
+        target_faction: india
+    secondary:
+      - id: shoot_down_aircraft
+        description: "Shoot down 5+ Indian aircraft"
+        vp: 20
+        type: attrition
+        target_category: aircraft
+        target_faction: india
+        count: 5
+      - id: cooperative_engagement
+        description: "Successful PL-15 cooperative engagement via Erieye"
+        vp: 15
+        type: special_tactic
+
+# Initial Deployment - India
+india_deployment:
+  air_forces:
+    - base: iaf_ambala
+      squadrons:
+        - {type: rafale, count: 18, alert_status: high, mission: deep_strike}
+    - base: iaf_adampur
+      squadrons:
+        - {type: su30mki, count: 18, alert_status: high, mission: escort}
+    - base: iaf_halwara
+      squadrons:
+        - {type: su30mki, count: 18, alert_status: high, mission: cap}
+    - base: iaf_pathankot
+      squadrons:
+        - {type: mig29, count: 16, alert_status: high, mission: cap}
+    - base: iaf_jodhpur
+      squadrons:
+        - {type: mirage2000, count: 14, alert_status: medium, mission: strike}
+
+  ground_forces: []  # No ground movement Day 1
+
+  missiles:
+    - {type: brahmos, launchers: 6, location: {lat: 29.5, lon: 73.8}, target_priority: camps}
+    - {type: brahmos, launchers: 6, location: {lat: 30.5, lon: 74.5}, target_priority: airbases}
+
+  air_defense:
+    - {type: s400, batteries: 2, location: {lat: 31.5, lon: 76.5}, coverage_km: 400}
+    - {type: akash, batteries: 6, location: {lat: 31.0, lon: 75.0}, coverage_km: 30}
+    - {type: spyder, batteries: 8, location: {lat: 30.5, lon: 75.5}, coverage_km: 15}
+
+# Initial Deployment - Pakistan
+pakistan_deployment:
+  air_forces:
+    - base: paf_sargodha
+      squadrons:
+        - {type: jf17_block3, count: 20, alert_status: high}
+        - {type: f16, count: 18, alert_status: high}
+    - base: paf_minhas
+      squadrons:
+        - {type: j10c, count: 24, alert_status: high}
+    - base: paf_rafiqui
+      squadrons:
+        - {type: jf17, count: 18, alert_status: medium}
+    - base: paf_masroor
+      squadrons:
+        - {type: f16, count: 12, alert_status: low}
+    # AEW&C
+    - base: paf_minhas
+      squadrons:
+        - {type: erieye, count: 3, alert_status: high, mission: awacs}
+        - {type: zdk03, count: 2, alert_status: medium, mission: awacs}
+
+  ground_forces: []  # No ground movement Day 1
+
+  missiles:
+    - {type: babur, launchers: 8, location: {lat: 33.0, lon: 72.5}, target_priority: airbases}
+
+  air_defense:
+    - {type: hq9, batteries: 2, location: {lat: 31.5, lon: 74.3}, coverage_km: 200}
+    - {type: hq16, batteries: 4, location: {lat: 32.5, lon: 74.0}, coverage_km: 40}
+    - {type: spada, batteries: 6, location: {lat: 31.8, lon: 73.8}, coverage_km: 15}
+
+  # Drone forces
+  drone_forces:
+    - {type: yihaa_iii, count: 200, location: {lat: 32.0, lon: 72.5}, mission: saturation_attack}
+    - {type: decoy_drone, count: 60, location: {lat: 32.0, lon: 72.5}, mission: decoy}
+    - {type: tb2, count: 12, location: {lat: 31.5, lon: 72.0}, mission: strike}
+    - {type: akinci, count: 4, location: {lat: 33.5, lon: 72.5}, mission: standoff_strike}
+
+# Weather
+weather:
+  day_1:
+    - {turn: 1, weather: clear, time: pre_dawn}
+    - {turn: 2, weather: clear, time: morning}
+    - {turn: 3, weather: hazy, time: afternoon}
+    - {turn: 4, weather: clear, time: dusk}
+
+# Agent behavior
+agent_config:
+  india:
+    doctrine: "surgical_strike"
+    risk_tolerance: 0.5
+    air_priority: "strike_first"
+    ground_priority: "none"
+    escalation_threshold: "high"
+    constraints:
+      - "precision_strikes_only_on_designated_targets"
+      - "minimize_civilian_casualties"
+      - "avoid_pak_military_infrastructure"
+      - "rafale_scalp_for_deep_strike"
+      - "su30_brahmos_for_standoff"
+
+  pakistan:
+    doctrine: "aggressive_air_defense"
+    risk_tolerance: 0.7
+    air_priority: "cooperative_engagement_bvr"
+    ground_priority: "none"
+    escalation_threshold: "medium"
+    constraints:
+      - "erieye_cooperative_engagement_with_pl15"
+      - "f16_amraam_cap_over_lahore"
+      - "drone_wave_at_dusk_300_plus"
+      - "preserve_j10c_for_day2"
+
+# Special rules
+special_rules:
+  - id: surgical_strikes_only
+    description: "India restricted to terrorist camp targets initially"
+    active: true
+
+  - id: cooperative_engagement
+    description: "PAF can use Erieye datalink for silent BVR shots"
+    active: true
+    effect:
+      pl15_range_km: 200
+      shooter_radar: silent
+
+  - id: drone_swarm_dusk
+    description: "PAF launches 300-drone wave at dusk (Turn 4)"
+    active: true
+    trigger:
+      turn: 4
+      wave_size: 300
+      composition: {yihaa_iii: 200, decoy: 60, tb2: 12, songar: 28}
+
+  - id: international_pressure
+    description: "UN Security Council emergency session called"
+    active: true
+    effect: "Potential ceasefire pressure from Turn 3 onwards"

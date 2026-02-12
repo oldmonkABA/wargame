@@ -1,0 +1,217 @@
+# Operation Sindoor — Day 3: Drone Swarm Escalation (May 9, 2025)
+# PAF launches 600-drone mega-wave — largest in modern warfare
+
+scenario:
+  id: sindoor_day3_may9
+  name: "Operation Sindoor — Day 3: Drone Swarm Escalation"
+  description: |
+    May 9, 2025. PAF launches its largest drone wave — 600 drones including
+    Yihaa-III loitering munitions, decoys, TB2s, and Songar rotary-wing
+    platforms. Primary targets: S-400 batteries and forward airbases.
+    JF-17 Block 3 fires CM-400AKG anti-radiation missiles at S-400.
+    Indian Akash and Akashteer integrated AD network faces its ultimate test.
+
+  duration_turns: 4
+  start_date: "2025-05-09"
+  start_time: "0400"
+
+# Victory Conditions
+victory_conditions:
+  india:
+    primary:
+      - id: defend_s400
+        description: "Protect S-400 batteries from drone swarm and CM-400AKG"
+        vp: 50
+        type: defensive
+        targets: [s400_adampur, s400_bathinda]
+      - id: attrit_drone_fleet
+        description: "Destroy 400+ drones from the mega-wave"
+        vp: 30
+        type: attrition
+        target_category: drone
+        target_faction: pakistan
+        count: 400
+    secondary:
+      - id: counter_air
+        description: "Shoot down CM-400AKG carrier JF-17s"
+        vp: 20
+        type: attrition
+        target_category: aircraft
+        target_faction: pakistan
+      - id: maintain_airbase_ops
+        description: "Keep 80%+ of forward airbases operational"
+        vp: 15
+        type: infrastructure
+        survival_ratio: 0.8
+
+  pakistan:
+    primary:
+      - id: destroy_s400
+        description: "Destroy or disable at least one S-400 battery"
+        vp: 60
+        type: infrastructure
+        target_type: air_defense
+        target_faction: india
+      - id: saturate_defenses
+        description: "Overwhelm Indian AD with 600-drone saturation attack"
+        vp: 30
+        type: special_tactic
+    secondary:
+      - id: damage_airbases
+        description: "Damage 3+ Indian forward airbases"
+        vp: 20
+        type: infrastructure
+        target_type: airbase
+        target_faction: india
+        count: 3
+      - id: cm400akg_strike
+        description: "Successful CM-400AKG strike on S-400 radar"
+        vp: 25
+        type: special_tactic
+
+# Initial Deployment - India
+india_deployment:
+  air_forces:
+    - base: iaf_ambala
+      squadrons:
+        - {type: rafale, count: 14, alert_status: high, mission: cap_intercept}
+    - base: iaf_adampur
+      squadrons:
+        - {type: su30mki, count: 14, alert_status: high, mission: cap}
+    - base: iaf_halwara
+      squadrons:
+        - {type: su30mki, count: 14, alert_status: high, mission: cap}
+    - base: iaf_pathankot
+      squadrons:
+        - {type: mig29, count: 12, alert_status: high, mission: point_defense}
+    - base: iaf_jodhpur
+      squadrons:
+        - {type: mirage2000, count: 10, alert_status: medium, mission: strike}
+
+  ground_forces: []
+
+  missiles:
+    - {type: brahmos, launchers: 4, location: {lat: 30.5, lon: 74.5}, target_priority: airbases}
+
+  air_defense:
+    - {type: s400, batteries: 2, location: {lat: 31.5, lon: 76.5}, coverage_km: 400, id: s400_adampur}
+    - {type: s400, batteries: 1, location: {lat: 30.2, lon: 75.0}, coverage_km: 400, id: s400_bathinda}
+    - {type: akash, batteries: 8, location: {lat: 31.0, lon: 75.0}, coverage_km: 30}
+    - {type: spyder, batteries: 8, location: {lat: 30.5, lon: 75.5}, coverage_km: 15}
+    - {type: barak8, batteries: 4, location: {lat: 31.5, lon: 75.5}, coverage_km: 70}
+
+  drone_forces:
+    - {type: harop, count: 12, location: {lat: 30.5, lon: 76.5}, mission: counter_drone}
+    - {type: heron_tp, count: 6, location: {lat: 31.5, lon: 76.0}, mission: isr}
+
+# Initial Deployment - Pakistan
+pakistan_deployment:
+  air_forces:
+    - base: paf_sargodha
+      squadrons:
+        - {type: jf17_block3, count: 16, alert_status: high, mission: cm400akg_strike}
+        - {type: f16, count: 14, alert_status: high, mission: escort}
+    - base: paf_minhas
+      squadrons:
+        - {type: j10c, count: 20, alert_status: high, mission: cap}
+    - base: paf_rafiqui
+      squadrons:
+        - {type: jf17, count: 14, alert_status: medium, mission: cap}
+    - base: paf_minhas
+      squadrons:
+        - {type: erieye, count: 2, alert_status: high, mission: awacs}
+
+  ground_forces: []
+
+  missiles:
+    - {type: babur, launchers: 4, location: {lat: 33.0, lon: 72.5}, target_priority: airbases}
+
+  air_defense:
+    - {type: hq9, batteries: 1, location: {lat: 31.5, lon: 74.3}, coverage_km: 200}
+    - {type: hq16, batteries: 2, location: {lat: 32.5, lon: 74.0}, coverage_km: 40}
+    - {type: spada, batteries: 4, location: {lat: 31.8, lon: 73.8}, coverage_km: 15}
+
+  drone_forces:
+    # The mega-wave
+    - {type: yihaa_iii, count: 350, location: {lat: 32.0, lon: 72.5}, mission: saturation_s400}
+    - {type: decoy_drone, count: 150, location: {lat: 32.0, lon: 72.5}, mission: decoy_saturation}
+    - {type: tb2, count: 24, location: {lat: 31.5, lon: 72.0}, mission: precision_strike}
+    - {type: akinci, count: 6, location: {lat: 33.5, lon: 72.5}, mission: som_launch}
+    - {type: songar, count: 50, location: {lat: 31.8, lon: 73.5}, mission: close_swarm}
+    - {type: burraq, count: 8, location: {lat: 32.5, lon: 73.0}, mission: isr_targeting}
+
+# Weather
+weather:
+  day_1:
+    - {turn: 1, weather: clear, time: pre_dawn}
+    - {turn: 2, weather: clear, time: morning}
+    - {turn: 3, weather: clear, time: afternoon}
+    - {turn: 4, weather: cloudy, time: dusk}
+
+# Agent behavior
+agent_config:
+  india:
+    doctrine: "integrated_air_defense"
+    risk_tolerance: 0.5
+    air_priority: "counter_drone_defense"
+    ground_priority: "none"
+    escalation_threshold: "high"
+    constraints:
+      - "akashteer_network_coordinated_defense"
+      - "s400_priority_target_protection"
+      - "akash_spyder_inner_layer_vs_drones"
+      - "rafale_intercept_cm400akg_carriers"
+      - "preserve_s400_missiles_for_high_value_targets"
+      - "gun_ciws_for_terminal_drone_defense"
+
+  pakistan:
+    doctrine: "saturation_attack"
+    risk_tolerance: 0.8
+    air_priority: "destroy_s400"
+    ground_priority: "none"
+    escalation_threshold: "low"
+    constraints:
+      - "launch_600_drone_wave_multi_axis"
+      - "decoys_first_to_exhaust_sam_missiles"
+      - "cm400akg_timed_with_drone_wave"
+      - "akinci_som_cruise_at_airbases"
+      - "jf17_stay_beyond_s400_range_until_struck"
+      - "all_in_offensive_accept_heavy_drone_losses"
+
+# Special rules
+special_rules:
+  - id: mega_drone_wave
+    description: "600-drone saturation attack — largest in modern warfare"
+    active: true
+    trigger:
+      turn: 2
+      total_drones: 600
+      composition: {yihaa_iii: 350, decoy: 150, tb2: 24, akinci: 6, songar: 50, burraq: 8}
+      waves: 3
+      wave_interval_minutes: 20
+
+  - id: cm400akg_anti_s400
+    description: "JF-17 Block 3 fires CM-400AKG at S-400 radar during drone wave"
+    active: true
+    trigger:
+      turn: 2
+      requires: "s400_radar_emitting"
+      weapon: cm400akg
+      speed_mach: 4.0
+      notes: "Timed to arrive when S-400 busy engaging drones"
+
+  - id: akashteer_network
+    description: "Indian Akashteer integrated AD command network"
+    active: true
+    effect:
+      coordination_bonus: 20
+      handoff_time_seconds: 5
+      multi_layer_engagement: true
+      notes: "Centralized C2 coordinates S-400, Akash, SPYDER, Barak-8"
+
+  - id: drone_attrition_ceiling
+    description: "Maximum drone losses before wave effectiveness collapses"
+    active: true
+    effect:
+      collapse_threshold: 0.7
+      notes: "If 70%+ drones destroyed before reaching target, wave fails"
