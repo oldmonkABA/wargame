@@ -305,25 +305,37 @@ class AirCombat(CombatResolver):
         losses_to_sam = 0
 
         # Phase 1: SAM engagement during ingress
-        for sam in sam_coverage:
-            if aircraft_count <= 0:
-                break
+        # Aircraft with standoff weapons (SCALP, BrahMos-A, Kh-59, Ra'ad, HAMMER)
+        # launch from outside SAM range and never enter the engagement zone.
+        # Only aircraft doing direct overfly attacks face SAMs.
+        STANDOFF_WEAPONS = {"scalp", "storm_shadow", "brahmos_air", "kh59", "hammer",
+                            "raad", "harpoon"}
+        aircraft_weapons = set(striker_stats.get("weapons", []))
+        has_standoff = bool(aircraft_weapons & STANDOFF_WEAPONS)
 
-            sam_effectiveness = sam.get("effectiveness", 0.5)
-            sam_range = sam.get("range_km", 50)
-            sam_rounds = sam.get("rounds", 8)
+        if not has_standoff:
+            # Legacy strike (Jaguar, MiG-21, etc.) — must penetrate SAM zone
+            for sam in sam_coverage:
+                if aircraft_count <= 0:
+                    break
 
-            # Number of engagement opportunities
-            engagements = min(sam_rounds // 2, aircraft_count)
+                sam_effectiveness = sam.get("effectiveness", 0.3)
+                sam_rounds = sam.get("rounds", 8)
 
-            for _ in range(engagements):
-                pk = sam_effectiveness * weather_modifier
-                # Striker EW reduces SAM effectiveness
-                pk *= (1.0 - striker_stats.get("ew_suite", 50) / 200.0)
+                # 1 engagement per aircraft per SAM battery
+                engagements = min(sam_rounds // 2, aircraft_count)
+                engagements = min(engagements, aircraft_count)
 
-                if self.hit_check(pk):
-                    losses_to_sam += 1
-                    aircraft_count -= 1
+                for _ in range(engagements):
+                    pk = sam_effectiveness * weather_modifier
+                    pk *= (1.0 - striker_stats.get("ew_suite", 50) / 200.0)
+                    stealth = striker_stats.get("stealth", 15)
+                    pk *= (1.0 - stealth / 200.0)
+
+                    if self.hit_check(pk):
+                        losses_to_sam += 1
+                        aircraft_count -= 1
+        # else: standoff launch — aircraft stays outside SAM envelope, zero SAM exposure
 
         # Phase 2: Strike delivery
         remaining = striker.aircraft_count - losses_to_sam
@@ -385,16 +397,17 @@ class AirCombat(CombatResolver):
         # SEAD aircraft have ARM (Anti-Radiation Missiles)
         aircraft_count = striker.aircraft_count
         sam_rounds = target_sam.get("rounds", 20)
-        sam_effectiveness = target_sam.get("effectiveness", 0.6)
+        sam_effectiveness = target_sam.get("effectiveness", 0.3)
 
         losses = 0
         sam_damage = 0.0
 
-        # Mutual engagement
-        # SAM shoots at SEAD aircraft
+        # SAM shoots at SEAD aircraft — 1 engagement per aircraft
         engagements = min(sam_rounds // 2, aircraft_count)
+        engagements = min(engagements, aircraft_count)
         for _ in range(engagements):
             pk = sam_effectiveness * (1.0 - striker_stats.get("ew_suite", 50) / 200.0)
+            pk *= (1.0 - striker_stats.get("stealth", 15) / 200.0)
             if self.hit_check(pk):
                 losses += 1
                 aircraft_count -= 1

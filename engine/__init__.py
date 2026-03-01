@@ -18,6 +18,7 @@ from .units import (
 from .logistics import LogisticsSystem, SupplyNode, SupplyRoute
 from .fog_of_war import FogOfWar, IntelQuality, IntelReport, SensorCoverage
 from .turn import TurnManager, GameState, Orders, Phase, TimeOfDay
+from .costs import CostTracker
 
 __all__ = [
     # Map
@@ -31,4 +32,6 @@ __all__ = [
     "FogOfWar", "IntelQuality", "IntelReport", "SensorCoverage",
     # Turn Management
     "TurnManager", "GameState", "Orders", "Phase", "TimeOfDay",
+    # Cost Tracking
+    "CostTracker",
 ]

@@ -51,12 +51,23 @@ class MissileCombat(CombatResolver):
     # Air defense effectiveness vs missile types
     SAM_EFFECTIVENESS = {
         # System: {missile_speed: intercept_chance}
-        "s400": {"subsonic": 0.95, "supersonic": 0.85, "quasi_ballistic": 0.70, "ballistic": 0.60},
-        "hq9": {"subsonic": 0.90, "supersonic": 0.75, "quasi_ballistic": 0.55, "ballistic": 0.45},
-        "akash": {"subsonic": 0.80, "supersonic": 0.50, "quasi_ballistic": 0.30, "ballistic": 0.15},
-        "spyder": {"subsonic": 0.85, "supersonic": 0.60, "quasi_ballistic": 0.20, "ballistic": 0.10},
-        "mrsam": {"subsonic": 0.90, "supersonic": 0.70, "quasi_ballistic": 0.50, "ballistic": 0.40},
-        "hq16": {"subsonic": 0.85, "supersonic": 0.60, "quasi_ballistic": 0.35, "ballistic": 0.25},
+        # Supersonic (Mach 2.8+ BrahMos): near-impossible for anything except S-400 (theoretical)
+        # No system has proven combat intercept of Mach 2.8 sea-skimming cruise missiles
+        # Quasi-ballistic (Pralay): faster than cruise but predictable trajectory
+        # Ballistic (Prithvi/Shaheen): high speed but ballistic arc, needs dedicated BMD
+
+        # INDIA — S-400 is the only system with theoretical supersonic intercept
+        "s400": {"subsonic": 0.95, "supersonic": 0.35, "quasi_ballistic": 0.45, "ballistic": 0.40},
+        "barak8": {"subsonic": 0.88, "supersonic": 0.10, "quasi_ballistic": 0.30, "ballistic": 0.25},
+        "mrsam": {"subsonic": 0.88, "supersonic": 0.10, "quasi_ballistic": 0.30, "ballistic": 0.25},
+        "akash": {"subsonic": 0.75, "supersonic": 0.03, "quasi_ballistic": 0.12, "ballistic": 0.05},
+        "spyder": {"subsonic": 0.80, "supersonic": 0.03, "quasi_ballistic": 0.08, "ballistic": 0.03},
+
+        # PAKISTAN — Chinese systems, zero capability against Mach 2.8 supersonic cruise missiles
+        "hq9": {"subsonic": 0.80, "supersonic": 0.0, "quasi_ballistic": 0.20, "ballistic": 0.15},
+        "hq16": {"subsonic": 0.70, "supersonic": 0.0, "quasi_ballistic": 0.08, "ballistic": 0.05},
+        "spada2000": {"subsonic": 0.65, "supersonic": 0.0, "quasi_ballistic": 0.03, "ballistic": 0.01},
+        "fm90": {"subsonic": 0.55, "supersonic": 0.0, "quasi_ballistic": 0.01, "ballistic": 0.01},
     }
 
     # Target hardness (damage required to destroy)

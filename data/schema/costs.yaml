@@ -1,0 +1,154 @@
+# Unit Cost Database (USD, approximate procurement cost per unit)
+# Sources: SIPRI, IHS Janes, public procurement data, defense ministry reports
+# All values in millions USD unless noted
+
+# ─── AIRCRAFT (per airframe) ───
+aircraft:
+  rafale: 91.0          # Dassault Rafale (India deal ~$91M/unit flyaway)
+  su30mki: 65.0         # Sukhoi Su-30MKI (HAL licensed production)
+  mig29: 29.0           # MiG-29 upgrade cost ~$29M
+  mirage2000: 23.0      # Mirage 2000 (upgrade program ~$23M/unit)
+  jaguar: 12.0          # SEPECAT Jaguar (aging fleet, replacement cost)
+  mig21: 4.0            # MiG-21 Bison (minimal residual value)
+  tejas: 42.0           # HAL Tejas Mk1 (unit cost per MoD)
+  jf17: 25.0            # JF-17 Thunder Block I/II
+  jf17_block3: 32.0     # JF-17 Block III (AESA radar upgrade)
+  f16: 62.0             # F-16C/D Block 52+ (Pakistan MLU)
+  mirage3: 5.0          # Mirage III (legacy, minimal value)
+  mirage5: 6.0          # Mirage 5 (legacy)
+  j10c: 50.0            # Chengdu J-10C (estimated export price)
+
+# ─── MISSILES (per missile) ───
+missiles:
+  brahmos: 2.73         # BrahMos ($2.73M per unit)
+  brahmos_er: 3.5       # BrahMos-ER (extended range variant)
+  brahmos_air: 3.0      # BrahMos air-launched
+  nirbhay: 1.8          # Nirbhay LACM
+  prithvi2: 4.0         # Prithvi-II SRBM
+  pralay: 3.5           # Pralay quasi-ballistic
+  babur: 2.0            # Babur cruise missile
+  babur2: 2.5           # Babur-2
+  raad: 1.5             # Ra'ad ALCM
+  ghaznavi: 5.0         # Ghaznavi SRBM
+  shaheen1: 8.0         # Shaheen-I MRBM
+
+# ─── AIR DEFENSE SYSTEMS (per battery/system) ───
+air_defense:
+  s400: 500.0           # S-400 battery ($500M per battery, India paid ~$5.43B for 5)
+  akash: 5.0            # Akash system (per launcher unit)
+  akash_ng: 8.0         # Akash-NG (per launcher unit)
+  spyder: 40.0          # SPYDER system (per fire unit)
+  barak8: 50.0          # Barak-8/MRSAM (per battery)
+  hq9: 180.0            # HQ-9/FD-2000 (per battery, Chinese export)
+  hq16: 30.0            # HQ-16/LY-80 (per battery)
+  spada2000: 20.0       # Spada 2000 (per fire unit)
+  fm90: 8.0             # FM-90 (per fire unit)
+
+# ─── SAM INTERCEPTOR MISSILES (cost per shot) ───
+sam_missiles:
+  s400_48n6: 1.2        # 48N6 long-range interceptor
+  s400_9m96: 0.6        # 9M96 medium-range interceptor
+  s400_40n6: 2.5        # 40N6 very long-range
+  akash_missile: 0.3    # Akash interceptor
+  barak8_missile: 1.0   # Barak-8 interceptor
+  spyder_python5: 0.8   # Python-5 / Derby for SPYDER
+  hq9_missile: 0.8      # HQ-9 interceptor
+  hq16_missile: 0.4     # HQ-16 interceptor
+
+# ─── HELICOPTERS (per airframe) ───
+helicopters:
+  apache: 36.0          # AH-64E Apache ($36M India deal)
+  rudra: 12.0           # HAL Rudra ALH-WSI
+  lch: 18.0             # HAL LCH Prachand
+  mi35: 15.0            # Mi-35 Hind
+  chinook: 38.0         # CH-47F Chinook
+  mi17: 20.0            # Mi-17V-5
+  ah1_cobra: 8.0        # AH-1F Cobra (legacy)
+  t129: 30.0            # TAI T129 ATAK
+  z10: 22.0             # CAIC Z-10
+  mi17_pak: 18.0        # Mi-17 (Pakistan variant)
+
+# ─── DRONES / UAVs (per unit) ───
+drones:
+  heron: 10.0           # IAI Heron
+  heron_tp: 35.0        # IAI Heron TP (Eitan)
+  harop: 0.7            # IAI Harop loitering munition
+  rustom2: 8.0          # DRDO Rustom-2
+  predator_mq9: 32.0   # MQ-9B SeaGuardian ($32M per unit)
+  burraq: 2.5           # NESCOM Burraq
+  shahpar: 1.0          # GIDS Shahpar
+  shahpar2: 1.5         # GIDS Shahpar-II
+  wing_loong2: 4.0      # Wing Loong II
+  yihaa_iii: 0.02       # Yihaa-III loitering munition ($20K each)
+  songar: 0.15          # STM Songar armed drone
+  tb2: 5.0              # Bayraktar TB2
+  akinci: 16.0          # Bayraktar Akinci
+  decoy_drone: 0.005    # Decoy drone ($5K each)
+  harpy: 0.5            # IAI Harpy
+  mini_harpy: 0.15      # IAI Mini Harpy
+
+# ─── GROUND FORCES (per brigade/unit, replacement cost) ───
+ground_forces:
+  infantry_brigade: 120.0       # Full infantry brigade equipment
+  mechanized_brigade: 350.0     # BMP-2/IFV equipped mechanized brigade
+  armored_brigade: 800.0        # T-90/Arjun equipped armored brigade
+  mountain_brigade: 100.0       # Mountain infantry brigade
+  para_brigade: 150.0           # Parachute brigade with specialist equipment
+  integrated_battle_group: 600.0 # IBG (combined arms, heavy equipment)
+  bhairav_battalion: 40.0       # Bhairav shock battalion
+  rudra_brigade: 700.0          # Rudra all-arms offensive brigade
+  shaktibaan_regiment: 25.0     # Drone/loitering munitions regiment
+  ashni_platoon: 2.0            # Tactical ISR drone platoon
+  infantry_division: 400.0
+  armored_division: 2500.0
+  mountain_division: 350.0
+  strike_corps: 5000.0
+  pivot_corps: 3000.0
+  holding_corps: 2000.0
+
+# ─── MBTs (per tank) ───
+mbts:
+  t90: 4.5              # T-90 Bhishma
+  arjun: 5.8            # Arjun Mk1A
+  t72: 2.0              # T-72M1 Ajeya
+  al_khalid: 3.5        # Al-Khalid
+  al_zarrar: 1.5        # Al-Zarrar (T-59 upgrade)
+  vt4: 5.0              # VT-4
+
+# ─── ARTILLERY (per system) ───
+artillery:
+  dhanush: 1.2          # Dhanush 155mm
+  k9_vajra: 5.2         # K9 Vajra 155mm SPH
+  m777: 5.0             # M777 155mm ($5M per gun India deal)
+  bofors: 2.0           # FH-77B Bofors
+  pinaka: 1.5           # Pinaka Mk1 launcher
+  pinaka_mk2: 2.0       # Pinaka Mk2
+  smerch: 3.0           # BM-30 Smerch launcher
+  m109: 1.5             # M109A5 SPH
+  sh15: 2.5             # SH-15
+  m198: 0.8             # M198 155mm
+  a100: 2.0             # A-100 MRL
+  ks1a: 0.3             # KRL-122 MRL
+
+# ─── SPECIAL FORCES (per team, equipment cost) ───
+special_forces:
+  para_sf: 0.5          # Para SF team equipment
+  marcos: 0.6           # MARCOS team equipment
+  garud: 0.4            # Garud team equipment
+  ghatak: 0.3           # Ghatak platoon equipment
+  ssg: 0.5              # SSG team equipment
+  ssg_navy: 0.5         # SSG (Navy) team equipment
+  zarrar: 0.4           # Zarrar company equipment
+
+# ─── ISR / AWACS (per aircraft) ───
+isr:
+  phalcon: 250.0        # A-50EI Phalcon AWACS
+  netra: 80.0           # DRDO Netra AEW&C
+  erieye: 150.0         # Saab 2000 Erieye
+  zdk03: 100.0          # ZDK-03 Karakoram Eagle
+
+# ─── AIRBASES (infrastructure replacement cost) ───
+airbases:
+  default: 500.0        # Average airbase full replacement
+  major: 1000.0         # Major operational base
+  forward: 200.0        # Forward operating base

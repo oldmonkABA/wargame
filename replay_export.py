@@ -192,6 +192,10 @@ class ReplayCollector:
 
     def snapshot_initial_state(self):
         self._collect_static_data()
+        # Compute OOB values
+        self.oob_values = {}
+        if hasattr(self.sim, 'turn_manager') and hasattr(self.sim.turn_manager, 'cost_tracker'):
+            self.oob_values = self.sim.turn_manager.cost_tracker.compute_initial_oob_value(self.sim.units)
         self.turns.append({
             "turn": 0, "day": 1, "time": "pre-war",
             "weather": self.sim.hex_map.weather.weather.value,
@@ -269,6 +273,11 @@ class ReplayCollector:
                 "sf_missions": len(orders.sf_missions),
             }
 
+        # Cost-of-war data
+        cost_data = {}
+        if hasattr(self.sim, 'turn_manager') and hasattr(self.sim.turn_manager, 'cost_tracker'):
+            cost_data = self.sim.turn_manager.cost_tracker.get_turn_snapshot()
+
         self.turns.append({
             "turn": turn_state.turn_number, "day": turn_state.day,
             "time": turn_state.time_of_day.value,
@@ -281,17 +290,25 @@ class ReplayCollector:
             "pakistan_orders": _order_summary(pakistan_orders),
             "india_reasoning": india_reasoning or "",
             "pakistan_reasoning": pakistan_reasoning or "",
+            **cost_data,
         })
 
     def generate(self, output_path):
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)
+        # Cost-of-war summary
+        cost_summary = {}
+        if hasattr(self.sim, 'turn_manager') and hasattr(self.sim.turn_manager, 'cost_tracker'):
+            cost_summary = self.sim.turn_manager.cost_tracker.get_summary()
+
         replay_data = {
             "scenario": self.sim.scenario_name,
             "generated": datetime.now().isoformat(),
             "max_turns": self.sim.turn_manager.game_state.max_turns,
             "static": self.static_data,
             "turns": self.turns,
+            "cost_summary": cost_summary,
+            **getattr(self, 'oob_values', {}),
         }
         json_str = json.dumps(replay_data, default=str).replace("</", "<\\/")
         html = HTML_TEMPLATE.replace("/*__REPLAY_DATA__*/", json_str)
@@ -532,9 +549,140 @@ body{font-family:'JetBrains Mono','Courier New','Consolas',monospace;background:
 
 /* Screen shake */
 .shaking{animation:shake .4s ease-out}
+
+/* ── Splash Screen ── */
+#splash-overlay{position:fixed;inset:0;z-index:5000;background:#050812;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;transition:opacity 1.2s ease-out}
+#splash-overlay.fade-out{opacity:0;pointer-events:none}
+#splash-overlay.hidden{display:none}
+.splash-radar{position:absolute;width:300px;height:300px;opacity:.1}
+.splash-radar-ring{position:absolute;inset:0;border-radius:50%;border:1px solid #2a6;animation:radarPulse 3s ease-out infinite}
+.splash-radar-ring:nth-child(2){animation-delay:.8s;inset:40px}
+.splash-radar-ring:nth-child(3){animation-delay:1.6s;inset:80px}
+.splash-radar-sweep{position:absolute;top:50%;left:50%;width:50%;height:2px;
+  background:linear-gradient(90deg,rgba(0,255,100,.6),transparent);transform-origin:left center;
+  animation:radarSweep 3s linear infinite}
+@keyframes radarPulse{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.5);opacity:0}}
+@keyframes radarSweep{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.splash-content{position:relative;z-index:1;text-align:center;max-width:700px;padding:0 24px}
+.splash-classification{font-size:10px;letter-spacing:5px;color:#ff3333;text-transform:uppercase;
+  font-weight:700;margin-bottom:40px;opacity:.8;animation:blink 2s step-end infinite}
+@keyframes blink{0%,100%{opacity:.8}50%{opacity:.3}}
+.splash-title{font-size:36px;font-weight:800;letter-spacing:8px;text-transform:uppercase;
+  color:#7eb8da;margin-bottom:8px;text-shadow:0 0 30px rgba(126,184,218,.3)}
+.splash-subtitle{font-size:13px;letter-spacing:3px;color:#445566;text-transform:uppercase;margin-bottom:40px}
+.splash-briefing{font-size:12px;color:#6a8899;line-height:1.8;text-align:left;max-width:500px;margin:0 auto 40px;
+  border-left:2px solid rgba(126,184,218,.3);padding-left:16px;min-height:80px}
+.splash-briefing .brf-cursor{display:inline-block;width:8px;height:14px;background:#7eb8da;
+  animation:fblink 1s step-end infinite;vertical-align:middle;margin-left:2px}
+.splash-countdown{font-size:48px;font-weight:800;color:#7eb8da;letter-spacing:4px;
+  text-shadow:0 0 40px rgba(126,184,218,.5);min-height:60px}
+.splash-prompt{font-size:11px;letter-spacing:3px;color:#445566;text-transform:uppercase;
+  animation:promptPulse 2s ease-in-out infinite}
+@keyframes promptPulse{0%,100%{opacity:.3}50%{opacity:.8}}
+.splash-threats{display:flex;gap:30px;justify-content:center;margin-bottom:40px}
+.splash-threat{text-align:center}
+.splash-threat .thr-icon{font-size:20px;margin-bottom:4px}
+.splash-threat .thr-label{font-size:9px;letter-spacing:2px;color:#556;text-transform:uppercase}
+.splash-threat .thr-value{font-size:14px;font-weight:700;margin-top:2px}
+.splash-threat.india .thr-value{color:#2196F3}
+.splash-threat.pakistan .thr-value{color:#4CAF50}
+
+/* ── Turn Transition Card ── */
+#turn-card{position:fixed;inset:0;z-index:4000;background:rgba(4,6,14,.95);
+  display:none;align-items:center;justify-content:center;flex-direction:column;gap:8px;
+  transition:opacity .3s}
+#turn-card.active{display:flex}
+#turn-card.fade-out{opacity:0}
+.tc-day{font-size:36px;font-weight:800;letter-spacing:6px;color:#7eb8da;text-transform:uppercase;
+  text-shadow:0 0 30px rgba(126,184,218,.3);animation:tcSlideIn .4s ease-out}
+.tc-phase{font-size:14px;letter-spacing:4px;color:#445566;text-transform:uppercase;margin-top:4px}
+.tc-cost-ticker{display:flex;gap:30px;margin-top:16px;font-size:12px}
+.tc-cost-ticker .tc-faction{text-align:center}
+.tc-cost-ticker .tc-label{font-size:9px;letter-spacing:2px;color:#445;text-transform:uppercase}
+.tc-cost-ticker .tc-val{font-size:18px;font-weight:800;margin-top:2px}
+.tc-cost-ticker .tc-val.india{color:#2196F3}
+.tc-cost-ticker .tc-val.pakistan{color:#4CAF50}
+@keyframes tcSlideIn{0%{transform:translateY(20px);opacity:0}100%{transform:translateY(0);opacity:1}}
+
+/* Cost-of-War Report Overlay */
+#cost-report-overlay{position:fixed;inset:0;z-index:3000;background:rgba(4,8,16,.92);
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+#cost-report-overlay.active{display:flex}
+.cost-report{max-width:840px;width:90%;max-height:85vh;overflow-y:auto;padding:32px;
+  background:linear-gradient(135deg,rgba(12,20,35,.95),rgba(8,14,24,.98));
+  border:1px solid #2a4a6f;border-radius:8px;box-shadow:0 0 60px rgba(33,150,243,.15)}
+.cost-report h2{font-size:16px;letter-spacing:4px;text-transform:uppercase;color:#7eb8da;
+  text-align:center;margin-bottom:4px}
+.cost-report .subtitle{font-size:11px;color:#556;text-align:center;margin-bottom:20px;letter-spacing:2px}
+.cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.cost-card{background:rgba(15,23,41,.8);border:1px solid #1e3a5f;border-radius:6px;padding:16px}
+.cost-card.india{border-top:3px solid #2196F3}
+.cost-card.pakistan{border-top:3px solid #4CAF50}
+.cost-card h3{font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.cost-card.india h3{color:#2196F3}.cost-card.pakistan h3{color:#4CAF50}
+.cost-row{display:flex;justify-content:space-between;padding:3px 0;font-size:11px;border-bottom:1px solid rgba(255,255,255,.04)}
+.cost-row .label{color:#778}.cost-row .value{font-weight:700;color:#ccd}
+.cost-row .value.red{color:#ff4444}.cost-row .value.green{color:#44ee44}
+.cost-row .value.amber{color:#ffaa22}
+.cost-big{font-size:22px;font-weight:800;text-align:center;margin:8px 0}
+.cost-big.india{color:#2196F3}.cost-big.pakistan{color:#4CAF50}
+.cost-exchange{text-align:center;padding:16px;background:rgba(15,23,41,.9);border:1px solid #1e3a5f;
+  border-radius:6px;margin-bottom:16px}
+.cost-exchange .ratio{font-size:28px;font-weight:800;letter-spacing:2px}
+.cost-exchange .ratio.india{color:#2196F3}.cost-exchange .ratio.pakistan{color:#4CAF50}
+.cost-exchange .vs{font-size:12px;color:#556;margin:0 12px}
+.cost-close{display:block;margin:16px auto 0;background:#1a2744;border:1px solid #2a4a6f;
+  color:#7eb8da;padding:8px 24px;border-radius:4px;cursor:pointer;font-size:11px;
+  letter-spacing:2px;text-transform:uppercase;font-family:inherit}
+.cost-close:hover{background:#243654}
+
+/* ── Presentation Mode ── */
+body.presentation .controls button:not(#play-btn),body.presentation #speed-select,
+body.presentation #crt-btn,body.presentation #sound-btn{display:none}
+body.presentation .feed-col{font-size:13px}
+body.presentation .feed-line{font-size:13px}
+body.presentation .title{font-size:15px}
+body.presentation .vp-h{font-size:13px}
+body.presentation .info-pill{font-size:13px}
+body.presentation .cost-h{font-size:12px!important}
+body.presentation #turn-num{font-size:14px}
+body.presentation .cost-report{font-size:13px}
+body.presentation .cost-big{font-size:28px}
+body.presentation .cost-exchange .ratio{font-size:34px}
+body.presentation .splash-title{font-size:48px}
+body.presentation .splash-briefing{font-size:14px}
+
+.cost-breakdown{margin-top:10px}
+.cost-bar-row{display:flex;align-items:center;gap:6px;margin:3px 0;font-size:10px}
+.cost-bar-label{width:70px;color:#778;text-align:right}
+.cost-bar-track{flex:1;height:6px;background:#0a1020;border-radius:3px;overflow:hidden}
+.cost-bar-fill{height:100%;border-radius:3px;transition:width .5s}
+.cost-bar-fill.india{background:#2196F3}.cost-bar-fill.pakistan{background:#4CAF50}
+.cost-bar-fill.red{background:#ff4444}.cost-bar-fill.amber{background:#ffaa22}
+.cost-bar-value{width:55px;color:#99a;font-size:10px}
 </style>
 </head>
 <body>
+
+<!-- Splash Screen -->
+<div id="splash-overlay">
+  <div class="splash-radar">
+    <div class="splash-radar-ring"></div>
+    <div class="splash-radar-ring"></div>
+    <div class="splash-radar-ring"></div>
+    <div class="splash-radar-sweep"></div>
+  </div>
+  <div class="splash-content">
+    <div class="splash-classification">&#9608; TOP SECRET // WARGAME SIMULATION &#9608;</div>
+    <div class="splash-title" id="splash-title">OPERATION SINDOOR</div>
+    <div class="splash-subtitle" id="splash-subtitle">India-Pakistan Theatre Simulation</div>
+    <div class="splash-threats" id="splash-threats"></div>
+    <div class="splash-briefing" id="splash-briefing"><span class="brf-cursor"></span></div>
+    <div class="splash-countdown" id="splash-countdown"></div>
+    <div class="splash-prompt" id="splash-prompt">PRESS SPACE TO BEGIN</div>
+  </div>
+</div>
 
 <div id="header">
   <div class="title">India-Pakistan Wargame</div>
@@ -557,6 +705,12 @@ body{font-family:'JetBrains Mono','Courier New','Consolas',monospace;background:
     <span class="vp-h india">IND <div class="vp-bar-sm"><div class="vp-fill-sm india" id="vp-india-bar" style="width:50%"></div></div> <span id="india-vp">0</span></span>
     <span class="vp-h pakistan">PAK <div class="vp-bar-sm"><div class="vp-fill-sm pakistan" id="vp-pak-bar" style="width:50%"></div></div> <span id="pakistan-vp">0</span></span>
   </div>
+  <div class="cost-header" id="cost-display" style="display:flex;align-items:center;gap:6px;margin-left:6px">
+    <span class="cost-h india" style="font-size:10px;font-weight:700;color:#2196F3">$<span id="india-cost">0</span>M</span>
+    <span style="font-size:9px;color:#556;letter-spacing:1px">LOST</span>
+    <span class="cost-h pakistan" style="font-size:10px;font-weight:700;color:#4CAF50">$<span id="pakistan-cost">0</span>M</span>
+    <span style="font-size:8px;color:#445;margin-left:2px;letter-spacing:1px" id="exchange-display"></span>
+  </div>
   <div class="info">
     <span class="info-pill" id="day-display">Day 1 Pre-war</span>
     <span class="info-pill" id="weather-display">Clear</span>
@@ -564,6 +718,10 @@ body{font-family:'JetBrains Mono','Courier New','Consolas',monospace;background:
 </div>
 
 <div id="phase-overlay"></div>
+<div id="turn-card"><div class="tc-day" id="tc-day"></div><div class="tc-phase" id="tc-phase"></div>
+  <div class="tc-cost-ticker"><div class="tc-faction"><div class="tc-label">India Losses</div><div class="tc-val india" id="tc-india-cost">$0M</div></div>
+    <div class="tc-faction"><div class="tc-label">Pakistan Losses</div><div class="tc-val pakistan" id="tc-pak-cost">$0M</div></div></div></div>
+<div id="cost-report-overlay" onclick="if(event.target===this)closeCostReport()"></div>
 
 <div id="map"></div>
 <div id="crt-overlay"></div>
@@ -685,6 +843,18 @@ function showTurn(i) {
   document.getElementById('pakistan-vp').textContent = pV;
   document.getElementById('vp-india-bar').style.width = (iV/tot*100)+'%';
   document.getElementById('vp-pak-bar').style.width = (pV/tot*100)+'%';
+
+  // Cost-of-war display
+  var iCD=t.india_cost_destroyed||0, pCD=t.pakistan_cost_destroyed||0;
+  var iCK=t.india_cost_killed||0, pCK=t.pakistan_cost_killed||0;
+  document.getElementById('india-cost').textContent = Math.round(iCD);
+  document.getElementById('pakistan-cost').textContent = Math.round(pCD);
+  var exEl=document.getElementById('exchange-display');
+  if(iCD>0||pCD>0){
+    var iRatio=iCK/Math.max(0.1,iCD+( t.india_munitions_usd||0));
+    var pRatio=pCK/Math.max(0.1,pCD+(t.pakistan_munitions_usd||0));
+    exEl.textContent='XR: IND '+iRatio.toFixed(1)+'x | PAK '+pRatio.toFixed(1)+'x';
+  }
 
   drawUnits(t);
   drawCombatMarkers(t);
@@ -943,6 +1113,79 @@ function feedTurnSummary(t) {
     });
     feedSeparator();
   }
+}
+
+// ── Strategic Narration ──
+function generateNarration(ev) {
+  var pd = phaseFor(ev);
+  var aName = fmtUnit(ev.attacker);
+  var dName = fmtUnit(ev.defender);
+  var isVic = ev.result && ev.result.indexOf('victory') >= 0;
+  var isDef = ev.result && ev.result.indexOf('defeat') >= 0;
+  var note = evNote(ev);
+
+  if(pd.type==='missile') {
+    if(isVic) return aName + ' salvo \u2014 ' + (note || 'target destroyed');
+    if(isDef) return aName + ' intercepted by air defense';
+    return aName + ' cruise missile strike on ' + dName;
+  }
+  if(pd.type==='air') {
+    if(isVic) return aName + ' achieves air superiority over ' + dName;
+    if(isDef) return aName + ' repelled by ' + dName + ' CAP';
+    return aName + ' air engagement with ' + dName;
+  }
+  if(pd.type==='drone') {
+    var isSEAD = (ev.phase||'').indexOf('sead')>=0 || (note||'').indexOf('SEAD')>=0;
+    if(isSEAD) return 'SEAD swarm degrades ' + dName + ' radar coverage';
+    return aName + ' drone strike on ' + dName;
+  }
+  if(pd.type==='arty') return aName + ' artillery barrage on ' + dName;
+  if(pd.type==='heli') return aName + ' helicopter assault on ' + dName;
+  if(pd.type==='sf') {
+    if(note.toLowerCase().indexOf('sabotage')>=0) return aName + ' sabotage operation behind enemy lines';
+    return aName + ' special forces raid on ' + dName;
+  }
+  if(pd.type==='ground') {
+    if(isVic) return aName + ' breaks through ' + dName + ' defensive line';
+    if(isDef) return aName + ' ground assault repulsed by ' + dName;
+    return aName + ' ground combat with ' + dName;
+  }
+  return aName + ' engages ' + dName;
+}
+
+function feedTurnEndSummary(t) {
+  if(!feedPak) feedInit();
+  feedSeparator();
+  // Net losses
+  var iCost = t.india_cost_destroyed||0, pCost = t.pakistan_cost_destroyed||0;
+  if(iCost>0||pCost>0) {
+    feedLine('\u2501 NET LOSSES: India -$'+Math.round(iCost)+'M | Pakistan -$'+Math.round(pCost)+'M', 'fc-yellow');
+  }
+  // VP swing
+  var iVP = t.india_vp||0, pVP = t.pakistan_vp||0;
+  if(iVP>0||pVP>0) {
+    feedLine('\u2501 VP: India '+iVP+' | Pakistan '+pVP, 'fc-cyan');
+  }
+  // Exchange ratio
+  var iXR = t.india_exchange_ratio||0, pXR = t.pakistan_exchange_ratio||0;
+  if(iXR>0||pXR>0) {
+    var advFaction = iXR>pXR ? 'India' : 'Pakistan';
+    feedLine('\u2501 EXCHANGE ADVANTAGE: '+advFaction+' ('+Math.max(iXR,pXR).toFixed(1)+'x)', 'fc-amber');
+  }
+  // Phase-level narration for key events
+  var events = t.combat_events||[];
+  var narrations = [];
+  events.forEach(function(ev){
+    var n = generateNarration(ev);
+    if(n && narrations.length<3) narrations.push(n);
+  });
+  if(narrations.length>0) {
+    feedLine('', 'fc-dim');
+    narrations.forEach(function(n){
+      feedLine('\u25b8 '+n, 'fc-dim');
+    });
+  }
+  feedSeparator();
 }
 
 // ── Animation engine ──
@@ -1951,12 +2194,35 @@ function animEvent(ev, ctx) {
   return animGround(ev, ctx);
 }
 
+// ── Turn Transition Card ──
+var TIME_LABELS = {pre_war:'PRE-WAR',dawn:'DAWN',morning:'MORNING',midday:'MIDDAY',afternoon:'AFTERNOON',dusk:'DUSK',night:'NIGHT',midnight:'MIDNIGHT'};
+async function showTurnCard(t, ctx) {
+  var el = document.getElementById('turn-card');
+  document.getElementById('tc-day').textContent = 'DAY ' + t.day;
+  document.getElementById('tc-phase').textContent = (TIME_LABELS[t.time]||t.time.toUpperCase());
+  // Animate cost tickers
+  var iCost = t.india_cost_destroyed||0, pCost = t.pakistan_cost_destroyed||0;
+  document.getElementById('tc-india-cost').textContent = '$'+Math.round(iCost)+'M';
+  document.getElementById('tc-pak-cost').textContent = '$'+Math.round(pCost)+'M';
+  el.classList.remove('fade-out');
+  el.classList.add('active');
+  await sleep(800/animSpeed);
+  if(ctx.cancelled) return;
+  el.classList.add('fade-out');
+  await sleep(300/animSpeed);
+  el.classList.remove('active','fade-out');
+}
+
 // ── Orchestrate turn animation ──
 async function animateTurn(turnIndex) {
   cancelAnim();
   var ctx = {cancelled:false};
   currentAnim = ctx;
   var t = D.turns[turnIndex]; if(!t) return;
+
+  // Turn transition card
+  await showTurnCard(t, ctx);
+  if(ctx.cancelled) return;
 
   // Show previous turn's units as backdrop
   var prevIdx = turnIndex > 0 ? turnIndex - 1 : 0;
@@ -2037,6 +2303,11 @@ async function animateTurn(turnIndex) {
   }
 
   if(ctx.cancelled) return;
+  // Turn-end narration summary
+  feedTurnEndSummary(t);
+  await sleep(400/animSpeed);
+
+  if(ctx.cancelled) return;
   // Show final state
   showTurn(turnIndex);
   turn = turnIndex;
@@ -2052,6 +2323,7 @@ async function playLoop() {
   if(turn >= D.turns.length-1) {
     playing = false;
     document.getElementById('play-btn').innerHTML = '&#9654;';
+    setTimeout(showCostReport, 1200);
   }
 }
 
@@ -2076,6 +2348,7 @@ function manualNext() { manualGo(Math.min(turn+1, D.turns.length-1)); }
 function manualPrev() { manualGo(Math.max(turn-1, 0)); }
 
 document.addEventListener('keydown', function(e) {
+  if(splashActive) return; // handled by splash
   if(e.key==='ArrowRight') manualNext();
   else if(e.key==='ArrowLeft') manualPrev();
   else if(e.key===' ') { e.preventDefault(); togglePlay(); }
@@ -2086,7 +2359,332 @@ function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):'';}
 function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
 function fmtKey(k){return k.replace(/_/g,' ').replace(/\b\w/g,function(c){return c.toUpperCase();});}
 
-document.addEventListener('DOMContentLoaded', init);
+// ── Cost-of-War After-Action Report ──
+function showCostReport() {
+  var cs = D.cost_summary;
+  if(!cs || (!cs.india && !cs.pakistan)) return;
+  var ind = cs.india || {}, pak = cs.pakistan || {};
+  var iLost = ind.assets_lost_usd||0, pLost = pak.assets_lost_usd||0;
+  var iKilled = ind.assets_killed_usd||0, pKilled = pak.assets_killed_usd||0;
+  var iMun = ind.munitions_expended_usd||0, pMun = pak.munitions_expended_usd||0;
+  var iTotal = ind.total_cost_of_war_usd||0, pTotal = pak.total_cost_of_war_usd||0;
+  var iXR = ind.exchange_ratio||0, pXR = pak.exchange_ratio||0;
+
+  function catBars(data, maxVal, cls) {
+    if(!data||!Object.keys(data).length) return '<div style="color:#445;font-size:10px">No data</div>';
+    var html = '';
+    Object.keys(data).sort(function(a,b){return data[b]-data[a]}).forEach(function(k){
+      var v = data[k]; var pct = Math.min(100, v/Math.max(1,maxVal)*100);
+      html += '<div class="cost-bar-row"><span class="cost-bar-label">'+fmtKey(k)+'</span>';
+      html += '<div class="cost-bar-track"><div class="cost-bar-fill '+cls+'" style="width:'+pct+'%"></div></div>';
+      html += '<span class="cost-bar-value">$'+Math.round(v)+'M</span></div>';
+    });
+    return html;
+  }
+
+  var iMaxCat = Math.max.apply(null, Object.values(ind.destroyed_by_category||{}).concat([1]));
+  var pMaxCat = Math.max.apply(null, Object.values(pak.destroyed_by_category||{}).concat([1]));
+
+  var html = '<div class="cost-report">';
+  html += '<h2>Cost of War</h2>';
+  html += '<div class="subtitle">Economic After-Action Report \u2014 '+(D.scenario||'Wargame').toUpperCase().replace(/_/g,' ')+'</div>';
+
+  // Exchange ratio banner
+  html += '<div class="cost-exchange">';
+  html += '<span class="ratio india">'+iXR.toFixed(1)+'x</span>';
+  html += '<span class="vs">INDIA XR &nbsp;|&nbsp; PAK XR</span>';
+  html += '<span class="ratio pakistan">'+pXR.toFixed(1)+'x</span>';
+  html += '<div style="font-size:10px;color:#556;margin-top:4px">Exchange Ratio = Value Destroyed / Total Cost (higher = more efficient)</div>';
+  html += '</div>';
+
+  // VP Timeline Chart (SVG)
+  html += buildVPChart();
+
+  // Two-column cards
+  html += '<div class="cost-grid">';
+  // India card
+  html += '<div class="cost-card india"><h3>India</h3>';
+  html += '<div class="cost-big india">$'+Math.round(iTotal)+'M</div>';
+  html += '<div style="text-align:center;font-size:10px;color:#556;margin-bottom:10px">TOTAL COST OF WAR</div>';
+  html += '<div class="cost-row"><span class="label">Assets Lost</span><span class="value red">$'+Math.round(iLost)+'M</span></div>';
+  html += '<div class="cost-row"><span class="label">Enemy Destroyed</span><span class="value green">$'+Math.round(iKilled)+'M</span></div>';
+  html += '<div class="cost-row"><span class="label">Munitions Expended</span><span class="value amber">$'+Math.round(iMun)+'M</span></div>';
+  // Force remaining %
+  var iOOB = D.india_oob_value||0;
+  if(iOOB>0) {
+    var iPct = Math.max(0,Math.round((1 - iLost/iOOB)*100));
+    html += '<div class="cost-row"><span class="label">Force Remaining</span><span class="value" style="color:'+(iPct>70?'#4CAF50':iPct>40?'#ffaa22':'#ff4444')+'">'+iPct+'% of $'+Math.round(iOOB)+'M OOB</span></div>';
+  }
+  html += '<div class="cost-breakdown"><div style="font-size:10px;color:#556;letter-spacing:1px;margin-bottom:4px">LOSSES BY DOMAIN</div>';
+  html += catBars(ind.destroyed_by_category, iMaxCat, 'red');
+  html += '</div></div>';
+  // Pakistan card
+  html += '<div class="cost-card pakistan"><h3>Pakistan</h3>';
+  html += '<div class="cost-big pakistan">$'+Math.round(pTotal)+'M</div>';
+  html += '<div style="text-align:center;font-size:10px;color:#556;margin-bottom:10px">TOTAL COST OF WAR</div>';
+  html += '<div class="cost-row"><span class="label">Assets Lost</span><span class="value red">$'+Math.round(pLost)+'M</span></div>';
+  html += '<div class="cost-row"><span class="label">Enemy Destroyed</span><span class="value green">$'+Math.round(pKilled)+'M</span></div>';
+  html += '<div class="cost-row"><span class="label">Munitions Expended</span><span class="value amber">$'+Math.round(pMun)+'M</span></div>';
+  var pOOB = D.pakistan_oob_value||0;
+  if(pOOB>0) {
+    var pPct = Math.max(0,Math.round((1 - pLost/pOOB)*100));
+    html += '<div class="cost-row"><span class="label">Force Remaining</span><span class="value" style="color:'+(pPct>70?'#4CAF50':pPct>40?'#ffaa22':'#ff4444')+'">'+pPct+'% of $'+Math.round(pOOB)+'M OOB</span></div>';
+  }
+  html += '<div class="cost-breakdown"><div style="font-size:10px;color:#556;letter-spacing:1px;margin-bottom:4px">LOSSES BY DOMAIN</div>';
+  html += catBars(pak.destroyed_by_category, pMaxCat, 'red');
+  html += '</div></div>';
+  html += '</div>'; // cost-grid
+
+  // Most Cost-Effective Platforms
+  html += buildWeaponROI(ind, pak);
+
+  // Key Turning Points
+  html += buildTurningPoints();
+
+  // Casualty Summary
+  html += buildCasualtySummary();
+
+  html += '<button class="cost-close" onclick="closeCostReport()">Close Report</button>';
+  html += '</div>';
+
+  var overlay = document.getElementById('cost-report-overlay');
+  overlay.innerHTML = html;
+  overlay.classList.add('active');
+}
+
+function buildVPChart() {
+  var turns = D.turns;
+  if(turns.length<2) return '';
+  var w=780,h=120,pad=30;
+  var maxVP=1;
+  turns.forEach(function(t){maxVP=Math.max(maxVP,t.india_vp||0,t.pakistan_vp||0);});
+  var stepX=(w-2*pad)/(Math.max(1,turns.length-1));
+
+  var iPath='M', pPath='M';
+  turns.forEach(function(t,i){
+    var x=pad+i*stepX;
+    var iy=h-pad-(t.india_vp||0)/maxVP*(h-2*pad);
+    var py=h-pad-(t.pakistan_vp||0)/maxVP*(h-2*pad);
+    iPath+=(i===0?'':' L')+x.toFixed(1)+','+iy.toFixed(1);
+    pPath+=(i===0?'':' L')+x.toFixed(1)+','+py.toFixed(1);
+  });
+
+  var svg='<div style="margin:16px 0"><div style="font-size:10px;color:#556;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;text-align:center">Victory Points Over Time</div>';
+  svg+='<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:'+h+'px;background:rgba(10,15,25,.5);border:1px solid #1e3a5f;border-radius:4px">';
+  // Grid lines
+  for(var g=0;g<=4;g++){
+    var gy=pad+g*(h-2*pad)/4;
+    svg+='<line x1="'+pad+'" y1="'+gy+'" x2="'+(w-pad)+'" y2="'+gy+'" stroke="rgba(255,255,255,.05)" stroke-width="1"/>';
+  }
+  // Axis labels
+  svg+='<text x="'+(w-pad)+'" y="'+(h-pad+12)+'" fill="#445" font-size="9" text-anchor="end">Turn '+turns[turns.length-1].turn+'</text>';
+  svg+='<text x="'+pad+'" y="'+(h-pad+12)+'" fill="#445" font-size="9">Turn 0</text>';
+  svg+='<text x="'+(pad-4)+'" y="'+(pad+4)+'" fill="#445" font-size="9" text-anchor="end">'+maxVP+'</text>';
+  // Lines
+  svg+='<path d="'+iPath+'" fill="none" stroke="#2196F3" stroke-width="2" opacity=".8"/>';
+  svg+='<path d="'+pPath+'" fill="none" stroke="#4CAF50" stroke-width="2" opacity=".8"/>';
+  // End dots
+  var lastI=turns[turns.length-1].india_vp||0, lastP=turns[turns.length-1].pakistan_vp||0;
+  var lastX=pad+(turns.length-1)*stepX;
+  svg+='<circle cx="'+lastX+'" cy="'+(h-pad-lastI/maxVP*(h-2*pad))+'" r="4" fill="#2196F3"/>';
+  svg+='<circle cx="'+lastX+'" cy="'+(h-pad-lastP/maxVP*(h-2*pad))+'" r="4" fill="#4CAF50"/>';
+  // Legend
+  svg+='<rect x="'+(w/2-60)+'" y="4" width="8" height="8" rx="2" fill="#2196F3"/><text x="'+(w/2-48)+'" y="12" fill="#88a" font-size="9">India</text>';
+  svg+='<rect x="'+(w/2+10)+'" y="4" width="8" height="8" rx="2" fill="#4CAF50"/><text x="'+(w/2+22)+'" y="12" fill="#88a" font-size="9">Pakistan</text>';
+  svg+='</svg></div>';
+  return svg;
+}
+
+function buildWeaponROI(ind, pak) {
+  var html = '<div style="margin-top:16px;padding:12px;background:rgba(15,23,41,.8);border:1px solid #1e3a5f;border-radius:6px">';
+  html += '<div style="font-size:10px;color:#556;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Most Cost-Effective Platforms</div>';
+  var all = [];
+  var iROI = ind.weapon_roi||{};
+  Object.keys(iROI).forEach(function(k){
+    var r=iROI[k]; var spent=(ind.munitions_by_type||{})[k]||0;
+    if(r.cost_destroyed>0) all.push({name:k,faction:'India',destroyed:r.cost_destroyed,kills:r.kills,spent:spent,
+      roi:spent>0?r.cost_destroyed/spent:r.cost_destroyed});
+  });
+  var pROI = pak.weapon_roi||{};
+  Object.keys(pROI).forEach(function(k){
+    var r=pROI[k]; var spent=(pak.munitions_by_type||{})[k]||0;
+    if(r.cost_destroyed>0) all.push({name:k,faction:'Pakistan',destroyed:r.cost_destroyed,kills:r.kills,spent:spent,
+      roi:spent>0?r.cost_destroyed/spent:r.cost_destroyed});
+  });
+  all.sort(function(a,b){return b.roi-a.roi;});
+  if(all.length===0){html+='<div style="color:#445;font-size:10px">No weapon ROI data</div>';}
+  else {
+    all.slice(0,5).forEach(function(w){
+      var fColor = w.faction==='India'?'#2196F3':'#4CAF50';
+      html+='<div class="cost-row"><span class="label" style="color:'+fColor+'">'+fmtKey(w.name)+' <span style="color:#445;font-size:9px">('+w.faction+')</span></span>';
+      html+='<span class="value green">$'+Math.round(w.destroyed)+'M destroyed'+( w.spent>0?' \u2014 '+Math.round(w.roi)+'x ROI':'')+'</span></div>';
+    });
+  }
+  html += '</div>';
+  return html;
+}
+
+function buildTurningPoints() {
+  var timeline = (D.cost_summary||{}).turn_timeline||[];
+  if(timeline.length===0) return '';
+  var html = '<div style="margin-top:16px;padding:12px;background:rgba(15,23,41,.8);border:1px solid #1e3a5f;border-radius:6px">';
+  html += '<div style="font-size:10px;color:#556;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Key Turning Points</div>';
+  // Find turns with highest single-turn damage
+  var sorted = timeline.slice().sort(function(a,b){
+    var aMax=Math.max(a.india_killed||0,a.pakistan_killed||0);
+    var bMax=Math.max(b.india_killed||0,b.pakistan_killed||0);
+    return bMax-aMax;
+  });
+  sorted.slice(0,3).forEach(function(t){
+    var iK=t.india_killed||0, pK=t.pakistan_killed||0;
+    var iD=t.india_destroyed||0, pD=t.pakistan_destroyed||0;
+    var text = 'Turn '+t.turn+': ';
+    if(iK>pK) text += 'India inflicted $'+Math.round(iK)+'M damage (lost $'+Math.round(iD)+'M)';
+    else if(pK>iK) text += 'Pakistan inflicted $'+Math.round(pK)+'M damage (lost $'+Math.round(pD)+'M)';
+    else text += 'Even exchange \u2014 $'+Math.round(iK)+'M each';
+    html += '<div class="cost-row"><span class="label" style="color:#7eb8da">\u25b8 '+text+'</span></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function buildCasualtySummary() {
+  // Count surviving/destroyed units from final turn
+  var lastTurn = D.turns[D.turns.length-1];
+  if(!lastTurn) return '';
+  var stats = {india:{total:0,destroyed:0,damaged:0,byCat:{}},pakistan:{total:0,destroyed:0,damaged:0,byCat:{}}};
+  (lastTurn.units||[]).forEach(function(u){
+    var s = stats[u.faction]; if(!s) return;
+    s.total++;
+    if(u.status==='destroyed') s.destroyed++;
+    else if(u.status==='damaged'||u.strength<50) s.damaged++;
+    if(!s.byCat[u.category]) s.byCat[u.category]={total:0,destroyed:0};
+    s.byCat[u.category].total++;
+    if(u.status==='destroyed') s.byCat[u.category].destroyed++;
+  });
+
+  var html = '<div style="margin-top:16px;padding:12px;background:rgba(15,23,41,.8);border:1px solid #1e3a5f;border-radius:6px">';
+  html += '<div style="font-size:10px;color:#556;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Force Status at End of Conflict</div>';
+  html += '<div class="cost-grid" style="margin-bottom:0">';
+
+  ['india','pakistan'].forEach(function(f){
+    var s=stats[f]; var color=f==='india'?'#2196F3':'#4CAF50';
+    var survPct = s.total>0?Math.round((s.total-s.destroyed)/s.total*100):100;
+    html+='<div style="font-size:11px"><div style="color:'+color+';font-weight:700;letter-spacing:2px;margin-bottom:6px">'+f.toUpperCase()+'</div>';
+    html+='<div class="cost-row"><span class="label">Units Surviving</span><span class="value" style="color:'+color+'">'+(s.total-s.destroyed)+'/'+s.total+' ('+survPct+'%)</span></div>';
+    html+='<div class="cost-row"><span class="label">Destroyed</span><span class="value red">'+s.destroyed+'</span></div>';
+    html+='<div class="cost-row"><span class="label">Damaged</span><span class="value amber">'+s.damaged+'</span></div>';
+    Object.keys(s.byCat).sort().forEach(function(cat){
+      var c=s.byCat[cat]; if(c.destroyed>0) html+='<div class="cost-row"><span class="label" style="font-size:10px">  '+fmtKey(cat)+'</span><span class="value red" style="font-size:10px">-'+c.destroyed+'/'+c.total+'</span></div>';
+    });
+    html+='</div>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function closeCostReport() {
+  document.getElementById('cost-report-overlay').classList.remove('active');
+}
+
+// ── Presentation Mode ──
+var presentationMode = new URLSearchParams(window.location.search).has('presentation');
+if(presentationMode) {
+  document.body.classList.add('presentation');
+  document.documentElement.requestFullscreen && document.documentElement.requestFullscreen().catch(function(){});
+}
+
+// ── Splash Screen ──
+var splashActive = true;
+var splashReady = false;
+
+function initSplash() {
+  var scenario = D.scenario || 'WARGAME SIMULATION';
+  document.getElementById('splash-title').textContent = scenario.toUpperCase().replace(/_/g, ' ');
+
+  // Count forces from turn 0
+  var t0 = D.turns[0];
+  var indAir=0,pakAir=0,indGnd=0,pakGnd=0,indMsl=0,pakMsl=0;
+  (t0.units||[]).forEach(function(u){
+    if(u.faction==='india'){if(u.category==='aircraft')indAir++;else if(u.category==='ground')indGnd++;else if(u.category==='missile')indMsl++;}
+    else{if(u.category==='aircraft')pakAir++;else if(u.category==='ground')pakGnd++;else if(u.category==='missile')pakMsl++;}
+  });
+
+  document.getElementById('splash-threats').innerHTML =
+    '<div class="splash-threat india"><div class="thr-icon">&#9992;</div><div class="thr-label">India Air</div><div class="thr-value">'+indAir+' SQN</div></div>'+
+    '<div class="splash-threat india"><div class="thr-icon">&#9881;</div><div class="thr-label">India Ground</div><div class="thr-value">'+indGnd+' FMN</div></div>'+
+    '<div class="splash-threat pakistan"><div class="thr-icon">&#9992;</div><div class="thr-label">PAF Air</div><div class="thr-value">'+pakAir+' SQN</div></div>'+
+    '<div class="splash-threat pakistan"><div class="thr-icon">&#9881;</div><div class="thr-label">Pak Ground</div><div class="thr-value">'+pakGnd+' FMN</div></div>';
+
+  // Typewriter briefing
+  var briefingText = 'DATE: DAY 1 // THEATRE: WESTERN FRONT\n' +
+    'INDIA FORCES: ' + indAir + ' air squadrons, ' + indGnd + ' ground formations, ' + indMsl + ' missile batteries\n' +
+    'PAKISTAN FORCES: ' + pakAir + ' air squadrons, ' + pakGnd + ' ground formations, ' + pakMsl + ' missile batteries\n' +
+    'DURATION: ' + D.max_turns + ' TURNS // OBJECTIVE: THEATRE DOMINANCE';
+  typewriteBriefing(briefingText, function(){
+    splashReady = true;
+    startCountdown();
+  });
+}
+
+function typewriteBriefing(text, onDone) {
+  var el = document.getElementById('splash-briefing');
+  var i = 0;
+  function tick() {
+    if(!splashActive){if(onDone)onDone();return;}
+    if(i >= text.length){if(onDone)onDone();return;}
+    var ch = text.charAt(i);
+    // Remove cursor, add char, add cursor
+    var cursor = el.querySelector('.brf-cursor');
+    if(cursor) cursor.remove();
+    if(ch==='\n') el.appendChild(document.createElement('br'));
+    else el.appendChild(document.createTextNode(ch));
+    var c = document.createElement('span');c.className='brf-cursor';el.appendChild(c);
+    i++;
+    setTimeout(tick, ch==='\n'?200:25);
+  }
+  tick();
+}
+
+function startCountdown() {
+  if(!splashActive) return;
+  var count = 5;
+  var el = document.getElementById('splash-countdown');
+  document.getElementById('splash-prompt').textContent = 'SIMULATION BEGINS IN';
+  function tick() {
+    if(!splashActive) return;
+    if(count <= 0){dismissSplash();return;}
+    el.textContent = count;
+    count--;
+    setTimeout(tick, 1000);
+  }
+  tick();
+}
+
+function dismissSplash() {
+  if(!splashActive) return;
+  splashActive = false;
+  var el = document.getElementById('splash-overlay');
+  el.classList.add('fade-out');
+  setTimeout(function(){
+    el.classList.add('hidden');
+    // Auto-start playback
+    if(!playing) togglePlay();
+  }, 1200);
+}
+
+// Space/click to skip splash
+document.addEventListener('keydown', function(e) {
+  if(splashActive && e.key===' '){e.preventDefault();dismissSplash();}
+});
+document.addEventListener('click', function(e) {
+  if(splashActive && e.target.closest('#splash-overlay')){dismissSplash();}
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  init();
+  initSplash();
+});
 </script>
 </body>
 </html>"""

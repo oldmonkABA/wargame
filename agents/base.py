@@ -63,7 +63,7 @@ class StrategicAgent(ABC):
                             "battery_id": {"type": "string"},
                             "target_id": {"type": "string"},
                             "target_type": {"type": "string", "enum": ["airbase", "sam_site", "radar", "c2", "logistics", "ground_unit"]},
-                            "missiles": {"type": "integer"}
+                            "missiles": {"type": "integer", "description": "Number of missiles to fire (recommend 2-4 per target for high-value targets to ensure kill)"}
                         },
                         "required": ["battery_id", "target_id", "target_type", "missiles"]
                     }
@@ -302,6 +302,7 @@ Weather: {game_state['weather']}
         prompt += "\n### ORDERS REQUIRED\n"
         prompt += "Issue orders for all domains: missiles, EW, air, drones, artillery, helicopters, ground, special forces.\n"
         prompt += "Consider: current objectives, enemy disposition, weather, supply status.\n"
+        prompt += "IMPORTANT: For missile strikes, fire 2-4 missiles per salvo against high-value targets (airbases, C2, SAM sites) to ensure kill probability. Single-missile strikes often miss.\n"
 
         return prompt
 

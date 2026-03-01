@@ -141,6 +141,10 @@ class TurnManager:
         # Track destroyed units already counted for VP to avoid double-counting
         self._destroyed_units_counted: set[str] = set()
 
+        # Cost-of-war economic tracking
+        from .costs import CostTracker
+        self.cost_tracker = CostTracker(Path(data_path))
+
         # Callbacks for agent integration
         self.on_turn_start: Optional[Callable] = None
         self.on_phase_start: Optional[Callable] = None
@@ -266,6 +270,11 @@ class TurnManager:
         # Calculate VP changes
         self._calculate_victory_points()
 
+        # Process cost-of-war economics
+        self.cost_tracker.process_combat_reports(
+            self.current_turn.combat_reports, self.units
+        )
+
         # Check victory conditions
         self._check_victory_conditions()
 
@@ -337,7 +346,8 @@ class TurnManager:
             return None
 
         target_id = strike.get("target_id", "")
-        missiles = strike.get("missiles", 1)
+        missiles = max(2, strike.get("missiles", 2))  # Minimum salvo of 2
+        missiles = min(missiles, battery.missiles_remaining)  # Cap at available
 
         # Get defending SAMs
         enemy = "pakistan" if faction == "india" else "india"
@@ -380,16 +390,64 @@ class TurnManager:
         return report.__dict__
 
     def _get_sams_defending(self, target_id: str, faction: str) -> list:
-        """Get SAM systems that could defend a target."""
-        sams = []
+        """Get SAM systems defending a target — layered defense.
+
+        Incoming cruise missiles transit through multiple SAM engagement zones.
+        Long-range systems (S-400, HQ-9) provide outer umbrella.
+        Medium-range (Barak-8/MRSAM, Akash, HQ-16) provide middle layer.
+        Short-range (SPYDER, SPADA, FM-90) provide point defense.
+        Each layer gets a shot — this is how layered IADS works.
+        """
+        # SAM range tiers (km) — determines which layers engage incoming missiles
+        LONG_RANGE = {"s400", "hq9"}           # 200-400km, outer umbrella
+        MEDIUM_RANGE = {"barak8", "mrsam", "akash", "hq16"}  # 30-100km, area defense
+        SHORT_RANGE = {"spyder", "spada2000", "fm90"}         # 15-30km, point defense
+
+        # First: SAMs whose protecting list directly covers this target
+        protecting_sams = []
+        long_range_sams = []
+        medium_range_sams = []
+        short_range_sams = []
+
         for unit in self.units.get_units_by_category(UnitCategory.AIR_DEFENSE):
-            if unit.faction.value == faction and unit.is_combat_effective():
-                sams.append({
-                    "type": unit.unit_type,
-                    "rounds": int(unit.state.supply_level),
-                    "ready": unit.status == UnitStatus.READY,
-                })
-        return sams
+            if unit.faction.value != faction or not unit.is_combat_effective():
+                continue
+            sam_entry = {
+                "type": unit.unit_type,
+                "rounds": unit.type_data.get("missiles_available", int(unit.state.supply_level)),
+                "ready": unit.status == UnitStatus.READY,
+            }
+            protecting = unit.type_data.get("protecting", [])
+            is_protecting = target_id in protecting or any(target_id in p for p in protecting)
+
+            sam_type = unit.unit_type.lower()
+            if is_protecting:
+                protecting_sams.append(sam_entry)
+            elif sam_type in LONG_RANGE:
+                long_range_sams.append(sam_entry)
+            elif sam_type in MEDIUM_RANGE:
+                medium_range_sams.append(sam_entry)
+            elif sam_type in SHORT_RANGE:
+                short_range_sams.append(sam_entry)
+
+        # Build layered defense: all directly protecting SAMs +
+        # 1 long-range (area umbrella) + 1 medium-range (sector defense)
+        # Incoming missile must survive each layer sequentially
+        result = protecting_sams[:]
+        if long_range_sams:
+            result.append(long_range_sams[0])
+        if medium_range_sams:
+            result.append(medium_range_sams[0])
+
+        # Deduplicate by type (don't double-count same system)
+        seen_types = set()
+        deduped = []
+        for sam in result:
+            if sam["type"] not in seen_types:
+                seen_types.add(sam["type"])
+                deduped.append(sam)
+
+        return deduped if deduped else short_range_sams[:1]
 
     def _execute_ew_phase(self, india_orders: Orders, pakistan_orders: Orders) -> list:
         """Execute electronic warfare phase."""

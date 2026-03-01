@@ -393,24 +393,39 @@ class UnitManager:
         with open(filepath) as f:
             data = yaml.safe_load(f)
 
-        for system in data.get("missile_systems", data.get("missiles", [])):
+        for system in data.get("missile_units", data.get("missile_systems", data.get("missiles", []))):
             sys_id = system.get("id", str(uuid.uuid4()))
-            launchers = system.get("launchers", 1)
-            missiles_per = system.get("missiles_per_launcher", 4)
+            launchers = system.get("launcher_count", system.get("launchers", 1))
+            missiles_ready = system.get("missiles_ready", launchers * system.get("missiles_per_launcher", 4))
+            missile_type = system.get("missile_type", system.get("type", "cruise"))
+
+            # Look up range from schema type definitions
+            range_km = system.get("range_km", 300)
+            type_def = self.type_definitions.get(missile_type, {})
+            if "range_km" not in system and type_def:
+                range_km = type_def.get("range_km", 300)
+
+            # Parse location from YAML
+            loc_data = system.get("location", {})
+            location = Location(
+                lat=loc_data.get("lat"),
+                lon=loc_data.get("lon"),
+            )
 
             unit = MissileBattery(
                 id=sys_id,
                 name=system.get("name", sys_id),
                 faction=faction,
                 category=UnitCategory.MISSILE,
-                unit_type=system.get("type", "cruise"),
-                missile_type=system.get("type", "cruise"),
-                location=Location(),  # Position set by scenario
+                unit_type=missile_type,
+                missile_type=missile_type,
+                location=location,
                 state=UnitState(strength_current=launchers, strength_max=launchers),
-                missiles_remaining=launchers * missiles_per,
-                missiles_max=launchers * missiles_per,
-                range_km=system.get("range_km", 300),
-                is_mobile=system.get("mobile", True),
+                missiles_remaining=missiles_ready,
+                missiles_max=missiles_ready,
+                range_km=range_km,
+                reload_time_turns=system.get("reload_time_turns", 4),
+                is_mobile=system.get("mobility", system.get("mobile", "mobile")) != "static",
                 type_data=system,
             )
             self.units[sys_id] = unit
@@ -420,21 +435,29 @@ class UnitManager:
         with open(filepath) as f:
             data = yaml.safe_load(f)
 
-        for system in data.get("air_defense_systems", data.get("systems", [])):
+        for system in data.get("sam_sites", data.get("air_defense_systems", data.get("systems", []))):
             sys_id = system.get("id", str(uuid.uuid4()))
-            units = system.get("units", system.get("batteries", 1))
+            launchers = system.get("launcher_count", system.get("units", system.get("batteries", 1)))
+            sam_type = system.get("sam_type", system.get("type", "sam"))
+
+            # Parse location
+            loc_data = system.get("location", {})
+            location = Location(
+                lat=loc_data.get("lat"),
+                lon=loc_data.get("lon"),
+            )
 
             unit = Unit(
                 id=sys_id,
                 name=system.get("name", sys_id),
                 faction=faction,
                 category=UnitCategory.AIR_DEFENSE,
-                unit_type=system.get("type", "sam"),
-                location=Location(),
+                unit_type=sam_type,
+                location=location,
                 state=UnitState(
-                    strength_current=units,
-                    strength_max=units,
-                    supply_level=100.0
+                    strength_current=launchers,
+                    strength_max=launchers,
+                    supply_level=system.get("missiles_available", 100.0),
                 ),
                 type_data=system,
             )
@@ -446,7 +469,7 @@ class UnitManager:
             data = yaml.safe_load(f)
 
         # Load corps and divisions
-        for corps in data.get("corps", []):
+        for corps in data.get("formations", data.get("corps", [])):
             corps_id = corps.get("id", str(uuid.uuid4()))
             corps_unit = Unit(
                 id=corps_id,
@@ -488,7 +511,7 @@ class UnitManager:
         with open(filepath) as f:
             data = yaml.safe_load(f)
 
-        for system in data.get("artillery_systems", data.get("artillery", [])):
+        for system in data.get("artillery_units", data.get("artillery_systems", data.get("artillery", []))):
             sys_id = system.get("id", str(uuid.uuid4()))
             count = system.get("units", system.get("count", 1))
 
@@ -551,7 +574,7 @@ class UnitManager:
         with open(filepath) as f:
             data = yaml.safe_load(f)
 
-        for sf in data.get("special_forces_units", data.get("units", [])):
+        for sf in data.get("sf_units", data.get("special_forces_units", data.get("units", []))):
             sf_id = sf.get("id", str(uuid.uuid4()))
             count = sf.get("personnel", sf.get("strength", 500))
 
@@ -572,7 +595,7 @@ class UnitManager:
         with open(filepath) as f:
             data = yaml.safe_load(f)
 
-        for isr in data.get("isr_assets", data.get("assets", [])):
+        for isr in data.get("awacs_units", data.get("isr_assets", data.get("assets", []))):
             isr_id = isr.get("id", str(uuid.uuid4()))
 
             unit = Unit(
